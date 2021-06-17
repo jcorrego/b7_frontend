@@ -1,5 +1,7 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/2bd72e04-e087-4f19-b3b4-2fd3fa1f58a6/deploy-status)](https://app.netlify.com/sites/b7-time-tracker/deploys)
 # b7_frontend
 Frontend Vuejs project for B7 Time Tracker Prototype
+
 ## Element components
 
 See [Element Library Documentation](https://element.eleme.io/#/en-US/component/installation)
