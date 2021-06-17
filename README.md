@@ -6,6 +6,12 @@ See [Element Library Documentation](https://element.eleme.io/#/en-US/component/i
 
 We are using on-demand components installation, so in order to use a component, add the `import` and the `Vue.use` lines in `plugins/element.js` file.
 
+## Tailwindcss
+
+See [Tailwindcss Documentation](https://tailwindcss.com/docs)
+
+We are using this utility class css library. If you have never worked with tailwindcss before... give it a shot!
+
 ## Project setup
 ```
 npm install
