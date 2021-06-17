@@ -1,5 +1,5 @@
-# b7_backend
-
+# b7_frontend
+Frontend Vuejs project for B7 Time Tracker Prototype
 ## Project setup
 ```
 npm install
