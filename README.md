@@ -41,5 +41,6 @@ Developer workflow:
 - Rebase with `main` before pushing if necessary
 - Push to github
 - Create Pull Request to `main`, assign some reviewer.
+- When creating a PR, Netlify will create a preview URL and add some details to the PR if you want to test life your changes before PR is merged.
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
