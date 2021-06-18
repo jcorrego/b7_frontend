@@ -34,5 +34,12 @@ npm run build
 npm run lint
 ```
 
+## Contributing
+Developer workflow:
+- Create branch from `main`
+- Work in branch, commit changes.
+- Rebase with `main` before pushing if necessary
+- Push to github
+- Create Pull Request to `main`, assign some reviewer.
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
