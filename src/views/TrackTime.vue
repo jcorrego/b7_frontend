@@ -55,6 +55,9 @@
                             placeholder="00:00"
                             class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-16 shadow-sm sm:text-sm border-gray-300 rounded-md text-right"
                           >
+                          <p class="mt-2 text-sm text-gray-500">
+                          i.e. (HH:MM)
+                        </p>
                         </div>
                       </div>
 
