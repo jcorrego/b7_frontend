@@ -27,41 +27,45 @@
                       <div class="grid grid-cols-6 gap-6">
                         <div class="col-span-6 sm:col-span-3">
                           <label
-                            for="first_name"
+                            for="date"
                             class="block text-sm font-medium text-gray-700"
                           >Date</label>
                           <el-date-picker
-                          v-model="date"
-                          type="date"
-                          placeholder="Pick a day"
-                        >
-                        </el-date-picker>
+                            name="date"
+                            id="date"
+                            v-model="date"
+                            type="date"
+                            placeholder="Pick a day"
+                          >
+                          </el-date-picker>
                         </div>
 
                         <div class="col-span-6 sm:col-span-3">
                           <label
-                            for="last_name"
+                            for="hours"
                             class="block text-sm font-medium text-gray-700"
                           >Hours</label>
                           <input
+                            ref="hours"
+                            v-mask="timeMask"
+                            v-model="hours"
                             type="text"
-                            name="last_name"
-                            id="last_name"
-                            autocomplete="family-name"
-                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                            name="hours"
+                            id="hours"
+                            placeholder="00:00"
+                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-16 shadow-sm sm:text-sm border-gray-300 rounded-md text-right"
                           >
                         </div>
                       </div>
 
                       <div class="col-span-6 sm:col-span-3">
                         <label
-                          for="country"
+                          for="project"
                           class="block text-sm font-medium text-gray-700"
                         >Project</label>
                         <select
-                          id="country"
-                          name="country"
-                          autocomplete="country"
+                          id="project"
+                          name="project"
                           class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         >
                           <option>Some sample project 1</option>
@@ -72,7 +76,7 @@
 
                       <div>
                         <label
-                          for="about"
+                          for="description"
                           class="block text-sm font-medium text-gray-700"
                         >
                           Category / Task Description
@@ -92,15 +96,15 @@
 
                       <div>
                         <label
-                          for="about"
+                          for="comments"
                           class="block text-sm font-medium text-gray-700"
                         >
                           Comments
                         </label>
                         <div class="mt-1">
                           <textarea
-                            id="about"
-                            name="about"
+                            id="comments"
+                            name="comments"
                             rows="3"
                             class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
                             placeholder="Tickets IDs, links..."
@@ -133,8 +137,12 @@
 </template>
 <script>
 export default {
+  mounted() {
+    this.$refs.hours.focus();
+  },
   data() {
     return {
+      hours: '',
       date: new Date(),
       description: '',
       options: [
@@ -172,6 +180,18 @@ export default {
   methods: {
     handleChange(data) {
       console.log(data);
+    },
+    timeMask(value) {
+      const hour = [/[0-9]/];
+      const hours = [/[0-2]/, value.charAt(0) === '2' ? /[0-3]/ : /[0-9]/];
+      const minutes = [/[0-5]/, /[0-9]/];
+      if (value.length === 1) return hour;
+      if (value.length === 2 && value.charAt(0) <= 5) return minutes;
+      if (value.length === 2 && value.charAt(0) > 5) return [...hour, ':', ...minutes];
+      if (value.length === 3) return [...hour, ':', ...minutes];
+      if (value.length === 4) return [...hour, ':', ...minutes];
+      if (value.length === 5) return [...hours, ':', ...minutes];
+      return [...hours, ':', ...minutes];
     },
   },
 };

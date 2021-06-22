@@ -37,6 +37,7 @@
                 aria-expanded="false"
                 aria-haspopup="true"
                 @click="showUserMenu = !showUserMenu"
+                v-on-clickaway="hideMenu"
               >
                 <span class="sr-only">Open user menu</span>
                 <img
@@ -138,7 +139,10 @@
 </template>
 
 <script>
+import { mixin as clickaway } from 'vue-clickaway';
+
 export default {
+  mixins: [clickaway],
   mounted() {
 
   },
@@ -164,6 +168,9 @@ export default {
       this.showMobileMenu = false;
       this.$store.commit('removeLoginUser');
       this.$router.push('/login');
+    },
+    hideMenu() {
+      this.showUserMenu = false;
     },
   },
 };

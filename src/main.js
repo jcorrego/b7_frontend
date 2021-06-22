@@ -3,6 +3,7 @@ import Vue from 'vue';
 import './plugins/element';
 import './assets/tailwind.css';
 import GoogleAuth from '@/config/google_oAuth';
+import VueMask from 'v-mask';
 import router from './router';
 import store from './store';
 import App from './App.vue';
@@ -13,6 +14,7 @@ const gauthOption = {
   prompt: 'select_account',
 };
 Vue.use(GoogleAuth, gauthOption);
+Vue.use(VueMask);
 
 Vue.config.productionTip = false;
 
