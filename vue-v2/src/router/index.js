@@ -2,6 +2,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import Login from '../views/Login.vue';
+import Sample1 from '../views/Sample1.vue';
+import Sample2 from '../views/Sample2.vue';
 
 Vue.use(VueRouter);
 
@@ -15,6 +17,16 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+  },
+  {
+    path: '/sample-1',
+    name: 'Track 1',
+    component: Sample1,
+  },
+  {
+    path: '/sample-2',
+    name: 'Track 2',
+    component: Sample2,
   },
   {
     path: '/track',

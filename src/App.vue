@@ -1,17 +1,11 @@
 <template>
-  <div id="app">
-    <navigation></navigation>
-    <div class="min-h-screen bg-gray-100">
-      <router-view />
-    </div>
-  </div>
+  <StackedList />
 </template>
 
-<script>
-import Navigation from './components/Navigation.vue';
+<script setup>
+import HelloWorld from './components/HelloWorld.vue';
+import StackedList from './components/StackedList.vue';
 
-export default {
-  name: 'app',
-  components: { Navigation },
-};
+// This starter template is using Vue 3 experimental <script setup> SFCs
+// Check out https://github.com/vuejs/rfcs/blob/script-setup-2/active-rfcs/0000-script-setup.md
 </script>

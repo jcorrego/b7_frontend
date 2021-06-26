@@ -159,6 +159,14 @@ export default {
           label: 'Track Time',
           url: '/track',
         },
+        {
+          label: 'Track Time 1',
+          url: '/sample-1',
+        },
+        {
+          label: 'Track Time 2',
+          url: '/sample-2',
+        },
       ],
     };
   },

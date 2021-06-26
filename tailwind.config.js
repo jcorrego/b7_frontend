@@ -1,11 +1,16 @@
-/* eslint-disable global-require */
-const defaultTheme = require('tailwindcss/defaultTheme');
+const defaultTheme = require('tailwindcss/defaultTheme')
+const colors = require('tailwindcss/colors')
 
 module.exports = {
-  purge: { content: ['./dist/**/*.html', './public/**/*.html', './src/**/*.vue'] },
+  mode: 'jit',
+  purge: { content: ['./index.html','./dist/**/*.html', './public/**/*.html', './src/**/*.vue'] },
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      colors: {
+        sky: colors.sky,
+        teal: colors.teal,
+      },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
@@ -17,4 +22,4 @@ module.exports = {
   plugins: [
     require('@tailwindcss/forms'),
   ],
-};
+}
