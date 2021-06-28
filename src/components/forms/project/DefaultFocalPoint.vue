@@ -37,7 +37,6 @@
 </template>
 
 <script>
-import { ref } from 'vue'
 import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from '@headlessui/vue'
 import { CheckIcon, SelectorIcon } from '@heroicons/vue/solid'
 
@@ -114,13 +113,15 @@ export default {
     CheckIcon,
     SelectorIcon,
   },
-  setup() {
-    const selected = ref(people[3])
-
-    return {
-      people,
-      selected,
+  computed:{
+    selected() {
+      return this.$store.state.selectedProject.focal
     }
   },
+  data(){
+    return {
+      people,
+    }
+  }
 }
 </script>

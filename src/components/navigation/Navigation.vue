@@ -4,7 +4,7 @@
       class="pb-24 bg-primary"
       v-slot="{ open }"
     >
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="relative py-3 flex items-center justify-center lg:justify-between">
           <!-- Logo -->
           <div class="absolute left-0 flex-shrink-0 lg:static">
@@ -245,6 +245,7 @@ const options = [
     // { title: 'Home', href: '/' },
     { title: 'Track Time',  href: '/track' },
     { title: 'Project Configuration', href: '/project/settings' },
+    { title: 'Track Time (alt)',  href: '/track2' },
     // { title: 'Reports', href: '/reports' },
 ]
 

@@ -1,17 +1,11 @@
 
 <template>
-  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 gap-4 items-start lg:grid-cols-3 lg:gap-8">
       <!-- Left column -->
       <div class="grid grid-cols-1 gap-4 lg:col-span-2">
 
         <new-time-record></new-time-record>
-
-        <div class="rounded-lg bg-white overflow-hidden shadow">
-          <div class="p-6 text-center">
-            <time-period-filter></time-period-filter>
-          </div>
-        </div>
 
         <task-list></task-list>
 
@@ -50,14 +44,6 @@
                 <p class="mt-1 text-sm text-gray-500">
                   There are some configurations that you can make to this project.
                 </p>
-              </div>
-              <div class="p-6 ">
-                <h3 class="mb-3 text-primary">Current Focal Point</h3>
-                <avatar-with-name
-                  :name="selectedProject.focal.name"
-                  :email="selectedProject.focal.email"
-                  :avatar="selectedProject.focal.avatar"
-                ></avatar-with-name>
               </div>
             </div>
             <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
@@ -128,7 +114,6 @@ import { mapState } from 'vuex'
 import HourStats from '../stats/HourStats.vue'
 import NewTimeRecord from '../forms/NewTimeRecord.vue'
 import AvatarWithName from '../users/AvatarWithName.vue'
-import TimePeriodFilter from '../filters/TimePeriodFilter.vue'
 import TaskList from '../tables/TaskList.vue'
 
 export default {
@@ -136,7 +121,6 @@ export default {
         HourStats,
         NewTimeRecord,
         AvatarWithName,
-        TimePeriodFilter,
         TaskList,
     },
     computed: {

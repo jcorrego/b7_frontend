@@ -23,6 +23,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "track" */ '../components/views/TrackTime.vue'),
   },
   {
+    path: '/track2',
+    name: 'Track Time 2',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "track" */ '../components/views/TrackTime2.vue'),
+  },
+  {
     path: '/project/settings',
     name: 'Project Settings',
     component: ProjectSettings,

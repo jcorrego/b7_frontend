@@ -1,11 +1,10 @@
-<!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-  <div >
+  <div>
     <div
       v-if="$store.state.selectedProject"
-      class="rounded-lg shadow sm:overflow-hidden"
+      class="rounded-lg shadow"
     >
-      <div class="bg-white">
+      <div class="bg-white rounded-t-lg">
         <div class="px-4 py-5 border-b border-gray-200 sm:px-6 rounded-lg">
           <h3 class="text-lg leading-6 font-medium text-gray-900">
             New Time Record
@@ -15,8 +14,8 @@
           </p>
         </div>
         <div class="px-4 py-5">
-          <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-            <div class="sm:col-span-2">
+          <div :class="[narrow ? '' :'sm:grid-cols-6','grid grid-cols-1 gap-y-6 gap-x-4 ']">
+            <div :class="narrow ? '' : 'sm:col-span-1'">
               <label
                 for="date"
                 class="block text-sm font-medium text-gray-700"
@@ -37,7 +36,26 @@
               </div>
             </div>
 
-            <div class="sm:col-span-4">
+            <div class="sm:col-span-1">
+              <label
+                for="hours"
+                class="block text-sm font-medium text-gray-700"
+              >Worked Hours</label>
+              <div class="mt-1"><input
+                  v-model="hours"
+                  v-maska="'#:##'"
+                  type="text"
+                  name="hours"
+                  id="hours"
+                  placeholder="0:00"
+                  class="text-right pr-4"
+                  @blur="fixHours"
+                  style="height: 40px;"
+                >
+              </div>
+            </div>
+
+            <div :class="narrow?'':'sm:col-span-4'">
               <label
                 for="description"
                 class="block text-sm font-medium text-gray-700"
@@ -58,25 +76,7 @@
               </div>
             </div>
 
-            <div class="sm:col-span-1">
-              <label
-                for="hours"
-                class="block text-sm font-medium text-gray-700"
-              >Worked Hours</label>
-              <div class="mt-1"><input
-                  v-model="hours"
-                  v-maska="'#:##'"
-                  type="text"
-                  name="hours"
-                  id="hours"
-                  placeholder="0:00"
-                  class="text-right pr-4"
-                  @blur="fixHours"
-                >
-              </div>
-            </div>
-
-            <div class="sm:col-span-5">
+            <div :class="narrow?'':'sm:col-span-4'">
               <label
                 for="comments"
                 class="block text-sm font-medium text-gray-700"
@@ -94,10 +94,13 @@
                 </el-input>
               </div>
             </div>
+
+            <div :class="narrow?'':'sm:col-span-2'"><default-focal-point></default-focal-point></div>
+
           </div>
         </div>
       </div>
-      <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+      <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 rounded-b-lg">
         <button
           :disabled="!date || !description || !hours || !comments"
           type="submit"
@@ -114,13 +117,16 @@
 
 <script>
 import NoProjectSelected from '../messages/NoProjectSelected.vue'
+import DefaultFocalPoint from '../forms/project/DefaultFocalPoint.vue'
 import { maska } from 'maska'
 
 export default {
     components: {
         NoProjectSelected,
+        DefaultFocalPoint,
     },
     directives: { maska },
+    props: { narrow: { default: false } },
     data() {
         return {
             disabledDate(time) {
@@ -158,11 +164,11 @@ export default {
         handleChange(value) {
             console.log(value)
         },
-        fixHours(){
-          let tokens = this.hours.split(":")
-          if(tokens[1].length == 0) tokens[1] = "00"
-          else if(tokens[1].length == 1) tokens[1] = "0" + tokens[1]
-          this.hours = tokens.join(':')
+        fixHours() {
+            let tokens = this.hours.split(':')
+            if (tokens[1].length == 0) tokens[1] = '00'
+            else if (tokens[1].length == 1) tokens[1] = '0' + tokens[1]
+            this.hours = tokens.join(':')
         },
     },
 }
