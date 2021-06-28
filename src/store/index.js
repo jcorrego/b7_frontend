@@ -9,7 +9,7 @@ const store = createStore({
       return {
         loginUser: user,
         projects,
-        selectedProject: null,
+        selectedProject: projects[0],
         descriptions
       }
   },
