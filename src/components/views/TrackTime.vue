@@ -5,10 +5,6 @@
       <!-- Left column -->
       <div class="grid grid-cols-1 gap-4 lg:col-span-2">
         <section aria-labelledby="section-1-title">
-          <h2
-            class="sr-only"
-            id="section-1-title"
-          >Section title</h2>
           <new-time-record></new-time-record>
           <div class="mb-5 rounded-lg bg-white overflow-hidden shadow">
             <div class="p-6 text-center">

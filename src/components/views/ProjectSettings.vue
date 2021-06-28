@@ -1,6 +1,6 @@
 <template>
   <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-    <div class="rounded-lg shadow">
+    <div class="rounded-lg shadow overflow-hidden">
       <div class="bg-white">
         <div class="px-4 py-5 border-b border-gray-200 sm:px-6 rounded-lg">
           <h2 class="text-xl leading-6 font-medium text-sky-700">
@@ -64,7 +64,6 @@
         </button>
       </div>
     </div>
-
   </div>
 </template>
 
