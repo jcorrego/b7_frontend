@@ -1,6 +1,6 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-  <div class="mb-5">
+  <div >
     <div
       v-if="$store.state.selectedProject"
       class="rounded-lg shadow sm:overflow-hidden"

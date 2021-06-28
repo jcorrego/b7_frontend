@@ -4,15 +4,17 @@
     <div class="grid grid-cols-1 gap-4 items-start lg:grid-cols-3 lg:gap-8">
       <!-- Left column -->
       <div class="grid grid-cols-1 gap-4 lg:col-span-2">
-        <section aria-labelledby="section-1-title">
-          <new-time-record></new-time-record>
-          <div class="mb-5 rounded-lg bg-white overflow-hidden shadow">
-            <div class="p-6 text-center">
-              <time-period-filter></time-period-filter>
-              <task-list></task-list>
-            </div>
+
+        <new-time-record></new-time-record>
+
+        <div class="rounded-lg bg-white overflow-hidden shadow">
+          <div class="p-6 text-center">
+            <time-period-filter></time-period-filter>
           </div>
-        </section>
+        </div>
+
+        <task-list></task-list>
+
       </div>
 
       <!-- Right column -->
@@ -52,8 +54,9 @@
               <div class="p-6 ">
                 <h3 class="mb-3 text-primary">Current Focal Point</h3>
                 <avatar-with-name
-                  name="John Doe"
-                  email="john@bairesdev.com"
+                  :name="selectedProject.focal.name"
+                  :email="selectedProject.focal.email"
+                  :avatar="selectedProject.focal.avatar"
                 ></avatar-with-name>
               </div>
             </div>
