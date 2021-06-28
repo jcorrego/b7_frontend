@@ -47,6 +47,9 @@ router.beforeEach((to, from, next) => {
   if(loggedIn && to.path == '/login'){
     return next('/track');
   }
+  if(loggedIn && to.path == '/'){
+    return next('/track');
+  }
   return next();
 });
 
