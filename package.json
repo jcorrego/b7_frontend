@@ -1,5 +1,5 @@
 {
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "serve": "vite preview",
     "build": "vite build",
@@ -10,6 +10,7 @@
     "@heroicons/vue": "^1.0.1",
     "@tailwindcss/forms": "^0.3.3",
     "element-plus": "^1.0.2-beta.28",
+    "maska": "^1.4.2",
     "postcss-import": "^14.0.2",
     "vue": "^3.0.5",
     "vue-router": "^4.0.10",
@@ -27,18 +28,6 @@
     "postcss": "^8.3.5",
     "prettier": "^2.3.2",
     "tailwindcss": "^2.2.4",
-    "vite": "^2.3.8",
-    "vue-cli-plugin-element-plus": "~0.0.13"
-  },
-  "babel": {
-    "plugins": [
-      [
-        "component",
-        {
-          "libraryName": "element-plus",
-          "styleLibraryName": "theme-chalk"
-        }
-      ]
-    ]
+    "vite": "^2.3.8"
   }
 }

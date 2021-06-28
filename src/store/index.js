@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
 import { setStore, getStore, removeItem } from '../config/utils';
 import projects from './projects';
+import descriptions from './descriptions';
 
 const user = getStore('user');
 const store = createStore({
@@ -9,6 +10,7 @@ const store = createStore({
         loginUser: user,
         projects,
         selectedProject: null,
+        descriptions
       }
   },
   mutations: {

@@ -244,7 +244,7 @@ import SelectMenu from '../forms/SelectMenu.vue'
 const options = [
     { title: 'Home', href: '/' },
     { title: 'Track Time',  href: '/track' },
-    { title: 'PM: Configuration', href: '/projects' },
+    { title: 'Project Configuration', href: '/project/settings' },
     { title: 'Reports', href: '/reports' },
 ]
 

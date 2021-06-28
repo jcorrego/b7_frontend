@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../components/views/Home.vue'
+import ProjectSettings from '../components/views/ProjectSettings.vue'
 import Login from '../components/views/Login.vue';
 
 const routes = [
@@ -22,9 +23,9 @@ const routes = [
     component: () => import(/* webpackChunkName: "track" */ '../components/views/TrackTime.vue'),
   },
   {
-    path: '/projects',
-    name: 'Projects',
-    component: Home,
+    path: '/project/settings',
+    name: 'Project Settings',
+    component: ProjectSettings,
   },
   {
     path: '/reports',
