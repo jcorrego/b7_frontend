@@ -7,10 +7,10 @@ const projects = [
         status: 'ok',
         focal: {
             id: 9,
-            name: 'Claudie Smitham',
-            email: 'claudie@smitham.com',
+            name: 'Juliana Ponzio',
+            email: 'juliana.ponzio@bairesdev.com',
             avatar:
-              'https://images.unsplash.com/photo-1584486520270-19eca1efcce5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+              'https://ca.slack-edge.com/T9U2U104U-U01CTG078RG-30f636af9db9-512',
           },
     },
     {
