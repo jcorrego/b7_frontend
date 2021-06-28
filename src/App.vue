@@ -1,11 +1,24 @@
 <template>
-  <StackedList />
+  <div class="min-h-screen bg-gray-100">
+    <navigation v-if="this.$store.state.loginUser" ></navigation>
+    <main class="-mt-24 pb-8">
+      <router-view/>
+    </main>
+    <footer>
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 lg:max-w-7xl">
+        <div class="border-t border-gray-200 py-8 text-sm text-gray-500 text-center sm:text-left"><span class="block sm:inline">&copy; BairesDev 2009 – 2021. All rights reserved.</span> <span class="block sm:inline">All rights reserved.</span></div>
+      </div>
+    </footer>
+  </div>
+
 </template>
 
-<script setup>
-import HelloWorld from './components/HelloWorld.vue';
-import StackedList from './components/StackedList.vue';
 
-// This starter template is using Vue 3 experimental <script setup> SFCs
-// Check out https://github.com/vuejs/rfcs/blob/script-setup-2/active-rfcs/0000-script-setup.md
+<script>
+import Navigation from './components/navigation/Navigation.vue';
+
+export default {
+  name: 'app',
+  components: { Navigation },
+};
 </script>
