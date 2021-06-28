@@ -13,7 +13,7 @@
                 scope="col"
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Date / Hours
+                Date
               </th>
               <th
                 scope="col"
@@ -25,7 +25,7 @@
                   content="Overtime hours"
                   placement="top-start"
                 >
-                  <span>OT</span>
+                  <span>Hours</span>
                 </el-tooltip>
               </th>
               <th
@@ -67,12 +67,13 @@
                   <div class="text-sm font-medium text-gray-400">
                     {{ task.date }}
                   </div>
-                  <div class="text-sm text-primary font-bold">{{ task.hours }}</div>
+
                 </div>
               </td>
               <td @click="task.selected = !task.selected"
               class="py-2 whitespace-nowrap">
-                <el-popover
+              <div :class="[task.overtime?'text-red-500' :'text-primary','text-sm  font-bold']">{{ task.hours }}</div>
+                <!-- <el-popover
                   v-if="task.overtime"
                   placement="top-start"
                   :width="200"
@@ -85,11 +86,11 @@
                   <div class="text-red-400">Overtime</div>
                   <div>{{ task.hours }}</div>
                   <div>To be compensated</div>
-                </el-popover>
-                <div
+                </el-popover> -->
+                <!-- <div
                   v-else
                   class="bg-green-500 flex-shrink-0 flex items-center justify-center w-2 h-2 text-white text-sm font-medium rounded"
-                ></div>
+                ></div> -->
               </td>
               <!-- <td class="px-6 py-4 whitespace-nowrap"> -->
               <!-- <div class="text-sm text-gray-900">{{ task.hours }}</div> -->
@@ -222,6 +223,114 @@ export default {
     data() {
         return {
             tasks: [
+                {
+                    date: '2021-06-28',
+                    hours: '03:25',
+                    category: 'Testing',
+                    description: 'Environment configuration',
+                    comments: 'Ticket #234, solve the problem',
+                    overtime: false,
+                    selected: false,
+                },
+                {
+                    date: '2021-06-28',
+                    hours: '01:30',
+                    category: 'Development',
+                    description: 'Code Review',
+                    comments: 'Ticket #234, solve the problem',
+                    overtime: false,
+                    selected: false,
+                },
+                {
+                    date: '2021-06-28',
+                    hours: '00:15',
+                    category: 'Other',
+                    description: 'Other',
+                    comments: 'Ticket #234, solve the problem',
+                    overtime: true,
+                    selected: false,
+                },
+                {
+                    date: '2021-06-28',
+                    hours: '01:30',
+                    category: 'Meetings (Internal)',
+                    description: '1:1 meeting with Manager',
+                    comments: 'Ticket #234, solve the problem',
+                    overtime: false,
+                    selected: false,
+                },
+                {
+                    date: '2021-06-28',
+                    hours: '00:45',
+                    category: 'Development',
+                    description: 'Backlog refinement meeting',
+                    comments: 'Ticket #234, solve the problem',
+                    overtime: false,
+                    selected: false,
+                },
+                {
+                    date: '2021-06-28',
+                    hours: '02:00',
+                    category: 'Idle time',
+                    description: 'No assigned tasks',
+                    comments: 'Ticket #234, solve the problem',
+                    overtime: true,
+                    selected: false,
+                },
+                {
+                    date: '2021-06-28',
+                    hours: '03:25',
+                    category: 'Testing',
+                    description: 'Environment configuration',
+                    comments: 'Ticket #234, solve the problem',
+                    overtime: false,
+                    selected: false,
+                },
+                {
+                    date: '2021-06-28',
+                    hours: '01:30',
+                    category: 'Development',
+                    description: 'Code Review',
+                    comments: 'Ticket #234, solve the problem',
+                    overtime: false,
+                    selected: false,
+                },
+                {
+                    date: '2021-06-28',
+                    hours: '00:15',
+                    category: 'Other',
+                    description: 'Other',
+                    comments: 'Ticket #234, solve the problem',
+                    overtime: true,
+                    selected: false,
+                },
+                {
+                    date: '2021-06-28',
+                    hours: '01:30',
+                    category: 'Meetings (Internal)',
+                    description: '1:1 meeting with Manager',
+                    comments: 'Ticket #234, solve the problem',
+                    overtime: false,
+                    selected: false,
+                },
+                {
+                    date: '2021-06-28',
+                    hours: '00:45',
+                    category: 'Development',
+                    description: 'Backlog refinement meeting',
+                    comments: 'Ticket #234, solve the problem',
+                    overtime: false,
+                    selected: false,
+                },
+                {
+                    date: '2021-06-28',
+                    hours: '02:00',
+                    category: 'Idle time',
+                    description: 'No assigned tasks',
+                    comments: 'Ticket #234, solve the problem',
+                    overtime: true,
+                    selected: false,
+                },
                 {
                     date: '2021-06-28',
                     hours: '03:25',
