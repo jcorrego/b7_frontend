@@ -242,10 +242,10 @@ import { MenuIcon, XIcon } from '@heroicons/vue/outline'
 import SelectMenu from '../forms/SelectMenu.vue'
 
 const options = [
-    { title: 'Home', href: '/' },
+    // { title: 'Home', href: '/' },
     { title: 'Track Time',  href: '/track' },
     { title: 'Project Configuration', href: '/project/settings' },
-    { title: 'Reports', href: '/reports' },
+    // { title: 'Reports', href: '/reports' },
 ]
 
 export default {
