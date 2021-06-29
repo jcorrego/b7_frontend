@@ -1,11 +1,8 @@
 <template>
   <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-      <div class="shadow border-b border-gray-200 sm:rounded-lg bg-white">
-        <div class="p-4">
-          <time-period-filter></time-period-filter>
-        </div>
-        <table class="min-w-full divide-y divide-gray-200 ">
+      <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg bg-white">
+        <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-sky-50">
             <tr>
               <th></th>
@@ -43,16 +40,14 @@
               <th class="pr-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider" />
             </tr>
           </thead>
-          <tbody class="bg-white divide-y divide-gray-200 ">
+          <tbody class="bg-white divide-y divide-gray-200">
             <tr
               v-for="(task,index) in tasks"
               :key="index"
               :class="[task.selected?'bg-teal-50':'','cursor-pointer hover:bg-gray-50']"
             >
-              <td
-                @click="task.selected = !task.selected"
-                class="pl-4"
-              >
+              <td @click="task.selected = !task.selected"
+                class="pl-4">
                 <div class="flex items-center h-5">
                   <input
                     :id="'task['+index+']'"
@@ -63,26 +58,19 @@
                   />
                 </div>
               </td>
-              <td
-                @click="task.selected = !task.selected"
-                class="px-6 py-2 whitespace-nowrap"
-              >
+              <td @click="task.selected = !task.selected"
+              class="px-6 py-2 whitespace-nowrap">
                 <div class="text-right">
                   <div class="text-sm font-medium text-gray-400">
                     {{ task.date }}
                   </div>
                 </div>
               </td>
-              <td
-                @click="task.selected = !task.selected"
-                class="py-2 whitespace-nowrap text-right"
-              >
-                <div class="text-primary text-sm  font-bold">
-                  <span
-                    v-if="task.overtime"
-                    class="text-yellow-600 mr-2"
-                  >OT</span>
-                  {{ task.hours }}
+              <td @click="task.selected = !task.selected"
+              class="py-2 whitespace-nowrap text-right">
+              <div class="text-primary text-sm  font-bold">
+                <span v-if="task.overtime" class="text-yellow-600 mr-2">OT</span>
+                {{ task.hours }}
                 </div>
                 <!-- <el-popover
                   v-if="task.overtime"
@@ -106,17 +94,13 @@
               <!-- <td class="px-6 py-4 whitespace-nowrap"> -->
               <!-- <div class="text-sm text-gray-900">{{ task.hours }}</div> -->
               <!-- </td> -->
-              <td
-                @click="task.selected = !task.selected"
-                class="px-6 py-2 whitespace-nowrap"
-              >
+              <td @click="task.selected = !task.selected"
+              class="px-6 py-2 whitespace-nowrap">
                 <div class="text-sm text-gray-900">{{ task.category }}</div>
                 <div class="text-sm text-gray-500">{{ task.description }}</div>
               </td>
-              <td
-                @click="task.selected = !task.selected"
-                class="px-6 py-4 whitespace-nowrap"
-              >
+              <td @click="task.selected = !task.selected"
+              class="px-6 py-4 whitespace-nowrap">
                 <div class="text-sm text-gray-500">{{ task.comments }}</div>
               </td>
               <td class="pr-6">
@@ -188,39 +172,25 @@
           </tbody>
           <tfoot class="bg-gray-50">
             <tr>
-              <td
-                colspan="6"
-                class="px-6 py-3 text-gray-500 text-sm"
-              >
+              <td colspan="6" class="px-6 py-3 text-gray-500 text-sm">
                 <div class="flex items-center justify-between">
                   <div>Displaying <span class="font-bold text-primary">{{ tasks.length }}</span> records</div>
-
+                  <div v-if="selected.length" class="flex items-center">
+                    <div class="mr-2"><span class="font-bold text-primary">{{ selected.length }}</span> records selected</div>
+                    <button type="button" class="mr-2 inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                      <i class="fad fa-trash-alt mr-2"></i>
+                      Delete
+                    </button>
+                    <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+                      <i class="fad fa-clone mr-2"></i>
+                      Duplicate
+                    </button>
+                  </div>
                 </div>
               </td>
             </tr>
           </tfoot>
         </table>
-        <div
-          v-if="selected.length"
-          class="fixed bottom-0 bg-gray-50 px-6 py-3 w-[970px] flex items-center border-t border-primary"
-        >
-          <div class="mr-2"><span class="font-bold text-primary">{{ selected.length }}</span> records selected</div>
-          <button
-            type="button"
-            class="mr-2 inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-          >
-            <i class="fad fa-trash-alt mr-2"></i>
-            Delete
-          </button>
-          <button
-            type="button"
-            class="inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
-          >
-            <i class="fad fa-clone mr-2"></i>
-            Duplicate
-          </button>
-        </div>
-
       </div>
     </div>
   </div>
@@ -417,10 +387,10 @@ export default {
             ],
         }
     },
-    computed: {
-        selected() {
-            return this.tasks.filter((item) => item.selected)
-        },
+    computed:{
+      selected(){
+        return this.tasks.filter((item)=>item.selected)
+      }
     },
 }
 </script>

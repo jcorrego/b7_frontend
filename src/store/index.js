@@ -10,7 +10,9 @@ const store = createStore({
         loginUser: user,
         projects,
         selectedProject: projects[0],
-        descriptions
+        descriptions,
+        period: 'weekly',
+        theme: 2,
       }
   },
   mutations: {
@@ -25,6 +27,9 @@ const store = createStore({
     selectProject(state, project){
       if(project.id === 0) state.selectedProject = null
       else state.selectedProject = project
+    },
+    setPeriod(state, per){
+      state.period = per;
     }
   },
   modules: {

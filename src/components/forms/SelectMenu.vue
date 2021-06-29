@@ -68,8 +68,8 @@
   </Listbox>
 </template>
 
-<script>
-import { mapState } from 'vuex' 
+<script> 
+import { mapState } from 'vuex'
 
 import {
     Listbox,
