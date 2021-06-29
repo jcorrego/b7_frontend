@@ -52,18 +52,6 @@
                 <MenuItems class="origin-top-right z-40 absolute -right-2 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <MenuItem v-slot="{ active }">
                   <a
-                    href="#"
-                    :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
-                  >Your Profile</a>
-                  </MenuItem>
-                  <MenuItem v-slot="{ active }">
-                  <a
-                    href="#"
-                    :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
-                  >Settings</a>
-                  </MenuItem>
-                  <MenuItem v-slot="{ active }">
-                  <a
                     @click.prevent="logout"
                     href="#"
                     :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
@@ -74,10 +62,9 @@
             </Menu>
           </div>
 
-          <!-- Search -->
           <div class="flex-1 min-w-0 px-12 lg:hidden">
-            <div class="max-w-xs w-full mx-auto">
-              <SelectMenu/>
+            <div class="max-w-xs w-full mx-auto text-white font-bold">
+              Time Tracker
             </div>
           </div>
 
@@ -115,7 +102,7 @@
             </div>
             <div>
               <div class="max-w-md w-full mx-auto">
-                <SelectMenu/>
+                <!-- <SelectMenu/> -->
               </div>
             </div>
           </div>
@@ -203,14 +190,6 @@
                   </div>
                   <div class="mt-3 px-2 space-y-1">
                     <a
-                      href="#"
-                      class="block rounded-md px-3 py-2 text-base text-gray-900 font-medium hover:bg-gray-100 hover:text-gray-800"
-                    >Your Profile</a>
-                    <a
-                      href="#"
-                      class="block rounded-md px-3 py-2 text-base text-gray-900 font-medium hover:bg-gray-100 hover:text-gray-800"
-                    >Settings</a>
-                    <a
                       @click.prevent="logout"
                       href="#"
                       class="block rounded-md px-3 py-2 text-base text-gray-900 font-medium hover:bg-gray-100 hover:text-gray-800"
@@ -239,7 +218,6 @@ import {
     TransitionRoot,
 } from '@headlessui/vue'
 import { MenuIcon, XIcon } from '@heroicons/vue/outline'
-import SelectMenu from '../forms/SelectMenu.vue'
 
 const options = [
     // { title: 'Home', href: '/' },
@@ -264,7 +242,6 @@ export default {
         TransitionRoot,
         MenuIcon,
         XIcon,
-        SelectMenu,
     },
     methods:{
       logout() {

@@ -5,15 +5,45 @@
       <!-- Left column -->
       <div class="grid grid-cols-1 gap-4 lg:col-span-2">
 
-        <new-time-record></new-time-record>
+        <div
+          class="bg-white shadow rounded-lg"
+        >
+          <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
+            <div class="-ml-4 -mt-4 flex justify-between items-center flex-wrap sm:flex-nowrap">
+              <div class="ml-4 mt-4 w-full">
+                <SelectMenu/>
+              </div>
+
+            </div>
+          </div>
+          <dl
+            class=" grid grid-cols-1 rounded-lg bg-white overflow-hidden shadow divide-y divide-gray-200 md:grid-cols-4 md:divide-y-0 md:divide-x"
+          >
+            <div
+              v-for="item in stats"
+              :key="item.name"
+              class="px-4 py-5 sm:p-6"
+            >
+              <dt class="text-base font-normal text-gray-900">
+                {{ item.name }}
+              </dt>
+              <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
+                <div :class="[item[period] === '0:00'?'text-gray-300': item.name ==='Hours Overtime'?'text-yellow-600': 'text-teal-600','flex items-baseline text-2xl font-semibold']">
+                  {{ item[period] }}
+                </div>
+              </dd>
+            </div>
+          </dl>
+
+        </div>
 
         <task-list></task-list>
 
       </div>
 
       <!-- Right column -->
-      <div class="grid grid-cols-1 gap-4">
-
+      <div class="grid grid-cols-1 gap-4 sticky top-0">
+        <new-time-record :narrow="true"></new-time-record>
         <HourStats v-if="!selectedProject" />
 
         <section
@@ -30,79 +60,6 @@
             </div>
           </div>
         </section>
-
-        <section
-          v-if="selectedProject"
-          aria-labelledby="section-2-title"
-        >
-          <div class="rounded-lg bg-white overflow-hidden shadow">
-            <div class="bg-white">
-              <div class="px-4 py-5 border-b border-gray-200">
-                <h3 class="text-lg leading-6 font-medium text-gray-900">
-                  Project Details
-                </h3>
-                <p class="mt-1 text-sm text-gray-500">
-                  There are some configurations that you can make to this project.
-                </p>
-              </div>
-            </div>
-            <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
-              <router-link
-                to="/project/settings"
-                class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500"
-              >Go to project configuration</router-link>
-            </div>
-          </div>
-        </section>
-
-        <section
-          v-if="selectedProject"
-          aria-labelledby="section-2-title"
-        >
-          <div class="rounded-lg overflow-hidden shadow">
-            <div class="bg-white">
-              <div class="px-4 py-5 border-b border-gray-200">
-                <h3 class="text-lg leading-6 font-medium text-gray-900">
-                  Stats for the selected project & period!!!!
-                </h3>
-                <p class="mt-1 text-sm text-gray-500">
-                  We have to add here some stats about the <strong>selected project</strong> and within the time period selected.
-                </p>
-                <ul class="mt-1 text-sm text-gray-500">
-                  <li class="">Expected hours</li>
-                  <li class="">Worked hours</li>
-                  <li class="">Overtime hours</li>
-                  <li class="">Missing hours</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section
-          v-if="selectedProject"
-          aria-labelledby="section-2-title"
-        >
-          <div class="rounded-lg overflow-hidden shadow">
-            <div class="bg-white">
-              <div class="px-4 py-5 border-b border-gray-200">
-                <h3 class="text-lg leading-6 font-medium text-gray-900">
-                  Stats for the selected project & current month
-                </h3>
-                <p class="mt-1 text-sm text-gray-500">
-                  We have to add here some stats about the <strong>selected project</strong> and running month.
-                </p>
-                <ul class="mt-1 text-sm text-gray-500">
-                  <li class="">Expected hours</li>
-                  <li class="">Worked hours</li>
-                  <li class="">Overtime hours</li>
-                  <li class="">Missing hours</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
       </div>
     </div>
   </div>
@@ -113,20 +70,61 @@ import { mapState } from 'vuex'
 
 import HourStats from '../stats/HourStats.vue'
 import NewTimeRecord from '../forms/NewTimeRecord.vue'
-import AvatarWithName from '../users/AvatarWithName.vue'
 import TaskList from '../tables/TaskList.vue'
+import SelectMenu from '../forms/SelectMenu.vue'
+
+const stats = [
+    {
+        name: 'Hours Expected',
+        daily: '8:00',
+        weekly: '40:00',
+        monthly: '160:00',
+        range: '78:00',
+        multiple: '78:00',
+    },
+    {
+        name: 'Hours Worked',
+        daily: '7:30',
+        weekly: '18:00',
+        monthly: '164:00',
+        range: '77:00',
+        multiple: '77:00',
+    },
+    {
+        name: 'Hours Missing',
+        daily: '0:30',
+        weekly: '22:00',
+        monthly: '0:00',
+        range: '1:00',
+        multiple: '1:00',
+    },
+    {
+        name: 'Hours Overtime',
+        daily: '0:00',
+        weekly: '0:00',
+        monthly: '4:00',
+        range: '0:00',
+        multiple: '0:00',
+    },
+]
 
 export default {
     components: {
         HourStats,
         NewTimeRecord,
-        AvatarWithName,
         TaskList,
+        SelectMenu,
     },
     computed: {
         ...mapState({
-            selectedProject: (state) => state.selectedProject,
+          selectedProject: state => state.selectedProject,
+          period: state => state.period,
         }),
+    },
+    setup() {
+        return {
+            stats,
+        }
     },
 }
 </script>

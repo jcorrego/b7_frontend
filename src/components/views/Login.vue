@@ -92,7 +92,7 @@ export default {
                         },
                     }
                     this.$store.commit('setLoginUser', userInfo)
-                    this.$router.push('/track')
+                    this.$router.push('/')
                 })
                 .catch((error) => {
                     console.log('error', error)
