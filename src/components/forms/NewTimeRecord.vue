@@ -5,7 +5,7 @@
       class="rounded-lg shadow"
     >
       <div class="bg-white rounded-t-lg">
-        <div v-if="$store.state.theme == 1">
+        <div >
           <div class="sm:hidden">
             <label
               for="tabs"

@@ -3,7 +3,7 @@
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 gap-4 items-start lg:grid-cols-3 lg:gap-8">
       <!-- Left column -->
-      <div :class="[$store.state.theme == 1?'-mt-14':'','grid grid-cols-1 gap-4 lg:col-span-2']">
+      <div class="grid grid-cols-1 gap-4 lg:col-span-2">
 
         <div
           class="bg-white shadow rounded-lg overflow-hidden"

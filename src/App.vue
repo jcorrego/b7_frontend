@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-gray-100">
     <navigation v-if="this.$store.state.loginUser"></navigation>
-    <main class="-mt-24 pb-8">
+    <main :class="[!this.$store.state.loginUser?'':'-mt-24',' pb-8']">
       <router-view/>
     </main>
     <footer v-if="this.$store.state.loginUser">

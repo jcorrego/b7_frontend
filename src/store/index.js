@@ -12,7 +12,6 @@ const store = createStore({
         selectedProject: projects[0],
         descriptions,
         period: 'weekly',
-        theme: 2,
       }
   },
   mutations: {
