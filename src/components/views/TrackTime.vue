@@ -1,68 +1,106 @@
-
 <template>
-  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 gap-4 items-start lg:grid-cols-3 lg:gap-8">
-      <!-- Left column -->
-      <div class="grid grid-cols-1 gap-4 lg:col-span-2">
-
-        <div
-          class="bg-white border shadow rounded-lg"
-        >
-          <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
-            <div class="-ml-4 -mt-4 flex justify-between items-center flex-wrap sm:flex-nowrap">
-              <div class="ml-4 mt-4 w-full">
-                <SelectMenu/>
-              </div>
-
-            </div>
-          </div>
-          <dl
-            class=" grid grid-cols-1 rounded-lg bg-white overflow-hidden shadow divide-y divide-gray-200 md:grid-cols-4 md:divide-y-0 md:divide-x"
-          >
-            <div
-              v-for="item in stats"
-              :key="item.name"
-              class="px-4 py-5 sm:p-6"
-            >
-              <dt class="text-base font-normal text-gray-900">
-                {{ item.name }}
-              </dt>
-              <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
-                <div :class="[item[period] === '0:00'?'text-gray-300': item.name ==='Hours Overtime'?'text-yellow-600': 'text-teal-600','flex items-baseline text-2xl font-semibold']">
-                  {{ item[period] }}
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 gap-4 items-start lg:grid-cols-3 lg:gap-8">
+            <!-- Left column -->
+            <div class="grid grid-cols-1 gap-4 lg:col-span-2">
+                <div class="bg-white border shadow rounded-lg">
+                    <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
+                        <div
+                            class="
+                                -ml-4
+                                -mt-4
+                                flex
+                                justify-between
+                                items-center
+                                flex-wrap
+                                sm:flex-nowrap
+                            "
+                        >
+                            <div class="ml-4 mt-4 w-full">
+                                <SelectMenu />
+                            </div>
+                        </div>
+                    </div>
+                    <dl
+                        class="
+                            grid grid-cols-1
+                            rounded-lg
+                            bg-white
+                            overflow-hidden
+                            shadow
+                            divide-y divide-gray-200
+                            md:grid-cols-4 md:divide-y-0 md:divide-x
+                        "
+                    >
+                        <div
+                            v-for="item in stats"
+                            :key="item.name"
+                            class="px-4 py-5 sm:p-6"
+                        >
+                            <dt class="text-base font-normal text-gray-900">
+                                {{ item.name }}
+                            </dt>
+                            <dd
+                                class="
+                                    mt-1
+                                    flex
+                                    justify-between
+                                    items-baseline
+                                    md:block
+                                    lg:flex
+                                "
+                            >
+                                <div
+                                    :class="[
+                                        item[period] === '0:00'
+                                            ? 'text-gray-300'
+                                            : item.name === 'Hours Overtime'
+                                            ? 'text-yellow-600'
+                                            : 'text-teal-600',
+                                        'flex items-baseline text-2xl font-semibold',
+                                    ]"
+                                >
+                                    {{ item[period] }}
+                                </div>
+                            </dd>
+                        </div>
+                    </dl>
                 </div>
-              </dd>
-            </div>
-          </dl>
 
+                <task-list></task-list>
+            </div>
+
+            <!-- Right column -->
+            <div class="grid grid-cols-1 gap-4 sticky top-0">
+                <new-time-record :narrow="true"></new-time-record>
+                <HourStats v-if="!selectedProject" />
+
+                <section
+                    v-if="!selectedProject"
+                    aria-labelledby="section-2-title"
+                >
+                    <div class="rounded-lg overflow-hidden shadow">
+                        <div class="bg-white">
+                            <div class="px-4 py-5 border-b border-gray-200">
+                                <h3
+                                    class="
+                                        text-lg
+                                        leading-6
+                                        font-medium
+                                        text-gray-900
+                                    "
+                                >
+                                    For consolidated view we can add here some
+                                    details about missing / overtime hours for
+                                    each project...
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
-
-        <task-list></task-list>
-
-      </div>
-
-      <!-- Right column -->
-      <div class="grid grid-cols-1 gap-4 sticky top-0">
-        <new-time-record :narrow="true"></new-time-record>
-        <HourStats v-if="!selectedProject" />
-
-        <section
-          v-if="!selectedProject"
-          aria-labelledby="section-2-title"
-        >
-          <div class="rounded-lg overflow-hidden shadow">
-            <div class="bg-white">
-              <div class="px-4 py-5 border-b border-gray-200">
-                <h3 class="text-lg leading-6 font-medium text-gray-900">
-                  For consolidated view we can add here some details about missing / overtime hours for each project...
-                </h3>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -73,6 +111,7 @@ import NewTimeRecord from '../forms/NewTimeRecord.vue'
 import TaskList from '../tables/TaskList.vue'
 import SelectMenu from '../forms/SelectMenu.vue'
 
+//TODO: fetch from API
 const stats = [
     {
         name: 'Hours Expected',
@@ -117,8 +156,8 @@ export default {
     },
     computed: {
         ...mapState({
-          selectedProject: state => state.selectedProject,
-          period: state => state.period,
+            selectedProject: (state) => state.filters.project,
+            period: (state) => state.filters.period,
         }),
     },
     setup() {

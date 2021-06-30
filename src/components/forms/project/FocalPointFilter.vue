@@ -1,5 +1,5 @@
 <template>
-    <Listbox as="div" v-model="selected">
+    <Listbox as="div" v-model="selectedFocalPoint">
         <ListboxLabel class="block text-sm font-medium text-gray-700">
             Focal Point
         </ListboxLabel>
@@ -26,11 +26,13 @@
             >
                 <span class="flex items-center">
                     <img
-                        :src="selected.avatar"
+                        :src="selectedFocalPoint.avatar"
                         alt=""
                         class="flex-shrink-0 h-6 w-6 rounded-full"
                     />
-                    <span class="ml-3 block truncate">{{ selected.name }}</span>
+                    <span class="ml-3 block truncate">{{
+                        selectedFocalPoint.name
+                    }}</span>
                 </span>
                 <span
                     class="
@@ -79,7 +81,7 @@
                         v-for="person in people"
                         :key="person.id"
                         :value="person"
-                        v-slot="{ active, selected }"
+                        v-slot="{ active, selectedFocalPoint }"
                     >
                         <li
                             :class="[
@@ -97,7 +99,7 @@
                                 />
                                 <span
                                     :class="[
-                                        selected
+                                        selectedFocalPoint
                                             ? 'font-semibold'
                                             : 'font-normal',
                                         'ml-3 block truncate',
@@ -108,7 +110,7 @@
                             </div>
 
                             <span
-                                v-if="selected"
+                                v-if="selectedFocalPoint"
                                 :class="[
                                     active ? 'text-white' : 'text-teal-600',
                                     'absolute inset-y-0 right-0 flex items-center pr-4',
@@ -125,6 +127,7 @@
 </template>
 
 <script>
+import people from '../../../store/people' //TODO: fetch from API
 import {
     Listbox,
     ListboxButton,
@@ -133,7 +136,7 @@ import {
     ListboxOptions,
 } from '@headlessui/vue'
 import { CheckIcon, SelectorIcon } from '@heroicons/vue/solid'
-import people from '../../../store/people'
+import { mapActions } from 'vuex'
 
 export default {
     components: {
@@ -145,15 +148,19 @@ export default {
         CheckIcon,
         SelectorIcon,
     },
-    computed: {
-        selected() {
-            return this.$store.state.filters.project.focal
-        },
-    },
     data() {
         return {
             people,
+            selectedFocalPoint: this.$store.state.filters.focalPoint,
         }
+    },
+    watch: {
+        selectedFocalPoint(value) {
+            this.setFocalPointFilter(value)
+        },
+    },
+    methods: {
+        ...mapActions(['setFocalPointFilter']),
     },
 }
 </script>
