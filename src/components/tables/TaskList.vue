@@ -84,28 +84,8 @@
                   >OT</span>
                   {{ task.hours }}
                 </div>
-                <!-- <el-popover
-                  v-if="task.overtime"
-                  placement="top-start"
-                  :width="200"
-                  trigger="hover"
-                >
-                  <template #reference>
-                    <div class="bg-red-500 flex-shrink-0 flex items-center justify-center w-2 h-2 text-white text-sm font-medium rounded">
-                    </div>
-                  </template>
-                  <div class="text-red-400">Overtime</div>
-                  <div>{{ task.hours }}</div>
-                  <div>To be compensated</div>
-                </el-popover> -->
-                <!-- <div
-                  v-else
-                  class="bg-green-500 flex-shrink-0 flex items-center justify-center w-2 h-2 text-white text-sm font-medium rounded"
-                ></div> -->
+
               </td>
-              <!-- <td class="px-6 py-4 whitespace-nowrap"> -->
-              <!-- <div class="text-sm text-gray-900">{{ task.hours }}</div> -->
-              <!-- </td> -->
               <td
                 @click="task.selected = !task.selected"
                 class="px-6 py-2 whitespace-nowrap"
@@ -172,10 +152,7 @@
                           href="#"
                           :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm']"
                         >
-                          <TrashIcon
-                            class="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                            aria-hidden="true"
-                          />
+                          <i class="fad fa-trash-alt mr-2"></i>
                           Delete
                         </a>
                         </MenuItem>

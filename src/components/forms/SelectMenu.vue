@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center w-full">
-    <div class="mr-2 hidden sm:block text-primary upper">Select a project</div>
+    <div class="mr-2 hidden sm:block text-primary">Select a project</div>
     <div class="flex-1">
       <Listbox
         as="div"
