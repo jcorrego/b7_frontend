@@ -24,7 +24,7 @@
                     sm:text-sm
                 "
             >
-                <span class="flex items-center">
+                <span class="flex items-center" v-if="selectedFocalPoint">
                     <img
                         :src="selectedFocalPoint.avatar"
                         alt=""
@@ -136,7 +136,6 @@ import {
     ListboxOptions,
 } from '@headlessui/vue'
 import { CheckIcon, SelectorIcon } from '@heroicons/vue/solid'
-import { mapActions } from 'vuex'
 
 export default {
     components: {
@@ -148,19 +147,20 @@ export default {
         CheckIcon,
         SelectorIcon,
     },
+    props: { initial: { default: null }, onUpdate: { required: true } },
     data() {
         return {
             people,
-            selectedFocalPoint: this.$store.state.filters.focalPoint,
+            selectedFocalPoint: null,
         }
     },
     watch: {
         selectedFocalPoint(value) {
-            this.setFocalPointFilter(value)
+            this.onUpdate(value)
         },
     },
-    methods: {
-        ...mapActions(['setFocalPointFilter']),
+    mounted() {
+        if (this.initial) this.selectedFocalPoint = this.initial
     },
 }
 </script>

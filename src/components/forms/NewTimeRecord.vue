@@ -102,6 +102,7 @@
                                             rounded-md
                                         "
                                         v-model="date"
+                                        @change="setNewRecordDate"
                                         type="date"
                                         placeholder="Pick a day"
                                         :disabled-date="disabledDate"
@@ -125,42 +126,27 @@
                                 <div class="mt-1">
                                     <input
                                         v-model="hours"
+                                        @change="handleHoursChange"
                                         v-maska="'#:##'"
                                         type="text"
                                         name="hours"
                                         id="hours"
                                         placeholder="0:00"
                                         class="text-right pr-4"
-                                        @blur="fixHours"
                                         style="height: 40px"
                                     />
                                 </div>
                             </div>
 
                             <div :class="narrow ? '' : 'sm:col-span-4'">
-                                <label
-                                    for="description"
-                                    class="
-                                        block
-                                        text-sm
-                                        font-medium
-                                        text-gray-700
+                                <task-description
+                                    :updateTaskCategory="
+                                        setNewRecordTaskCategory
                                     "
-                                >
-                                    Task Description
-                                </label>
-                                <div class="mt-1">
-                                    <el-cascader
-                                        v-model="description"
-                                        class="w-full"
-                                        placeholder="Select task category and description"
-                                        :options="$store.state.descriptions"
-                                        :props="{ expandTrigger: 'hover' }"
-                                        @change="handleChange"
-                                        clearable
-                                        filterable
-                                    ></el-cascader>
-                                </div>
+                                    :updateTaskDescription="
+                                        setNewRecordTaskDescription
+                                    "
+                                ></task-description>
                             </div>
 
                             <div :class="narrow ? '' : 'sm:col-span-4'">
@@ -181,6 +167,7 @@
                                         id="comments"
                                         placeholder="Tickets IDs, links..."
                                         v-model="comments"
+                                        @input="setNewRecordComments"
                                         clearable
                                     >
                                     </el-input>
@@ -188,7 +175,10 @@
                             </div>
 
                             <div :class="narrow ? '' : 'sm:col-span-2'">
-                                <default-focal-point></default-focal-point>
+                                <focal-point
+                                    :initial="focalPoint"
+                                    :onUpdate="setNewRecordFocalPoint"
+                                ></focal-point>
                             </div>
                         </div>
                     </div>
@@ -214,10 +204,20 @@
                     <div class="px-4 py-5">
                         <form class="space-y-6" action="#" method="POST">
                             <div class="grid grid-cols-1 gap-6">
-                                <default-focal-point></default-focal-point>
+                                <focal-point
+                                    :initial="focalPoint"
+                                    :onUpdate="setNewRecordFocalPoint"
+                                ></focal-point>
                                 <default-time-period></default-time-period>
                                 <default-sort-results></default-sort-results>
-                                <default-task-description></default-task-description>
+                                <task-description
+                                    :updateTaskCategory="
+                                        setNewRecordTaskCategory
+                                    "
+                                    :updateTaskDescription="
+                                        setNewRecordTaskDescription
+                                    "
+                                ></task-description>
                             </div>
                         </form>
                     </div>
@@ -229,8 +229,9 @@
             <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 rounded-b-lg">
                 <button
                     v-if="selectedTab == 'new'"
-                    :disabled="!date || !description || !hours || !comments"
+                    :disabled="!date || !taskDescription || !hours || !comments"
                     type="submit"
+                    @click="createRecord"
                     class="
                         inline-flex
                         justify-center
@@ -312,10 +313,10 @@
 
 <script>
 import NoProjectSelected from '../messages/NoProjectSelected.vue'
-import DefaultFocalPoint from '../forms/project/DefaultFocalPoint.vue'
+import FocalPoint from '../forms/project/FocalPoint.vue'
 import DefaultTimePeriod from '../forms/project/DefaultTimePeriod.vue'
 import DefaultSortResults from '../forms/project/DefaultSortResults.vue'
-import DefaultTaskDescription from '../forms/project/DefaultTaskDescription.vue'
+import TaskDescription from '../forms/project/TaskDescription.vue'
 
 import { maska } from 'maska'
 import { mapState, mapActions } from 'vuex'
@@ -324,10 +325,10 @@ import AdditionalFilters from '../filters/AdditionalFilters.vue'
 export default {
     components: {
         NoProjectSelected,
-        DefaultFocalPoint,
+        FocalPoint,
         DefaultTimePeriod,
         DefaultSortResults,
-        DefaultTaskDescription,
+        TaskDescription,
         AdditionalFilters,
     },
     directives: { maska },
@@ -359,10 +360,6 @@ export default {
                     })(),
                 },
             ],
-            date: new Date(),
-            description: '',
-            hours: '',
-            comments: '',
             tabs: [
                 { name: 'New Time Record', href: 'new', current: true },
                 { name: 'Project Config', href: 'project', current: false },
@@ -374,12 +371,27 @@ export default {
     computed: {
         ...mapState({
             selectedProject: (state) => state.filters.project,
+            focalPoint: (state) => state.newRecord.focalPoint,
+            descriptions: (state) => state.descriptions,
+            hours: (state) => state.newRecord.hours,
+            date: (state) => state.newRecord.date,
+            comments: (state) => state.newRecord.comments,
+            taskDescription: (state) => state.newRecord.taskDescription,
         }),
     },
     methods: {
-        ...mapActions(['search']),
-        handleChange(value) {
-            console.log(value)
+        ...mapActions([
+            'search',
+            'setNewRecordDate',
+            'setNewRecordHours',
+            'setNewRecordComments',
+            'setNewRecordFocalPoint',
+            'setNewRecordTaskCategory',
+            'setNewRecordTaskDescription',
+            'createRecord',
+        ]),
+        handleHoursChange(e) {
+            this.setNewRecordHours(e.target.value)
         },
         fixHours() {
             let tokens = this.hours.split(':')

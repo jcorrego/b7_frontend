@@ -12,7 +12,7 @@
                 @change="handleTaskDescriptionChange"
                 class="w-full"
                 placeholder="Select task category and description"
-                :options="$store.state.descriptions"
+                :options="descriptions"
                 :props="{ expandTrigger: 'hover' }"
                 clearable
                 filterable
@@ -22,19 +22,27 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapState } from 'vuex'
 export default {
+    props: {
+        updateTaskCategory: { required: true },
+        updateTaskDescription: { required: true },
+    },
     data() {
         return {
             description: '',
         }
     },
+    computed: {
+        ...mapState({
+            descriptions: (state) => state.descriptions,
+        }),
+    },
     methods: {
-        ...mapActions(['setTaskCategoryFilter', 'setTaskDescriptionFilter']),
         handleTaskDescriptionChange(result) {
             const [category, description] = result
-            this.setTaskCategoryFilter(category)
-            this.setTaskDescriptionFilter(description)
+            this.updateTaskCategory(category)
+            this.updateTaskDescription(description)
         },
     },
 }
