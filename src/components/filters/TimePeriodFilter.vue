@@ -23,19 +23,13 @@
         >
           Monthly
         </button>
+
         <button
           @click="setPeriod('range')"
           type="button"
-          :class="[period == 'range'?'bg-secondary text-white hover:bg-teal-400':'bg-white text-gray-700 hover:bg-gray-50','-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium focus:z-10 focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500']"
+          :class="[period == 'range'?'bg-secondary text-white hover:bg-teal-400':'bg-white text-gray-700 hover:bg-gray-50','-ml-px relative inline-flex items-center px-4 py-2 rounded-r-md border border-gray-300 text-sm font-medium focus:z-10 focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500']"
         >
           Range
-        </button>
-        <button
-          @click="setPeriod('multiple')"
-          type="button"
-          :class="[period == 'multiple'?'bg-secondary text-white hover:bg-teal-400':'bg-white text-gray-700 hover:bg-gray-50','-ml-px relative inline-flex items-center px-4 py-2 rounded-r-md border border-gray-300 text-sm font-medium focus:z-10 focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500']"
-        >
-          Multiple
         </button>
       </span>
     </div>
@@ -63,14 +57,6 @@
         :disabled-date="disabledDate"
         type="month"
         placeholder="Pick a month"
-      >
-      </el-date-picker>
-      <el-date-picker
-        v-if="period == 'multiple'"
-        type="dates"
-        v-model="multiple"
-        :disabled-date="disabledDate"
-        placeholder="Pick one or more dates"
       >
       </el-date-picker>
       <el-date-picker
@@ -103,7 +89,6 @@ export default {
             month: '',
             day: '',
             range: '',
-            multiple: '',
             shortcuts: [
                 {
                     text: 'Last week',

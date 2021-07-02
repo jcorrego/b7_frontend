@@ -136,11 +136,11 @@
                                 class="py-2 whitespace-nowrap text-right"
                             >
                                 <div class="text-primary text-sm font-bold">
-                                    <span
-                                        v-if="task.overtime"
+                                    <el-tooltip v-if="task.overtime" class="item" effect="dark" content="Overtime" placement="top">
+                                        <span
                                         class="text-yellow-600 mr-2"
-                                        >OT</span
-                                    >
+                                        >OT</span>
+                                    </el-tooltip>
                                     {{ task.hours }}
                                 </div>
                             </td>
