@@ -8,8 +8,8 @@
         </label>
         <div class="mt-1">
             <el-cascader
-                v-model="description"
-                @change="handleTaskDescriptionChange"
+                :model-value="modelValue"
+                @change="update"
                 class="w-full"
                 placeholder="Select task category and description"
                 :options="descriptions"
@@ -22,15 +22,13 @@
 </template>
 
 <script>
+
 import { mapState } from 'vuex'
 export default {
-    props: {
-        updateTaskCategory: { required: true },
-        updateTaskDescription: { required: true },
-    },
+    props: ['modelValue'],
+    emits: ['update:modelValue'],
     data() {
         return {
-            description: '',
         }
     },
     computed: {
@@ -38,12 +36,10 @@ export default {
             descriptions: (state) => state.descriptions,
         }),
     },
-    methods: {
-        handleTaskDescriptionChange(result) {
-            const [category, description] = result
-            this.updateTaskCategory(category)
-            this.updateTaskDescription(description)
-        },
-    },
+    methods:{
+        update(val){
+            this.$emit('update:modelValue', val)
+        }
+    }
 }
 </script>

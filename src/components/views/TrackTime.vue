@@ -1,28 +1,10 @@
 <template>
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 gap-4 items-start lg:grid-cols-3 lg:gap-8">
-            <!-- Left column -->
-            <div class="grid grid-cols-1 gap-4 lg:col-span-2">
-                <div class="bg-white border shadow rounded-lg">
-                    <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
-                        <div
-                            class="
-                                -ml-4
-                                -mt-4
-                                flex
-                                justify-between
-                                items-center
-                                flex-wrap
-                                sm:flex-nowrap
-                            "
-                        >
-                            <div class="ml-4 mt-4 w-full">
-                                <SelectMenu />
-                            </div>
-                        </div>
-                    </div>
-                    <dl
-                        class="
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 gap-4 items-start lg:grid-cols-3 lg:gap-8">
+      <!-- Left column -->
+      <div class="grid grid-cols-1 gap-4 lg:col-span-2">
+        <div class="bg-white border shadow rounded-lg">
+          <dl class="
                             grid grid-cols-1
                             rounded-lg
                             bg-white
@@ -30,86 +12,57 @@
                             shadow
                             divide-y divide-gray-200
                             md:grid-cols-4 md:divide-y-0 md:divide-x
-                        "
-                    >
-                        <div
-                            v-for="item in stats"
-                            :key="item.name"
-                            class="px-4 py-5 sm:p-6"
-                        >
-                            <dt class="text-base font-normal text-gray-900">
-                                {{ item.name }}
-                            </dt>
-                            <dd
-                                class="
+                        ">
+            <div
+              v-for="item in stats"
+              :key="item.name"
+              class="px-4 py-5 sm:p-4"
+            >
+              <dt class="text-base font-normal text-gray-900">
+                {{ item.name }}
+              </dt>
+              <dd class="
                                     mt-1
                                     flex
                                     justify-between
                                     items-baseline
                                     md:block
                                     lg:flex
-                                "
-                            >
-                                <div
-                                    :class="[
+                                ">
+                <div :class="[
                                         item[period] === '0:00'
                                             ? 'text-gray-300'
                                             : item.name === 'Hours Overtime'
                                             ? 'text-yellow-600'
                                             : 'text-teal-600',
                                         'flex items-baseline text-2xl font-semibold',
-                                    ]"
-                                >
-                                    {{ item[period] }}
-                                </div>
-                            </dd>
-                        </div>
-                    </dl>
+                                    ]">
+                  {{ item[period] }}
                 </div>
-
-                <task-list></task-list>
+              </dd>
             </div>
-
-            <!-- Right column -->
-            <div class="grid grid-cols-1 gap-4 sticky top-0">
-                <new-time-record :narrow="true"></new-time-record>
-                <HourStats v-if="!selectedProject" />
-
-                <section
-                    v-if="!selectedProject"
-                    aria-labelledby="section-2-title"
-                >
-                    <div class="rounded-lg overflow-hidden shadow">
-                        <div class="bg-white">
-                            <div class="px-4 py-5 border-b border-gray-200">
-                                <h3
-                                    class="
-                                        text-lg
-                                        leading-6
-                                        font-medium
-                                        text-gray-900
-                                    "
-                                >
-                                    For consolidated view we can add here some
-                                    details about missing / overtime hours for
-                                    each project...
-                                </h3>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
+          </dl>
         </div>
+        <task-list></task-list>
+      </div>
+
+      <!-- Right column -->
+      <div class="grid grid-cols-1 gap-4 sticky top-0">
+        <select-project-menu></select-project-menu>
+        <right-column-tabs v-if="selectedProject"></right-column-tabs>
+        <hour-stats v-if="!selectedProject"></hour-stats>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 
 import HourStats from '../stats/HourStats.vue'
-import NewTimeRecord from '../forms/NewTimeRecord.vue'
+import RightColumnTabs from './Tabs/RightColumnTabs.vue'
 import TaskList from '../tables/TaskList.vue'
-import SelectMenu from '../forms/SelectMenu.vue'
+import SelectProjectMenu from '../forms/SelectProjectMenu.vue'
 
 //TODO: fetch from API
 const stats = [
@@ -150,9 +103,10 @@ const stats = [
 export default {
     components: {
         HourStats,
-        NewTimeRecord,
+        RightColumnTabs,
         TaskList,
-        SelectMenu,
+        SelectProjectMenu,
+        RightColumnTabs,
     },
     computed: {
         ...mapState({

@@ -1,7 +1,7 @@
 <template>
     <Popover
       as="header"
-      class="pb-24 bg-primary"
+      class="pb-16 bg-primary"
       v-slot="{ open }"
     >
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -26,7 +26,10 @@
           <!-- Right section on desktop -->
           <div class="hidden lg:ml-4 lg:flex lg:items-center lg:pr-0.5">
             <div class="ml-3 min-w-0 text-white">
-              <div class="text-base font-medium truncate">{{ $store.state.loginUser.user.name }}</div>
+              <div class="text-base font-medium truncate">
+                {{ $store.state.loginUser.user.name }}
+                <span class="text-sm opacity-75 italic">ID 3325 (BP)</span>
+                </div>
               <div class="text-sm font-medium opacity-60 truncate">{{ $store.state.loginUser.user.email }}</div>
             </div>
             <!-- Profile dropdown -->
@@ -184,7 +187,10 @@
                       />
                     </div>
                     <div class="ml-3 min-w-0 flex-1">
-                      <div class="text-base font-medium text-gray-800 truncate">{{ $store.state.loginUser.user.name }}</div>
+                      <div class="text-base font-medium text-gray-800 truncate">
+                        {{ $store.state.loginUser.user.name }}
+                        <span>2354</span>
+                        </div>
                       <div class="text-sm font-medium text-gray-500 truncate">{{ $store.state.loginUser.user.email }}</div>
                     </div>
                   </div>

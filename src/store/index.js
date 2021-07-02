@@ -40,7 +40,7 @@ const store = createStore({
         }
     },
     actions: {
-        createRecord({ dispatch, commit, state }) {
+        createRecord({ dispatch, commit, state, }) {
             const {
                 date,
                 hours,
