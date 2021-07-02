@@ -17,7 +17,7 @@
               />
               <img
                 class="hidden lg:block h-8 w-auto "
-                src="../../assets/bairesdev-logo-white.svg"
+                src="../../assets/bairesdev-tt-logo-white.svg"
                 alt="BairesDev"
               />
             </a>
@@ -149,7 +149,7 @@
                     <div>
                       <img
                         class="h-8 w-auto"
-                        src="../../assets/bairesdev-logo-blue.svg"
+                        src="../../assets/bairesdev-tt-logo-blue.svg"
                         alt="BairesDev"
                       />
                     </div>
