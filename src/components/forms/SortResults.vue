@@ -1,7 +1,7 @@
 <template>
-    <Listbox as="div" v-model="selectedFocalPoint">
+    <Listbox as="div" v-model="selected">
         <ListboxLabel class="block text-sm font-medium text-gray-700">
-            Focal Point
+            Results order
         </ListboxLabel>
         <div class="mt-1 relative">
             <ListboxButton
@@ -24,19 +24,9 @@
                     sm:text-sm
                 "
             >
-                <span class="flex items-center" v-if="selectedFocalPoint">
-                    <img
-                        :src="selectedFocalPoint.avatar"
-                        alt=""
-                        class="flex-shrink-0 h-6 w-6 rounded-full"
-                    />
-                    <span class="ml-3 block truncate">{{
-                        selectedFocalPoint.name
-                    }}</span>
-                </span>
+                <span class="block truncate">{{ selected.name }}</span>
                 <span
                     class="
-                        ml-3
                         absolute
                         inset-y-0
                         right-0
@@ -66,7 +56,7 @@
                         w-full
                         bg-white
                         shadow-lg
-                        max-h-56
+                        max-h-60
                         rounded-md
                         py-1
                         text-base
@@ -78,42 +68,33 @@
                 >
                     <ListboxOption
                         as="template"
-                        v-for="person in people"
-                        :key="person.id"
-                        :value="person"
-                        v-slot="{ active, selectedFocalPoint }"
+                        v-for="option in sortingOptions"
+                        :key="option.id"
+                        :value="option"
+                        v-slot="{ active, selected }"
                     >
                         <li
                             :class="[
                                 active
                                     ? 'text-white bg-teal-600'
                                     : 'text-gray-900',
-                                'cursor-default select-none relative py-2 pl-3 pr-9',
+                                'cursor-default select-none relative py-2 pl-8 pr-4',
                             ]"
                         >
-                            <div class="flex items-center">
-                                <img
-                                    :src="person.avatar"
-                                    alt=""
-                                    class="flex-shrink-0 h-6 w-6 rounded-full"
-                                />
-                                <span
-                                    :class="[
-                                        selectedFocalPoint
-                                            ? 'font-semibold'
-                                            : 'font-normal',
-                                        'ml-3 block truncate',
-                                    ]"
-                                >
-                                    {{ person.name }}
-                                </span>
-                            </div>
+                            <span
+                                :class="[
+                                    selected ? 'font-semibold' : 'font-normal',
+                                    'block truncate',
+                                ]"
+                            >
+                                {{ option.name }}
+                            </span>
 
                             <span
-                                v-if="selectedFocalPoint"
+                                v-if="selected"
                                 :class="[
                                     active ? 'text-white' : 'text-teal-600',
-                                    'absolute inset-y-0 right-0 flex items-center pr-4',
+                                    'absolute inset-y-0 left-0 flex items-center pl-1.5',
                                 ]"
                             >
                                 <CheckIcon class="h-5 w-5" aria-hidden="true" />
@@ -127,7 +108,7 @@
 </template>
 
 <script>
-import people from '../../store/people' //TODO: fetch from API
+import { ref, watch } from 'vue'
 import {
     Listbox,
     ListboxButton,
@@ -136,11 +117,9 @@ import {
     ListboxOptions,
 } from '@headlessui/vue'
 import { CheckIcon, SelectorIcon } from '@heroicons/vue/solid'
+import { sortingOptions } from '../../constants/sorting'
 
 export default {
-    props: ['modelValue'],
-    emits: ['update:modelValue'],
-
     components: {
         Listbox,
         ListboxButton,
@@ -150,23 +129,28 @@ export default {
         CheckIcon,
         SelectorIcon,
     },
+    props: ['modelValue'],
+    emit: ['update:modelValue'],
     data() {
         return {
-            people,
-            selectedFocalPoint: people[0],
+            selected: sortingOptions[0],
+            sortingOptions,
         }
     },
     watch: {
-        selectedFocalPoint(value) {
+        selected(value) {
             this.$emit('update:modelValue', value)
         },
         modelValue(value) {
-            if (value !== this.selectedFocalPoint)
-                this.selectedFocalPoint = value
+            if (value !== this.selected) this.selected = value
         },
     },
     mounted() {
-        if (this.modelValue) this.selectedFocalPoint = this.modelValue
+        if (this.modelValue) {
+            this.selected = this.modelValue
+        } else {
+            this.$emit('update:modelValue', this.selected)
+        }
     },
 }
 </script>

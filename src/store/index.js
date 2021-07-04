@@ -4,7 +4,11 @@ import projects from './projects' //TODO: fetch from API
 import people from './people' //TODO: fetch from API
 import descriptions from './descriptions' //TODO: fetch from API
 import tasks from './tasks' //TODO: fetch from API
+import projectDefaults from './projectDefaults' //TODO: fetch from API
 import * as uuid from 'uuid'
+const today = new Date()
+const startMonth = new Date(today.getFullYear(), today.getMonth(), 1)
+const endMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0)
 
 const user = getStore('user')
 const store = createStore({
@@ -12,22 +16,12 @@ const store = createStore({
         return {
             loginUser: user,
             projects,
+            projectDefaults,
             descriptions,
             records: tasks.map((t) => ({ ...t, selected: false })),
             filteredRecords: tasks.map((t) => ({ ...t, selected: false })),
-            newRecord: {
-                date: new Date(),
-                hours: '',
-                focalPoint: people[0],
-                taskCategory: null,
-                taskDescription: null,
-                overtime: false,
-                overtimeType: null,
-                overtimeReason: '',
-                comments: '',
-            },
             filters: {
-                period: 'weekly',
+                period: [startMonth, endMonth],
                 project: projects[0],
                 focalPoint: people[0],
                 overtime: null,
@@ -40,7 +34,7 @@ const store = createStore({
         }
     },
     actions: {
-        createRecord({ dispatch, commit, state, }) {
+        createRecord({ dispatch, commit, state }, newRecord) {
             const {
                 date,
                 hours,
@@ -51,74 +45,45 @@ const store = createStore({
                 overtimeType,
                 overtimeReason,
                 comments,
-            } = state.newRecord
-            const record = {
-                id: uuid.v4(),
-                date,
-                hours,
-                project: state.filters.project,
-                focalPoint,
-                taskCategory,
-                taskDescription,
-                overtime,
-                overtimeType,
-                overtimeReason,
-                comments,
-                selected: false,
+                repeat = 1,
+            } = newRecord
+            for (let i = 0; i < repeat; i++) {
+                const record = {
+                    id: uuid.v4(),
+                    date,
+                    hours,
+                    project: state.filters.project,
+                    focalPoint,
+                    taskCategory,
+                    taskDescription,
+                    overtime,
+                    overtimeType,
+                    overtimeReason,
+                    comments,
+                    selected: false,
+                }
+                commit('addRecord', record)
             }
-            console.log('createRecord', record)
-            commit('addRecord', record)
-            dispatch('clearNewRecord')
+            dispatch('search')
         },
         removeRecord({ dispatch, commit }, recordId) {
             commit('removeRecord', recordId)
             dispatch('search')
         },
-        clearNewRecord({ commit }) {
-            const mutations = new Map([
-                ['setNewRecordDate', new Date()],
-                ['setNewRecordHours', null],
-                ['setNewRecordFocalPoint', people[0]],
-                ['setNewRecordTaskCategory', null],
-                ['setNewRecordTaskDescription', null],
-                ['setNewRecordOvertime', false],
-                ['setNewRecordOvertimeType', null],
-                ['setNewRecordOvertimeReason', ''],
-                ['setNewRecordComments', ''],
-            ])
-
-            for (const [mutation, value] of mutations.entries()) {
-                commit(mutation, value)
-            }
+        setProjectDefault({ commit }, projectDefault) {
+            commit('setProjectDefault', projectDefault)
         },
         setProject({ dispatch, commit }, project) {
             commit('setProject', project)
             dispatch('search')
         },
         setPeriod({ dispatch, commit }, period) {
+            console.log('setting period', period)
             commit('setPeriod', period)
             dispatch('search')
         },
         setFocalPointFilter({ commit }, focalPoint) {
             commit('setFocalPointFilter', focalPoint)
-        },
-        setNewRecordDate({ commit }, date) {
-            commit('setNewRecordDate', date)
-        },
-        setNewRecordHours({ commit }, hours) {
-            commit('setNewRecordHours', hours)
-        },
-        setNewRecordComments({ commit }, comments) {
-            commit('setNewRecordComments', comments)
-        },
-        setNewRecordFocalPoint({ commit }, focalPoint) {
-            commit('setNewRecordFocalPoint', focalPoint)
-        },
-        setNewRecordTaskCategory({ commit }, taskCategory) {
-            commit('setNewRecordTaskCategory', taskCategory)
-        },
-        setNewRecordTaskDescription({ commit }, taskDescription) {
-            commit('setNewRecordTaskDescription', taskDescription)
         },
         setCommentsFilter({ commit }, comments) {
             commit('setCommentsFilter', comments)
@@ -148,8 +113,16 @@ const store = createStore({
                     (f) => f.project.id === filters.project.id
                 )
             }
+            if (filters.period && filters.period.length) {
+                const [start, end] = filters.period
+                start.setHours(0, 0, 0, 0)
+                end.setHours(23, 59, 59, 999)
+                filtered = filtered.filter((f) => {
+                    console.log(f.date, start, end)
+                    return f.date >= start && f.date <= end
+                })
+            }
 
-            //TODO: mock date filter
             //TODO: mock focal point filter
             //TODO: mock task description filter
 
@@ -165,33 +138,6 @@ const store = createStore({
         },
         setCommentsFilter(state, comments) {
             state.filters.comments = comments
-        },
-        setNewRecordFocalPoint(state, focalPoint) {
-            state.newRecord.focalPoint = focalPoint
-        },
-        setNewRecordComments(state, comments) {
-            state.newRecord.comments = comments
-        },
-        setNewRecordTaskCategory(state, taskCategory) {
-            state.newRecord.taskCategory = taskCategory
-        },
-        setNewRecordTaskDescription(state, taskDescription) {
-            state.newRecord.taskDescription = taskDescription
-        },
-        setNewRecordOvertimeReason(state, overtimeReason) {
-            state.newRecord.overtimeReason = overtimeReason
-        },
-        setNewRecordOvertime(state, overtime) {
-            state.newRecord.overtime = overtime
-        },
-        setNewRecordOvertimeType(state, overtimeType) {
-            state.newRecord.overtimeType = overtimeType
-        },
-        setNewRecordDate(state, date) {
-            state.newRecord.date = date
-        },
-        setNewRecordHours(state, hours) {
-            state.newRecord.hours = hours
         },
         setOvertimeReasonFilter(state, overtimeReason) {
             state.filters.overtimeReason = overtimeReason
@@ -220,8 +166,11 @@ const store = createStore({
             if (project.id === 0) state.filters.project = null
             else state.filters.project = project
         },
+        setProjectDefault(state, projectDefault) {
+            state.projectDefaults.set(projectDefault.id, projectDefault)
+        },
         setPeriod(state, per) {
-            state.period = per
+            state.filters.period = per
         },
         addRecord(state, record) {
             state.records.push(record)

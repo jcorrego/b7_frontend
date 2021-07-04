@@ -136,10 +136,16 @@
                                 class="py-2 whitespace-nowrap text-right"
                             >
                                 <div class="text-primary text-sm font-bold">
-                                    <el-tooltip v-if="task.overtime" class="item" effect="dark" content="Overtime" placement="top">
-                                        <span
-                                        class="text-yellow-600 mr-2"
-                                        >OT</span>
+                                    <el-tooltip
+                                        v-if="task.overtime"
+                                        class="item"
+                                        effect="dark"
+                                        content="Overtime"
+                                        placement="top"
+                                    >
+                                        <span class="text-yellow-600 mr-2"
+                                            >OT</span
+                                        >
                                     </el-tooltip>
                                     {{ task.hours }}
                                 </div>
@@ -149,7 +155,11 @@
                                 class="px-6 py-2 whitespace-nowrap"
                             >
                                 <div class="text-sm text-gray-900">
-                                    {{ task.taskCategory }}
+                                    {{
+                                        getTaskCategoryByDescription(
+                                            task.taskDescription
+                                        )
+                                    }}
                                 </div>
                                 <div class="text-sm text-gray-500">
                                     {{ task.taskDescription }}
@@ -411,6 +421,7 @@ import {
 
 import TimePeriodFilter from '../filters/TimePeriodFilter.vue'
 import { mapState, mapActions } from 'vuex'
+import { getTaskCategoryByDescription } from '../../store/descriptions'
 
 export default {
     components: {
@@ -430,7 +441,11 @@ export default {
         },
     },
     methods: {
-        ...mapActions(['removeRecord']),
+        getTaskCategoryByDescription,
+        ...mapActions(['removeRecord', 'search']),
+    },
+    mounted() {
+        this.search()
     },
 }
 </script>

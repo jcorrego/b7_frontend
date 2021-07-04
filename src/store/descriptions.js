@@ -439,4 +439,13 @@ const options = [
     },
 ]
 
+export const getTaskCategoryByDescription = (taskDescription) => {
+    for (const category of options) {
+        for (const description of category.children) {
+            if (description.value === taskDescription) return category.label
+        }
+    }
+    return null
+}
+
 export default options
