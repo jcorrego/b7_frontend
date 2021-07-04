@@ -97,7 +97,6 @@ export default {
                 this.timePeriod = projectDefault.timePeriod
                 this.description = projectDefault.description
             }
-            console.log(projectDefault)
         },
     },
     mounted() {

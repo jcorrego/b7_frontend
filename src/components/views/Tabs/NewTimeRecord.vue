@@ -217,6 +217,11 @@ export default {
         initProjectDefault() {
             this.hours = ''
             this.comments = ''
+            if (!this.project) {
+                this.focalPoint = people[0]
+                this.description = ''
+                return
+            }
             const projectDefault = this.projectDefaults.get(this.project.id)
             if (projectDefault) {
                 this.focalPoint = projectDefault.focalPoint

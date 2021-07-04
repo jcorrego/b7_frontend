@@ -78,7 +78,6 @@ const store = createStore({
             dispatch('search')
         },
         setPeriod({ dispatch, commit }, period) {
-            console.log('setting period', period)
             commit('setPeriod', period)
             dispatch('search')
         },
@@ -118,7 +117,6 @@ const store = createStore({
                 start.setHours(0, 0, 0, 0)
                 end.setHours(23, 59, 59, 999)
                 filtered = filtered.filter((f) => {
-                    console.log(f.date, start, end)
                     return f.date >= start && f.date <= end
                 })
             }
