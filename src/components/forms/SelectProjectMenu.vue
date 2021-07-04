@@ -1,6 +1,5 @@
 <template>
     <div class="flex items-center w-full">
-        <div class="mr-2 hidden sm:block text-primary">Select a project</div>
         <div class="flex-1">
             <Listbox
                 as="div"
@@ -145,16 +144,7 @@
                                                 />
                                             </span>
                                         </div>
-                                        <p
-                                            :class="[
-                                                active
-                                                    ? 'text-sky-200'
-                                                    : 'text-gray-500',
-                                                'mt-2',
-                                            ]"
-                                        >
-                                            {{ project.description }}
-                                        </p>
+
                                     </div>
                                 </li>
                             </ListboxOption>

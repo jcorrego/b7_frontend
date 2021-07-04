@@ -127,7 +127,7 @@
 </template>
 
 <script>
-import people from '../../../store/people' //TODO: fetch from API
+import people from '../../store/people' //TODO: fetch from API
 import {
     Listbox,
     ListboxButton,
@@ -138,6 +138,9 @@ import {
 import { CheckIcon, SelectorIcon } from '@heroicons/vue/solid'
 
 export default {
+    props: ['modelValue'],
+    emits: ['update:modelValue'],
+
     components: {
         Listbox,
         ListboxButton,
@@ -147,20 +150,23 @@ export default {
         CheckIcon,
         SelectorIcon,
     },
-    props: { initial: { default: null }, onUpdate: { required: true } },
     data() {
         return {
             people,
-            selectedFocalPoint: null,
+            selectedFocalPoint: people[0],
         }
     },
     watch: {
         selectedFocalPoint(value) {
-            this.onUpdate(value)
+            this.$emit('update:modelValue', value)
+        },
+        modelValue(value) {
+            if (value !== this.selectedFocalPoint)
+                this.selectedFocalPoint = value
         },
     },
     mounted() {
-        if (this.initial) this.selectedFocalPoint = this.initial
+        if (this.modelValue) this.selectedFocalPoint = this.modelValue
     },
 }
 </script>
