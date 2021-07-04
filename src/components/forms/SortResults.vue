@@ -108,7 +108,6 @@
 </template>
 
 <script>
-import { ref, watch } from 'vue'
 import {
     Listbox,
     ListboxButton,

@@ -1,83 +1,132 @@
 <template>
-    <label for="view" class="block text-sm font-medium text-gray-700">
-        Default Time Period View
-    </label>
-    <RadioGroup v-model="selected">
-        <RadioGroupLabel class="sr-only"> Privacy setting </RadioGroupLabel>
-        <div class="bg-white rounded-md -space-y-px">
-            <RadioGroupOption
-                as="template"
-                v-for="(setting, settingIdx) in timeViews"
-                :key="setting.name"
-                :value="setting"
-                v-slot="{ checked, active }"
+    <Listbox as="div" v-model="selected">
+        <ListboxLabel class="block text-sm font-medium text-gray-700">
+            Time Period View
+        </ListboxLabel>
+        <div class="mt-1 relative">
+            <ListboxButton
+                class="
+                    relative
+                    w-full
+                    bg-white
+                    border border-gray-300
+                    rounded-md
+                    shadow-sm
+                    pl-3
+                    pr-10
+                    py-2
+                    text-left
+                    cursor-default
+                    focus:outline-none
+                    focus:ring-1
+                    focus:ring-teal-500
+                    focus:border-teal-500
+                    sm:text-sm
+                "
             >
-                <div
-                    :class="[
-                        settingIdx === 0 ? 'rounded-tl-md rounded-tr-md' : '',
-                        settingIdx === timeViews.length - 1
-                            ? 'rounded-bl-md rounded-br-md'
-                            : '',
-                        checked
-                            ? 'bg-teal-50 border-teal-200'
-                            : 'border-gray-200',
-                        'relative border p-4 flex cursor-pointer focus:outline-none',
-                    ]"
+                <span class="block truncate">{{ selected.name }}</span>
+                <span
+                    class="
+                        absolute
+                        inset-y-0
+                        right-0
+                        flex
+                        items-center
+                        pr-2
+                        pointer-events-none
+                    "
                 >
-                    <span
-                        :class="[
-                            checked
-                                ? 'bg-teal-600 border-transparent'
-                                : 'bg-white border-gray-300',
-                            active ? 'ring-2 ring-offset-2 ring-teal-500' : '',
-                            'h-4 w-4 mt-0.5 cursor-pointer rounded-full border flex items-center justify-center',
-                        ]"
+                    <SelectorIcon
+                        class="h-5 w-5 text-gray-400"
                         aria-hidden="true"
+                    />
+                </span>
+            </ListboxButton>
+
+            <transition
+                leave-active-class="transition ease-in duration-100"
+                leave-from-class="opacity-100"
+                leave-to-class="opacity-0"
+            >
+                <ListboxOptions
+                    class="
+                        absolute
+                        z-10
+                        mt-1
+                        w-full
+                        bg-white
+                        shadow-lg
+                        max-h-60
+                        rounded-md
+                        py-1
+                        text-base
+                        ring-1 ring-black ring-opacity-5
+                        overflow-auto
+                        focus:outline-none
+                        sm:text-sm
+                    "
+                >
+                    <ListboxOption
+                        as="template"
+                        v-for="option in timeViews"
+                        :key="option.id"
+                        :value="option"
+                        v-slot="{ active, selected }"
                     >
-                        <span class="rounded-full bg-white w-1.5 h-1.5" />
-                    </span>
-                    <div class="ml-3 flex flex-col">
-                        <RadioGroupLabel
-                            as="span"
+                        <li
                             :class="[
-                                checked ? 'text-teal-900' : 'text-gray-900',
-                                'block text-sm font-medium',
+                                active
+                                    ? 'text-white bg-teal-600'
+                                    : 'text-gray-900',
+                                'cursor-default select-none relative py-2 pl-8 pr-4',
                             ]"
                         >
-                            {{ setting.name }}
-                        </RadioGroupLabel>
-                        <RadioGroupDescription
-                            as="span"
-                            :class="[
-                                checked ? 'text-teal-700' : 'text-gray-500',
-                                'block text-sm',
-                            ]"
-                        >
-                            {{ setting.description }}
-                        </RadioGroupDescription>
-                    </div>
-                </div>
-            </RadioGroupOption>
+                            <span
+                                :class="[
+                                    selected ? 'font-semibold' : 'font-normal',
+                                    'block truncate',
+                                ]"
+                            >
+                                {{ option.name }}
+                            </span>
+
+                            <span
+                                v-if="selected"
+                                :class="[
+                                    active ? 'text-white' : 'text-teal-600',
+                                    'absolute inset-y-0 left-0 flex items-center pl-1.5',
+                                ]"
+                            >
+                                <CheckIcon class="h-5 w-5" aria-hidden="true" />
+                            </span>
+                        </li>
+                    </ListboxOption>
+                </ListboxOptions>
+            </transition>
         </div>
-    </RadioGroup>
+    </Listbox>
 </template>
 
 <script>
-import { ref } from 'vue'
 import {
-    RadioGroup,
-    RadioGroupDescription,
-    RadioGroupLabel,
-    RadioGroupOption,
+    Listbox,
+    ListboxButton,
+    ListboxLabel,
+    ListboxOption,
+    ListboxOptions,
 } from '@headlessui/vue'
+import { CheckIcon, SelectorIcon } from '@heroicons/vue/solid'
 import { timeViews } from '../../constants/timeViews'
 
 export default {
     components: {
-        RadioGroup,
-        RadioGroupDescription,
-        RadioGroupLabel,
-        RadioGroupOption,
+        Listbox,
+        ListboxButton,
+        ListboxLabel,
+        ListboxOption,
+        ListboxOptions,
+        CheckIcon,
+        SelectorIcon,
     },
     props: ['modelValue'],
     emits: ['update:modelValue'],
