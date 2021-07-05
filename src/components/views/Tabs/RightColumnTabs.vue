@@ -88,8 +88,8 @@ export default {
     },
     watch: {
         editing(value) {
-            if (value) this.tabs[0].name = 'Edit Time Record'
-            else this.tabs[0].name = 'New Time Record'
+            if (value) this.tabs[0].name = 'Edit Record'
+            else this.tabs[0].name = 'New Record'
         },
     },
     methods: {
