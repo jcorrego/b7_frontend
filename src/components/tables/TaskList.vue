@@ -8,7 +8,18 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-sky-50">
                         <tr>
-                            <th></th>
+                            <th class="pl-4">
+                                <div class="flex items-center h-5">
+                                    <input
+                                        v-model="selectAll"
+                                        @change="toggleSelectAll"
+                                        id="select-all"
+                                        name="select-all"
+                                        type="checkbox"
+                                        class="focus:ring-teal-500 h-4 w-4 text-teal-600 border-gray-300 rounded"
+                                    />
+                                </div>
+                            </th>
                             <th
                                 scope="col"
                                 class="
@@ -438,6 +449,11 @@ export default {
         TimePeriodFilter,
     },
     props: ['onEditClick'],
+    data(){
+        return {
+            selectAll: false,
+        }
+    },
     computed: {
         ...mapState({ tasks: (state) => state.filteredRecords }),
         selected() {
@@ -446,6 +462,14 @@ export default {
     },
     methods: {
         getTaskCategoryByDescription,
+        toggleSelectAll(){
+            if(this.selectAll){
+                this.tasks.forEach((item) => item.selected = true)
+            } else {
+                this.tasks.forEach((item) => item.selected = false)
+            }
+
+        },
         ...mapActions(['removeRecord', 'search']),
     },
     mounted() {
