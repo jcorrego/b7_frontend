@@ -55,6 +55,15 @@
                                     <span>Hours</span>
                                 </el-tooltip>
                             </th>
+                            <th v-if="!selectedProject" class="
+                                    px-6
+                                    py-3
+                                    text-left text-xs
+                                    font-medium
+                                    text-gray-500
+                                    uppercase
+                                    tracking-wider
+                                ">Project</th>
                             <th
                                 scope="col"
                                 class="
@@ -160,6 +169,9 @@
                                     </el-tooltip>
                                     {{ task.hours }}
                                 </div>
+                            </td>
+                            <td v-if="!selectedProject" class="px-6 py-2 text-sm text-gray-900">
+                                {{ projects.filter((item)=>item.id ==task.project.id )[0].name }}
                             </td>
                             <td
                                 @click="task.selected = !task.selected"
@@ -455,7 +467,11 @@ export default {
         }
     },
     computed: {
-        ...mapState({ tasks: (state) => state.filteredRecords }),
+        ...mapState({
+             tasks: (state) => state.filteredRecords,
+             selectedProject: (state) => state.filters.project,
+             projects: (state) => state.projects,
+             }),
         selected() {
             return this.tasks.filter((item) => item.selected)
         },
