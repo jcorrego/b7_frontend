@@ -272,7 +272,6 @@ export default {
             this.overtimeReason = record.overtimeReason
             this.overtimeType = record.overtimeType
             this.repeat = 1
-            console.log('edit', this.taskDescription)
         },
         initProjectDefault() {
             this.id = null
