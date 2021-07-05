@@ -17,9 +17,9 @@ const store = createStore({
             loginUser: user,
             actAsPM: false,
             PMUser: {
-                name: 'Jean Paul Bressan',
-                email: 'jeanpaul.bressan@bairesdev.com',
-                avatar: 'https://ca.slack-edge.com/T9U2U104U-U01AB355TC3-1c0f853481eb-512'
+                name: 'Juliana Ponzio',
+                email: 'juliana.ponzio@bairesdev.com',
+                avatar: 'https://ca.slack-edge.com/T9U2U104U-U01CTG078RG-30f636af9db9-512'
             },
             projects,
             projectDefaults,
