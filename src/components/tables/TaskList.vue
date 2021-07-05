@@ -112,6 +112,7 @@
                         leave-active-class="transition ease-in duration-700"
                         leave-from-class="transform opacity-100 scale-100"
                         leave-to-class="transform opacity-0 scale-0"
+                        move-class="transition ease-out duration-500"
                     >
                         <tr
                             v-for="(task, index) in tasks"
