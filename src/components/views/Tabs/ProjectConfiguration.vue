@@ -12,31 +12,7 @@
         </div>
     </div>
     <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 rounded-b-lg">
-        <button
-            type="submit"
-            @click="save"
-            class="
-                inline-flex
-                justify-center
-                py-2
-                px-4
-                border border-transparent
-                shadow-sm
-                text-sm
-                font-medium
-                rounded-md
-                text-white
-                bg-teal-600
-                hover:bg-teal-700
-                focus:outline-none
-                focus:ring-2
-                focus:ring-offset-2
-                focus:ring-teal-500
-                disabled:opacity-50 disabled:cursor-not-allowed
-            "
-        >
-            Update config
-        </button>
+        <submit-button @click="save">Update config</submit-button>
     </div>
 </template>
 
@@ -45,6 +21,7 @@ import FocalPoint from '../../forms/FocalPoint.vue'
 import TaskDescription from '../../forms/TaskDescription.vue'
 import TimePeriod from '../../forms/TimePeriod.vue'
 import SortResults from '../../forms/SortResults.vue'
+import SubmitButton from '../../forms/SubmitButton.vue'
 import { mapState, mapActions } from 'vuex'
 import people from '../../../store/people'
 
@@ -54,6 +31,7 @@ export default {
         TaskDescription,
         TimePeriod,
         SortResults,
+        SubmitButton,
     },
     data() {
         return {
