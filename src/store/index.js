@@ -15,6 +15,12 @@ const store = createStore({
     state() {
         return {
             loginUser: user,
+            actAsPM: false,
+            PMUser: {
+                name: 'Juliana Ponzio',
+                email: 'juliana.ponzio@bairesdev.com',
+                avatar: 'https://ca.slack-edge.com/T9U2U104U-U01CTG078RG-30f636af9db9-512'
+            },
             projects,
             projectDefaults,
             descriptions,
@@ -161,6 +167,12 @@ const store = createStore({
             state.loginUser = us
             setStore('user', us)
         },
+        setPMInterface(state) {
+            state.actAsPM = true
+        },
+        removePMInterface(state) {
+            state.actAsPM = false
+        },
         removeLoginUser(state) {
             state.loginUser = null
             removeItem('user')
@@ -176,7 +188,7 @@ const store = createStore({
             state.filters.period = per
         },
         addRecord(state, record) {
-            state.records.push(record)
+            state.records.unshift(record)
         },
         editRecord(state, record) {
             const index = state.records.findIndex((r) => r.id === record.id)

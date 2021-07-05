@@ -295,11 +295,6 @@
                                                 <MenuItem v-slot="{ active }">
                                                     <a
                                                         href="#"
-                                                        @click="
-                                                            createRecord(
-                                                                task
-                                                            )
-                                                        "
                                                         :class="[
                                                             active
                                                                 ? 'bg-gray-100 text-gray-900'
@@ -395,7 +390,6 @@
                     </div>
                     <button
                         type="button"
-                        @click="deleteSelected(selected, selected.length)"
                         class="
                             mr-2
                             inline-flex
@@ -422,7 +416,6 @@
                     </button>
                     <button
                         type="button"
-                        @click="duplicate(selected, selected.length)"
                         class="
                             inline-flex
                             items-center
@@ -493,31 +486,15 @@ export default {
     },
     methods: {
         getTaskCategoryByDescription,
-        ...mapActions(['createRecord', 'removeRecord', 'search']),
-        duplicate(selected, length) {
-            for (let i = 0; i < length; i++) {
-                this.createRecord({
-                    date: selected[i].date,
-                    hours: selected[i].hours,
-                    focalPoint: selected[i].focalPoint,
-                    comments: selected[i].comments,
-                    taskDescription: selected[i].taskDescription,
-                    repeat: 1,
-                })
-            }
-        },
-        deleteSelected(selected, length) {
-            for (let i = 0; i < length; i++) {
-                this.removeRecord(selected[i].id)
-            }
-        },
         toggleSelectAll(){
             if(this.selectAll){
                 this.tasks.forEach((item) => item.selected = true)
             } else {
                 this.tasks.forEach((item) => item.selected = false)
             }
+
         },
+        ...mapActions(['removeRecord', 'search']),
     },
     mounted() {
         this.search()
