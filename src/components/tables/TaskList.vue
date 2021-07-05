@@ -8,7 +8,18 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-sky-50">
                         <tr>
-                            <th></th>
+                            <th class="pl-4">
+                                <div class="flex items-center h-5">
+                                    <input
+                                        v-model="selectAll"
+                                        @change="toggleSelectAll"
+                                        id="select-all"
+                                        name="select-all"
+                                        type="checkbox"
+                                        class="focus:ring-teal-500 h-4 w-4 text-teal-600 border-gray-300 rounded"
+                                    />
+                                </div>
+                            </th>
                             <th
                                 scope="col"
                                 class="
@@ -44,6 +55,15 @@
                                     <span>Hours</span>
                                 </el-tooltip>
                             </th>
+                            <th v-if="!selectedProject" class="
+                                    px-6
+                                    py-3
+                                    text-left text-xs
+                                    font-medium
+                                    text-gray-500
+                                    uppercase
+                                    tracking-wider
+                                ">Project</th>
                             <th
                                 scope="col"
                                 class="
@@ -150,6 +170,9 @@
                                     {{ task.hours }}
                                 </div>
                             </td>
+                            <td v-if="!selectedProject" class="px-6 py-2 text-sm text-gray-900">
+                                {{ projects.filter((item)=>item.id ==task.project.id )[0].name }}
+                            </td>
                             <td
                                 @click="task.selected = !task.selected"
                                 class="px-6 py-2 whitespace-nowrap"
@@ -238,6 +261,9 @@
                                                 <MenuItem v-slot="{ active }">
                                                     <a
                                                         href="#"
+                                                        @click="
+                                                            onEditClick(task)
+                                                        "
                                                         :class="[
                                                             active
                                                                 ? 'bg-gray-100 text-gray-900'
@@ -441,8 +467,18 @@ export default {
         PencilAltIcon,
         TimePeriodFilter,
     },
+    props: ['onEditClick'],
+    data(){
+        return {
+            selectAll: false,
+        }
+    },
     computed: {
-        ...mapState({ tasks: (state) => state.filteredRecords }),
+        ...mapState({
+             tasks: (state) => state.filteredRecords,
+             selectedProject: (state) => state.filters.project,
+             projects: (state) => state.projects,
+             }),
         selected() {
             return this.tasks.filter((item) => item.selected)
         },
@@ -466,7 +502,14 @@ export default {
             for (let i = 0; i < length; i++) {
                 this.removeRecord(selected[i].id)
             }
-        }
+        },
+        toggleSelectAll(){
+            if(this.selectAll){
+                this.tasks.forEach((item) => item.selected = true)
+            } else {
+                this.tasks.forEach((item) => item.selected = false)
+            }
+        },
     },
     mounted() {
         this.search()

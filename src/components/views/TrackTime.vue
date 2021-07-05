@@ -1,10 +1,11 @@
 <template>
-  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 gap-4 items-start lg:grid-cols-3 lg:gap-8">
-      <!-- Left column -->
-      <div class="grid grid-cols-1 gap-4 lg:col-span-2">
-        <div class="bg-white border shadow rounded-lg">
-          <dl class="
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 gap-4 items-start lg:grid-cols-3 lg:gap-8">
+            <!-- Left column -->
+            <div class="grid grid-cols-1 gap-4 lg:col-span-2">
+                <div class="bg-white border shadow rounded-lg">
+                    <dl
+                        class="
                             grid grid-cols-1
                             rounded-lg
                             bg-white
@@ -12,51 +13,61 @@
                             shadow
                             divide-y divide-gray-200
                             md:grid-cols-4 md:divide-y-0 md:divide-x
-                        ">
-            <div
-              v-for="item in stats"
-              :key="item.name"
-              class="px-4 py-5 sm:p-4"
-            >
-              <dt class="text-base font-normal text-gray-900">
-                {{ item.name }}
-              </dt>
-              <dd class="
+                        "
+                    >
+                        <div
+                            v-for="item in stats"
+                            :key="item.name"
+                            class="px-4 py-5 sm:p-4"
+                        >
+                            <dt class="text-base font-normal text-gray-900">
+                                {{ item.name }}
+                            </dt>
+                            <dd
+                                class="
                                     mt-1
                                     flex
                                     justify-between
                                     items-baseline
                                     md:block
                                     lg:flex
-                                ">
-                <div :class="[
+                                "
+                            >
+                                <div
+                                    :class="[
                                         item[period] === '0:00'
                                             ? 'text-gray-300'
                                             : item.name === 'Hours Overtime'
                                             ? 'text-yellow-600'
                                             : 'text-teal-600',
                                         'flex items-baseline text-2xl font-semibold',
-                                    ]">
-                  {{ item[period] }}
+                                    ]"
+                                >
+                                    {{ item[period] }}
+                                </div>
+                            </dd>
+                        </div>
+                    </dl>
                 </div>
-              </dd>
+                <task-list :onEditClick="edit"></task-list>
             </div>
-          </dl>
-        </div>
-        <task-list></task-list>
-      </div>
 
-      <!-- Right column -->
-      <div class="grid grid-cols-1 gap-4 sticky top-0">
-        <select-project-menu></select-project-menu>
-        <right-column-tabs v-if="selectedProject"></right-column-tabs>
-        <hour-stats v-if="!selectedProject"></hour-stats>
-      </div>
+            <!-- Right column -->
+            <div class="grid grid-cols-1 gap-4 sticky top-0">
+                <select-project-menu></select-project-menu>
+                <right-column-tabs
+                    v-if="selectedProject"
+                    v-model:editing="editing"
+                    @record:saved="handleRecordSaved"
+                ></right-column-tabs>
+                <hour-stats v-if="!selectedProject"></hour-stats>
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
+import { ref } from 'vue'
 import { mapState } from 'vuex'
 
 import HourStats from '../stats/HourStats.vue'
@@ -115,7 +126,20 @@ export default {
         }),
     },
     setup() {
+        const editing = ref(null)
+        const edit = (record) => {
+            editing.value = record
+        }
+
+        const handleRecordSaved = () => {
+            console.log('handleRecordSaved')
+            editing.value = null
+        }
+
         return {
+            editing,
+            edit,
+            handleRecordSaved,
             stats,
         }
     },
