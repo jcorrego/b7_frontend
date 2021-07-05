@@ -105,10 +105,17 @@
                             />
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
+                    <transition-group tag="tbody" class="bg-white divide-y divide-gray-200"
+                        enter-active-class="transition ease-out duration-700"
+                        enter-from-class="transform opacity-0 scale-0"
+                        enter-to-class="transform opacity-100 scale-100"
+                        leave-active-class="transition ease-in duration-700"
+                        leave-from-class="transform opacity-100 scale-100"
+                        leave-to-class="transform opacity-0 scale-0"
+                    >
                         <tr
                             v-for="(task, index) in tasks"
-                            :key="index"
+                            :key="task.id"
                             :class="[
                                 task.selected ? 'bg-teal-50' : '',
                                 'cursor-pointer hover:bg-gray-50',
@@ -340,7 +347,7 @@
                                 </Menu>
                             </td>
                         </tr>
-                    </tbody>
+                    </transition-group>
                     <tfoot class="bg-gray-50">
                         <tr>
                             <td

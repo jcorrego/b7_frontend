@@ -176,7 +176,7 @@ const store = createStore({
             state.filters.period = per
         },
         addRecord(state, record) {
-            state.records.push(record)
+            state.records.unshift(record)
         },
         editRecord(state, record) {
             const index = state.records.findIndex((r) => r.id === record.id)
