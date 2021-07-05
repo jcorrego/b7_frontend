@@ -53,7 +53,9 @@
                 </div>
 
                 <div class="sm:col-span-2">
-                    <task-description v-model="description"></task-description>
+                    <task-description
+                        v-model.sync="description"
+                    ></task-description>
                 </div>
 
                 <div class="sm:col-span-2">
@@ -79,7 +81,7 @@
                     <focal-point v-model="focalPoint"></focal-point>
                 </div>
 
-                <div class="sm:col-span-2">
+                <div class="sm:col-span-2" v-if="!editing">
                     <label
                         for="comments"
                         class="block text-sm font-medium text-gray-700"
@@ -102,6 +104,33 @@
         </div>
     </div>
     <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 rounded-b-lg">
+        <button
+            type="button"
+            v-if="editing"
+            @click="cancelEditing"
+            class="
+                inline-flex
+                justify-center
+                py-2
+                px-4
+                border border-transparent
+                shadow-sm
+                text-sm
+                font-medium
+                rounded-md
+                text-white
+                bg-gray-600
+                hover:bg-gray-700
+                focus:outline-none
+                focus:ring-2
+                focus:ring-offset-2
+                focus:ring-gray-500
+                disabled:opacity-50 disabled:cursor-not-allowed
+                mr-2
+            "
+        >
+            Cancel
+        </button>
         <button
             :disabled="!date || !taskDescription || !hours || !comments"
             type="submit"
@@ -144,6 +173,8 @@ export default {
         TaskDescription,
     },
     directives: { maska },
+    props: ['editing'],
+    emits: ['record:saved'],
     data() {
         return {
             disabledDate(time) {
@@ -171,12 +202,16 @@ export default {
                     })(),
                 },
             ],
+            id: null,
             date: new Date(),
             hours: '',
             focalPoint: people[0],
             comments: '',
             description: '',
             taskDescription: '',
+            overtime: false,
+            overtimeReason: '',
+            overtimeType: '',
             repeat: 1,
         }
     },
@@ -187,7 +222,12 @@ export default {
         }),
     },
     watch: {
+        editing(value) {
+            if (!value) return
+            if (value) this.edit(value)
+        },
         description(value) {
+            if (!value || !(typeof value === 'object')) return
             const [_, description] = value
             this.taskDescription = description
         },
@@ -196,9 +236,10 @@ export default {
         },
     },
     methods: {
-        ...mapActions(['createRecord']),
+        ...mapActions(['saveRecord']),
         save() {
-            this.createRecord({
+            this.saveRecord({
+                id: this.id,
                 date: this.date,
                 hours: this.hours,
                 focalPoint: this.focalPoint,
@@ -207,6 +248,11 @@ export default {
                 repeat: this.repeat,
             })
             this.initProjectDefault()
+            this.$emit('record:saved')
+        },
+        cancelEditing() {
+            this.initProjectDefault()
+            this.$emit('record:saved')
         },
         fixHours() {
             let tokens = this.hours.split(':')
@@ -214,9 +260,28 @@ export default {
             else if (tokens[1].length == 1) tokens[1] = '0' + tokens[1]
             this.hours = tokens.join(':')
         },
+        edit(record) {
+            this.id = record.id
+            this.date = record.date
+            this.hours = record.hours
+            this.comments = record.comments
+            this.focalPoint = record.focalPoint
+            this.taskDescription = record.taskDescription
+            this.description = record.taskDescription
+            this.overtime = record.overtime
+            this.overtimeReason = record.overtimeReason
+            this.overtimeType = record.overtimeType
+            this.repeat = 1
+            console.log('edit', this.taskDescription)
+        },
         initProjectDefault() {
+            this.id = null
+            this.date = new Date()
             this.hours = ''
             this.comments = ''
+            this.overtime = false
+            this.overtimeReason = ''
+            this.overtimeType = ''
             if (!this.project) {
                 this.focalPoint = people[0]
                 this.description = ''

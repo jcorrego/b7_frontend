@@ -34,8 +34,9 @@ const store = createStore({
         }
     },
     actions: {
-        createRecord({ dispatch, commit, state }, newRecord) {
+        saveRecord({ dispatch, commit, state }, newRecord) {
             const {
+                id = null,
                 date,
                 hours,
                 focalPoint,
@@ -47,9 +48,10 @@ const store = createStore({
                 comments,
                 repeat = 1,
             } = newRecord
+
             for (let i = 0; i < repeat; i++) {
                 const record = {
-                    id: uuid.v4(),
+                    id: id || uuid.v4(),
                     date,
                     hours,
                     project: state.filters.project,
@@ -62,7 +64,10 @@ const store = createStore({
                     comments,
                     selected: false,
                 }
-                commit('addRecord', record)
+                if (id) {
+                    commit('editRecord', record)
+                    break
+                } else commit('addRecord', record)
             }
             dispatch('search')
         },
@@ -172,6 +177,10 @@ const store = createStore({
         },
         addRecord(state, record) {
             state.records.push(record)
+        },
+        editRecord(state, record) {
+            const index = state.records.findIndex((r) => r.id === record.id)
+            if (~index) state.records[index] = record
         },
         removeRecord(state, recordId) {
             const index = state.records.findIndex((r) => r.id === recordId)
