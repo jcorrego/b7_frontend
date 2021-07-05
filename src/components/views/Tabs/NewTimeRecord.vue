@@ -86,7 +86,7 @@
                         for="comments"
                         class="block text-sm font-medium text-gray-700"
                     >
-                        Repeat record
+                        Repeat this record? <span class="text-xs opacity-50"> How many times...</span>
                     </label>
                     <div class="mt-1">
                         <el-input
