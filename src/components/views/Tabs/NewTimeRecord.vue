@@ -104,59 +104,8 @@
         </div>
     </div>
     <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 rounded-b-lg">
-        <button
-            type="button"
-            v-if="editing"
-            @click="cancelEditing"
-            class="
-                inline-flex
-                justify-center
-                py-2
-                px-4
-                border border-transparent
-                shadow-sm
-                text-sm
-                font-medium
-                rounded-md
-                text-white
-                bg-gray-600
-                hover:bg-gray-700
-                focus:outline-none
-                focus:ring-2
-                focus:ring-offset-2
-                focus:ring-gray-500
-                disabled:opacity-50 disabled:cursor-not-allowed
-                mr-2
-            "
-        >
-            Cancel
-        </button>
-        <button
-            :disabled="!date || !taskDescription || !hours || !comments"
-            type="submit"
-            @click="save"
-            class="
-                inline-flex
-                justify-center
-                py-2
-                px-4
-                border border-transparent
-                shadow-sm
-                text-sm
-                font-medium
-                rounded-md
-                text-white
-                bg-teal-600
-                hover:bg-teal-700
-                focus:outline-none
-                focus:ring-2
-                focus:ring-offset-2
-                focus:ring-teal-500
-                disabled:opacity-50 disabled:cursor-not-allowed
-            "
-        >
-            Save record
-        </button>
+        <cancel-button v-if="editing" @click="cancelEditing" >Cancel</cancel-button>
+        <submit-button @click="save" :disabled="!date || !taskDescription || !hours || !comments">Save record</submit-button>
     </div>
 </template>
 
@@ -164,6 +113,8 @@
 import FocalPoint from '../../forms/FocalPoint.vue'
 import TaskDescription from '../../forms/TaskDescription.vue'
 import people from '../../../store/people'
+import SubmitButton from '../../forms/SubmitButton.vue'
+import CancelButton from '../../forms/CancelButton.vue'
 import { maska } from 'maska'
 import { mapState, mapActions } from 'vuex'
 
@@ -171,6 +122,8 @@ export default {
     components: {
         FocalPoint,
         TaskDescription,
+        SubmitButton,
+        CancelButton,
     },
     directives: { maska },
     props: ['editing'],
