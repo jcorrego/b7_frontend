@@ -15,6 +15,12 @@ const store = createStore({
     state() {
         return {
             loginUser: user,
+            actAsPM: false,
+            PMUser: {
+                name: 'Jean Paul Bressan',
+                email: 'jeanpaul.bressan@bairesdev.com',
+                avatar: 'https://ca.slack-edge.com/T9U2U104U-U01AB355TC3-1c0f853481eb-512'
+            },
             projects,
             projectDefaults,
             descriptions,
@@ -34,8 +40,9 @@ const store = createStore({
         }
     },
     actions: {
-        createRecord({ dispatch, commit, state }, newRecord) {
+        saveRecord({ dispatch, commit, state }, newRecord) {
             const {
+                id = null,
                 date,
                 hours,
                 focalPoint,
@@ -47,9 +54,10 @@ const store = createStore({
                 comments,
                 repeat = 1,
             } = newRecord
+
             for (let i = 0; i < repeat; i++) {
                 const record = {
-                    id: uuid.v4(),
+                    id: id || uuid.v4(),
                     date,
                     hours,
                     project: state.filters.project,
@@ -62,7 +70,10 @@ const store = createStore({
                     comments,
                     selected: false,
                 }
-                commit('addRecord', record)
+                if (id) {
+                    commit('editRecord', record)
+                    break
+                } else commit('addRecord', record)
             }
             dispatch('search')
         },
@@ -78,7 +89,6 @@ const store = createStore({
             dispatch('search')
         },
         setPeriod({ dispatch, commit }, period) {
-            console.log('setting period', period)
             commit('setPeriod', period)
             dispatch('search')
         },
@@ -118,7 +128,6 @@ const store = createStore({
                 start.setHours(0, 0, 0, 0)
                 end.setHours(23, 59, 59, 999)
                 filtered = filtered.filter((f) => {
-                    console.log(f.date, start, end)
                     return f.date >= start && f.date <= end
                 })
             }
@@ -158,6 +167,12 @@ const store = createStore({
             state.loginUser = us
             setStore('user', us)
         },
+        setPMInterface(state) {
+            state.actAsPM = true
+        },
+        removePMInterface(state) {
+            state.actAsPM = false
+        },
         removeLoginUser(state) {
             state.loginUser = null
             removeItem('user')
@@ -173,7 +188,11 @@ const store = createStore({
             state.filters.period = per
         },
         addRecord(state, record) {
-            state.records.push(record)
+            state.records.unshift(record)
+        },
+        editRecord(state, record) {
+            const index = state.records.findIndex((r) => r.id === record.id)
+            if (~index) state.records[index] = record
         },
         removeRecord(state, recordId) {
             const index = state.records.findIndex((r) => r.id === recordId)

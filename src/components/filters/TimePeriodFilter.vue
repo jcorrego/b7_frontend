@@ -106,7 +106,7 @@ export default {
                 return time.getTime() > Date.now()
             },
             week: '',
-            month: '',
+            month: new Date(),
             day: '',
             range: '',
             shortcuts: [
