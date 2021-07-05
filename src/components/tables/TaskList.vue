@@ -238,6 +238,9 @@
                                                 <MenuItem v-slot="{ active }">
                                                     <a
                                                         href="#"
+                                                        @click="
+                                                            onEditClick(task)
+                                                        "
                                                         :class="[
                                                             active
                                                                 ? 'bg-gray-100 text-gray-900'
@@ -434,6 +437,7 @@ export default {
         PencilAltIcon,
         TimePeriodFilter,
     },
+    props: ['onEditClick'],
     computed: {
         ...mapState({ tasks: (state) => state.filteredRecords }),
         selected() {
