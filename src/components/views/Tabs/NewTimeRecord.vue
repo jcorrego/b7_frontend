@@ -103,7 +103,7 @@
             </div>
         </div>
     </div>
-    <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 rounded-b-lg">
+    <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 rounded-b-lg overflow-hidden">
         <cancel-button v-if="editing" @click="cancelEditing" >Cancel</cancel-button>
         <submit-button @click="save" :disabled="!date || !taskDescription || !hours || !comments">Save record</submit-button>
     </div>

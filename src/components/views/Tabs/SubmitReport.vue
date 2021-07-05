@@ -8,6 +8,7 @@
             rounded-lg
             grid grid-cols-1
             gap-y-6 gap-x-4
+            overflow-hidden
         "
     >
         ok

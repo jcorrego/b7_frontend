@@ -15,6 +15,12 @@ const store = createStore({
     state() {
         return {
             loginUser: user,
+            actAsPM: false,
+            PMUser: {
+                name: 'Jean Paul Bressan',
+                email: 'jeanpaul.bressan@bairesdev.com',
+                avatar: 'https://ca.slack-edge.com/T9U2U104U-U01AB355TC3-1c0f853481eb-512'
+            },
             projects,
             projectDefaults,
             descriptions,
@@ -160,6 +166,12 @@ const store = createStore({
         setLoginUser(state, us) {
             state.loginUser = us
             setStore('user', us)
+        },
+        setPMInterface(state) {
+            state.actAsPM = true
+        },
+        removePMInterface(state) {
+            state.actAsPM = false
         },
         removeLoginUser(state) {
             state.loginUser = null
