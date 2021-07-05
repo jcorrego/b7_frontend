@@ -3,11 +3,10 @@
         <div class="flex-1">
             <Listbox
                 as="div"
-                :modelValue="selectedProject"
-                @update:modelValue="setProject($event)"
+                :modelValue="user"
             >
                 <ListboxLabel class="sr-only">
-                    Change selected project
+                    Change selected user
                 </ListboxLabel>
                 <div class="relative">
                     <div
@@ -48,7 +47,7 @@
                             >
                                 <CheckIcon class="h-5 w-5" aria-hidden="true" />
                                 <p class="ml-2.5 text-sm font-medium">
-                                    {{ selectedProject.name }}
+                                    {{ user.name }}
                                 </p>
                             </div>
                             <ListboxButton
@@ -72,7 +71,7 @@
                                 "
                             >
                                 <span class="sr-only"
-                                    >Change selected project</span
+                                    >Change selected user</span
                                 >
                                 <ChevronDownIcon
                                     class="h-5 w-5 text-white"
@@ -106,9 +105,8 @@
                         >
                             <ListboxOption
                                 as="template"
-                                v-for="project in projects"
-                                :key="project.id"
-                                :value="project"
+                                :key="1"
+                                :value="user"
                                 v-slot="{ active, selected }"
                             >
                                 <li
@@ -128,7 +126,7 @@
                                                         : 'font-normal'
                                                 "
                                             >
-                                                {{ project.name }}
+                                                {{ user.name }}
                                             </p>
                                             <span
                                                 v-if="selected"
@@ -168,12 +166,6 @@ import {
 } from '@headlessui/vue'
 import { CheckIcon, ChevronDownIcon } from '@heroicons/vue/solid'
 
-const all = {
-    id: 0,
-    name: 'All Projects',
-    description:
-        'This option allows you to work and visualize all your assigned projects.',
-}
 export default {
     components: {
         Listbox,
@@ -186,15 +178,8 @@ export default {
     },
     computed: {
         ...mapState({
-            selectedProject: (state) => state.filters.project || all,
-            projects: (state) => {
-                if(!state.actAsPM) return [all, ...state.projects]
-                else return state.projects
-                },
+            user: (state) => state.loginUser.user,
         }),
-    },
-    methods: {
-        ...mapActions(['setProject']),
     },
 }
 </script>

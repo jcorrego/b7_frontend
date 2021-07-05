@@ -2,7 +2,8 @@
   <div class="min-h-screen bg-gray-100">
     <navigation v-if="this.$store.state.loginUser"></navigation>
     <main :class="[!this.$store.state.loginUser?'':'-mt-20',' pb-8']">
-      <router-view/>
+      <pm-screen v-if="actAsPM"></pm-screen>
+      <router-view v-else />
     </main>
     <footer v-if="this.$store.state.loginUser">
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 lg:max-w-7xl">
@@ -15,9 +16,16 @@
 
 <script>
 import Navigation from './components/navigation/Navigation.vue';
+import PmScreen from './components/views/PmScreen.vue';
+import { mapState } from 'vuex'
 
 export default {
   name: 'app',
-  components: { Navigation },
+  components: { Navigation,PmScreen },
+  computed: {
+        ...mapState({
+            actAsPM: (state) => state.actAsPM,
+        }),
+    },
 };
 </script>
