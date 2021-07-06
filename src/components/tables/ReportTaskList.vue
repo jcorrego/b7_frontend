@@ -14,6 +14,15 @@
           <div class="ml-4 mt-4 flex-shrink-0 items-center">
             <submit-button @click="approveReport" v-if="report.status == 'submitted'"><i class="far fa-check mr-2"></i>Approve</submit-button>
             <submit-button @click="rejectReport" v-if="report.status == 'submitted'" type="danger"><i class="far fa-times mr-2"></i> Reject</submit-button>
+            <span v-if="report.status=='approved'" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                Approved
+            </span>
+            <span v-if="report.status=='rejected'" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                Rejected
+            </span>
+            <span v-if="report.status=='working'" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-sky-100 text-sky-800">
+                Working on
+            </span>
           </div>
         </div>
       </div>
@@ -183,7 +192,11 @@ export default {
     methods: {
         getTaskCategoryByDescription,
         approveReport(){
-          
+          console.log('approve')
+          this.$store.commit('setReportStatus', {report: this.report, status: 'approved'})
+        },
+        rejectReport(){
+          this.$store.commit('setReportStatus', {report: this.report, status: 'rejected'})
         }
     },
 }

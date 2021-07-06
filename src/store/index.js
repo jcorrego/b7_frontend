@@ -165,6 +165,12 @@ const store = createStore({
         setTaskDescriptionFilter(state, taskDescription) {
             state.filters.taskDescription = taskDescription
         },
+        setReportStatus(state, payload) {
+            state.reports.forEach((item)=>{
+                if(item.date == payload.report.data && item.project == payload.report.project)
+                    item.status = payload.status
+            })
+        },
         setLoginUser(state, us) {
             state.loginUser = us
             setStore('user', us)
