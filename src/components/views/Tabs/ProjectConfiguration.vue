@@ -14,7 +14,7 @@
     <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 rounded-b-lg">
         <submit-button @click="save">Update config</submit-button>
     </div>
-</template>
+</template> 
 
 <script>
 import FocalPoint from '../../forms/FocalPoint.vue'

@@ -4,7 +4,7 @@
       <!-- Left column -->
       <div class="grid grid-cols-1 gap-4 lg:col-span-2">
         <div class="rounded-lg shadow bg-white px-4 py-5 grid grid-cols-1 gap-4 min-h-screen">
-            <report-task-list v-if="report"></report-task-list>
+            <report-task-list v-if="report" :report="report"></report-task-list>
             <span v-else class="text-gray-500"> Please select a user report from the available options to see the details.</span>
         </div>
       </div>
@@ -33,7 +33,7 @@ export default {
     },
     methods:{
         selectReport(item){
-            console.log(item)
+            this.report = item
         }
     }
 }
