@@ -202,6 +202,11 @@ export default {
             })
             this.initProjectDefault()
             this.$emit('record:saved')
+            this.$notify({
+                title: 'Succesfully saved!',
+                message: 'The record has been added/updated in time tracker',
+                type: 'success'
+              });
         },
         cancelEditing() {
             this.initProjectDefault()
