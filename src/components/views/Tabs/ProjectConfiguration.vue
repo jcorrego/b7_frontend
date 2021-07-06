@@ -64,6 +64,11 @@ export default {
                 timePeriod: this.timePeriod,
             }
             this.setProjectDefault(project)
+            this.$notify({
+                title: 'Succesfully saved!',
+                message: 'Project preferences has been updated',
+                type: 'success'
+              });
         },
         initProjectDefault() {
             const projectDefault = this.projectDefaults.get(

@@ -57,8 +57,8 @@ export default {
         }
 
         const handleRecordSaved = () => {
-            console.log('handleRecordSaved')
             editing.value = null
+
         }
 
         return {

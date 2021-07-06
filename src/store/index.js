@@ -4,6 +4,7 @@ import projects from './projects' //TODO: fetch from API
 import people from './people' //TODO: fetch from API
 import descriptions from './descriptions' //TODO: fetch from API
 import tasks from './tasks' //TODO: fetch from API
+import reports from './reports'
 import projectDefaults from './projectDefaults' //TODO: fetch from API
 import * as uuid from 'uuid'
 const today = new Date()
@@ -22,6 +23,7 @@ const store = createStore({
                 avatar: 'https://ca.slack-edge.com/T9U2U104U-U01CTG078RG-30f636af9db9-512'
             },
             projects,
+            reports,
             projectDefaults,
             descriptions,
             records: tasks.map((t) => ({ ...t, selected: false })),
@@ -162,6 +164,12 @@ const store = createStore({
         },
         setTaskDescriptionFilter(state, taskDescription) {
             state.filters.taskDescription = taskDescription
+        },
+        setReportStatus(state, payload) {
+            state.reports.forEach((item)=>{
+                if(item.date == payload.report.data && item.project == payload.report.project)
+                    item.status = payload.status
+            })
         },
         setLoginUser(state, us) {
             state.loginUser = us
