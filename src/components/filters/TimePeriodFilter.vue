@@ -146,7 +146,8 @@ export default {
         },
         week(value) {
             const dt = new Date(value)
-            this.setPeriod([dt, new Date(dt.getDate() + 7)])
+            let ndt = new Date(value)
+            this.setPeriod([dt, new Date(ndt.setDate(ndt.getDate() + 7))])
         },
         month(value) {
             const dt = new Date(value)
