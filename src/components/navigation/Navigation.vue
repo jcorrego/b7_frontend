@@ -108,7 +108,7 @@
           </PopoverButton>
         </div>
       </div>
-      <div class="hidden lg:block border-t border-white border-opacity-20 py-5">
+      <div class="hidden lg:block py-3">
 
       </div>
     </div>
