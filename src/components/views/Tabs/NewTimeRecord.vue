@@ -1,18 +1,42 @@
 <template>
-    <div>
-        <div class="px-4 py-5">
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <label
-                        for="date"
-                        class="block text-sm font-medium text-gray-700"
-                    >
-                        Date
-                    </label>
-                    <div class="mt-1">
-                        <el-date-picker
-                            name="date"
-                            class="
+  <div>
+    <div class="px-4 py-5">
+      <div class="grid grid-cols-2 gap-4">
+        <div
+          v-if="date.toLocaleDateString() == '7/5/2021'"
+          class="sm:col-span-2 p-2"
+        >
+
+          <div class="rounded-md bg-green-50 p-4">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <i class="fad fa-lights-holiday"></i>
+              </div>
+              <div class="ml-3">
+                <h3 class="text-sm font-medium text-green-800">
+                  Colombia's Holiday
+                </h3>
+                <div class="mt-2 text-sm text-green-700">
+                  <p>
+                    Feast of Saints Peter and Paul
+                  </p>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <label
+            for="date"
+            class="block text-sm font-medium text-gray-700"
+          >
+            Date
+          </label>
+          <div class="mt-1">
+            <el-date-picker
+              name="date"
+              class="
                                 shadow-sm
                                 focus:ring-sky-500 focus:border-sky-500
                                 block
@@ -21,79 +45,78 @@
                                 border-gray-300
                                 rounded-md
                             "
-                            v-model="date"
-                            type="date"
-                            placeholder="Pick a day"
-                            :disabled-date="disabledDate"
-                            :shortcuts="shortcuts"
-                        >
-                        </el-date-picker>
-                    </div>
-                </div>
+              v-model="date"
+              type="date"
+              placeholder="Pick a day"
+              :disabled-date="disabledDate"
+              :shortcuts="shortcuts"
+            >
+            </el-date-picker>
+          </div>
+        </div>
 
-                <div class="sm:col-span-1">
-                    <label
-                        for="hours"
-                        class="block text-sm font-medium text-gray-700"
-                        >Worked Hours</label
-                    >
-                    <div class="mt-1">
-                        <input
-                            v-model="hours"
-                            @blur="fixHours"
-                            v-maska="'#:##'"
-                            type="text"
-                            name="hours"
-                            id="hours"
-                            placeholder="0:00"
-                            class="text-right pr-4"
-                            style="height: 40px"
-                        />
-                    </div>
-                </div>
+        <div class="sm:col-span-1">
+          <label
+            for="hours"
+            class="block text-sm font-medium text-gray-700"
+          >Worked Hours</label>
+          <div class="mt-1">
+            <input
+              v-model="hours"
+              @blur="fixHours"
+              v-maska="'#:##'"
+              type="text"
+              name="hours"
+              id="hours"
+              placeholder="0:00"
+              class="text-right pr-4"
+              style="height: 40px"
+            />
+          </div>
+        </div>
 
-                <div class="sm:col-span-2">
-                    <task-description
-                        v-model.sync="description"
-                    ></task-description>
-                </div>
+        <div class="sm:col-span-2">
+          <task-description v-model.sync="description"></task-description>
+        </div>
 
-                <div class="sm:col-span-2">
-                    <label
-                        for="comments"
-                        class="block text-sm font-medium text-gray-700"
-                    >
-                        Comments
-                    </label>
-                    <div class="mt-1">
-                        <el-input
-                            name="comments"
-                            id="comments"
-                            placeholder="Tickets IDs, links..."
-                            v-model="comments"
-                            clearable
-                        >
-                        </el-input>
-                    </div>
-                </div>
+        <div class="sm:col-span-2">
+          <label
+            for="comments"
+            class="block text-sm font-medium text-gray-700"
+          >
+            Comments
+          </label>
+          <div class="mt-1">
+            <el-input
+              name="comments"
+              id="comments"
+              placeholder="Tickets IDs, links..."
+              v-model="comments"
+              clearable
+            >
+            </el-input>
+          </div>
+        </div>
 
-                <div class="sm:col-span-1">
-                    <focal-point v-model="focalPoint"></focal-point>
-                </div>
+        <div class="sm:col-span-1">
+          <focal-point v-model="focalPoint"></focal-point>
+        </div>
 
-                <div v-if="!editing" class="sm:col-span-1">
-                    <label
-                        for="price"
-                        class="block text-sm font-medium text-gray-700"
-                        >Repeat this record</label
-                    >
-                    <div class="mt-1 relative rounded-md shadow-sm">
-                        <input
-                            v-model="repeat"
-                            type="number"
-                            name="repeat"
-                            id="repeat"
-                            class="
+        <div
+          v-if="!editing"
+          class="sm:col-span-1"
+        >
+          <label
+            for="price"
+            class="block text-sm font-medium text-gray-700"
+          >Repeat this record</label>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <input
+              v-model="repeat"
+              type="number"
+              name="repeat"
+              id="repeat"
+              class="
                                 focus:ring-teal-500 focus:border-teal-500
                                 block
                                 w-full
@@ -103,10 +126,9 @@
                                 border-gray-300
                                 rounded-md
                             "
-                            placeholder="1"
-                        />
-                        <div
-                            class="
+              placeholder="1"
+            />
+            <div class="
                                 absolute
                                 inset-y-0
                                 right-0
@@ -114,22 +136,20 @@
                                 flex
                                 items-center
                                 pointer-events-none
-                            "
-                        >
-                            <span
-                                class="text-gray-500 sm:text-sm"
-                                id="price-currency"
-                            >
-                                times
-                            </span>
-                        </div>
-                    </div>
-                </div>
+                            ">
+              <span
+                class="text-gray-500 sm:text-sm"
+                id="price-currency"
+              >
+                times
+              </span>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-    <div
-        class="
+  </div>
+  <div class="
             px-4
             py-3
             bg-gray-50
@@ -137,23 +157,22 @@
             sm:px-6
             rounded-b-lg
             overflow-hidden
-        "
-    >
-        <cancel-button v-if="editing" @click="cancelEditing"
-            >Cancel</cancel-button
-        >
-        <submit-button
-            @click="save"
-            :disabled="!date || !taskDescription || !hours || !comments"
-            >Save</submit-button
-        >
-    </div>
-    <overtime-modal
-        v-model:isOpen="isOTModalOpen"
-        v-model:overtimeType="overtimeType"
-        v-model:overtimeReason="overtimeReason"
-        :onConfirm="save"
-    ></overtime-modal>
+        ">
+    <cancel-button
+      v-if="editing"
+      @click="cancelEditing"
+    >Cancel</cancel-button>
+    <submit-button
+      @click="save"
+      :disabled="!date || !taskDescription || !hours || !comments"
+    >Save</submit-button>
+  </div>
+  <overtime-modal
+    v-model:isOpen="isOTModalOpen"
+    v-model:overtimeType="overtimeType"
+    v-model:overtimeReason="overtimeReason"
+    :onConfirm="save"
+  ></overtime-modal>
 </template>
 
 <script>
@@ -285,7 +304,8 @@ export default {
                 return
             }
             this.isOTModalOpen = false
-
+            let holiday = false
+            // if(this.date.toLocaleDateString() == '7/5/2021') holiday = true
             if (this.overtime) {
                 const hours = parseInt(validation.amount / 60)
                 const minutes = validation.amount % 60
@@ -300,8 +320,8 @@ export default {
                     overtimeType: this.overtimeType,
                     overtimeReason: this.overtimeReason,
                     repeat: 1,
+                    holiday: holiday
                 })
-
                 const regular =
                     hourStringToMinutes(this.hours) - validation.amount
                 const regularHours = parseInt(regular / 60)
@@ -316,6 +336,7 @@ export default {
                     comments: this.comments,
                     taskDescription: this.taskDescription,
                     repeat: this.repeat,
+                    holiday: holiday
                 })
             } else {
                 this.saveRecord({
@@ -326,6 +347,7 @@ export default {
                     comments: this.comments,
                     taskDescription: this.taskDescription,
                     repeat: this.repeat,
+                    holiday: holiday
                 })
             }
             this.initProjectDefault()

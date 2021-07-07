@@ -188,15 +188,14 @@
                             >
                                 <div class="text-primary text-sm font-bold">
                                     <el-tooltip
-                                        v-if="task.overtime"
+                                        v-if="task.overtime || task.holiday"
                                         class="item"
                                         effect="dark"
                                         content="Overtime"
                                         placement="top"
                                     >
-                                        <span class="text-yellow-600 mr-2"
-                                            >OT</span
-                                        >
+                                        <span v-if="task.holiday" class="text-yellow-600 mr-2">OT:H</span>
+                                        <span v-else class="text-yellow-600 mr-2">OT</span>
                                     </el-tooltip>
                                     {{ task.hours }}
                                 </div>
