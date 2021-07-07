@@ -328,7 +328,8 @@ export default {
                     holiday: holiday,
                 })
                 const regular =
-                    hourStringToMinutes(this.hours) - validation.amount
+                    hourStringToMinutes(this.hours) * this.repeat -
+                    validation.amount / this.repeat
                 const regularHours = parseInt(regular / 60)
                 const regularMinutes = regular % 60
                 this.saveRecord({
