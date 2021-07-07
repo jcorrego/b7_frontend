@@ -1,6 +1,6 @@
 <template>
     <div class="rounded-lg shadow">
-        <div class="bg-white rounded-lg">
+        <div class="bg-white dark:bg-gray-200 rounded-lg">
             <div>
                 <div class="sm:hidden">
                     <label for="tabs" class="sr-only">Select a tab</label>

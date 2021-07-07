@@ -1,7 +1,7 @@
 <template>
   <Popover
     as="header"
-    class="pb-16 bg-primary"
+    class="pb-16 bg-primary dark:bg-sky-900"
     v-slot="{ open }"
   >
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -71,6 +71,20 @@
                     href="#"
                     :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
                   >Act as a regular user</a>
+                </MenuItem>
+                <MenuItem v-if="!darkMode" v-slot="{ active }">
+                <a
+                    @click.prevent="activateDarkMode"
+                    href="#"
+                    :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
+                  >Dark Mode</a>
+                </MenuItem>
+                <MenuItem v-else v-slot="{ active }">
+                <a
+                    @click.prevent="deactivateDarkMode"
+                    href="#"
+                    :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
+                  >Light Mode</a>
                 </MenuItem>
                 <MenuItem v-slot="{ active }">
                 <a
@@ -240,7 +254,7 @@ import {
     TransitionRoot,
 } from '@headlessui/vue'
 import { MenuIcon, XIcon } from '@heroicons/vue/outline'
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 
 export default {
@@ -261,12 +275,20 @@ export default {
     computed: {
         ...mapState({
             actAsPM: (state) => state.actAsPM,
+            darkMode: (state) => state.darkMode,
         }),
     },
     methods: {
+      ...mapActions(['setDarkMode']),
         logout() {
             this.$store.commit('removeLoginUser')
             this.$router.push('/login')
+        },
+        activateDarkMode(){
+          this.setDarkMode(true)
+        },
+        deactivateDarkMode(){
+          this.setDarkMode(false)
         },
         ...mapMutations(['setPMInterface', 'removePMInterface']),
     },

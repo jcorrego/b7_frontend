@@ -42,15 +42,7 @@ const store = createStore({
                 taskCategory: null,
                 taskDescription: null,
             },
-            confirmModal: {
-                isOpen: Boolean,
-                confirmMessage: {
-                    title: String,
-                    message: String,
-                    button: String,
-                }
-
-            }
+            darkMode: true,
         }
     },
     actions: {
@@ -97,6 +89,7 @@ const store = createStore({
         getHoursByDate({ state }, date) {
             return state.records
                 .map((r) =>
+                    r.project.id === state.filters.project.id &&
                     r.date.setHours(0, 0, 0, 0) == date.setHours(0, 0, 0, 0)
                         ? r.hours
                         : null
@@ -181,6 +174,9 @@ const store = createStore({
         addReport({ commit }, report) {
             commit('addReport', report)
         },
+        setDarkMode({ commit }, mode) {
+            commit('setDarkMode', mode)
+        },
     },
     mutations: {
         setFilteredRecords(state, filtered) {
@@ -259,6 +255,9 @@ const store = createStore({
         },
         setEditing(state, editing) {
             state.editing = editing
+        },
+        setDarkMode(state, mode) {
+            state.darkMode = mode
         },
     },
     modules: {

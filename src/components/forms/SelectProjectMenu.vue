@@ -36,7 +36,7 @@
                                     w-full
                                     inline-flex
                                     items-center
-                                    bg-sky-500
+                                    bg-sky-500 dark:bg-primary
                                     py-2
                                     pl-3
                                     pr-4
@@ -56,7 +56,7 @@
                                     relative
                                     inline-flex
                                     items-center
-                                    bg-sky-500
+                                    bg-sky-500 dark:bg-primary
                                     p-2
                                     rounded-l-none rounded-r-md
                                     text-sm

@@ -2,6 +2,26 @@
     <div>
         <div class="px-4 py-5">
             <div class="grid grid-cols-2 gap-4">
+                <div
+                    v-if="date.toLocaleDateString() == '7/5/2021'"
+                    class="sm:col-span-2 p-2"
+                >
+                    <div class="rounded-md bg-green-50 p-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <i class="fad fa-lights-holiday"></i>
+                            </div>
+                            <div class="ml-3">
+                                <h3 class="text-sm font-medium text-green-800">
+                                    Colombia's Holiday
+                                </h3>
+                                <div class="mt-2 text-sm text-green-700">
+                                    <p>Feast of Saints Peter and Paul</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div>
                     <label
                         for="date"
@@ -241,12 +261,12 @@ export default {
     },
     methods: {
         ...mapActions(['saveRecord', 'getHoursByDate']),
-        async exceededHours(date, amount) {
+        async exceededHours(date, amount, repeat = 1) {
             const dailyMinutes = this.project.expectedDailyMinutes
 
             const registeredHours = await this.getHoursByDate(date)
 
-            const addingMinutes = hourStringToMinutes(amount)
+            const addingMinutes = hourStringToMinutes(amount) * repeat
 
             let registeredMinutes = 0
             for (const hour of registeredHours) {
@@ -277,7 +297,11 @@ export default {
                 })
                 return
             }
-            const validation = await this.exceededHours(this.date, this.hours)
+            const validation = await this.exceededHours(
+                this.date,
+                this.hours,
+                this.repeat
+            )
 
             if (!this.overtime && validation.exceeded) {
                 this.isOTModalOpen = true
@@ -285,7 +309,8 @@ export default {
                 return
             }
             this.isOTModalOpen = false
-
+            let holiday = false
+            // if(this.date.toLocaleDateString() == '7/5/2021') holiday = true
             if (this.overtime) {
                 const hours = parseInt(validation.amount / 60)
                 const minutes = validation.amount % 60
@@ -300,10 +325,11 @@ export default {
                     overtimeType: this.overtimeType,
                     overtimeReason: this.overtimeReason,
                     repeat: 1,
+                    holiday: holiday,
                 })
-
                 const regular =
-                    hourStringToMinutes(this.hours) - validation.amount
+                    hourStringToMinutes(this.hours) * this.repeat -
+                    validation.amount / this.repeat
                 const regularHours = parseInt(regular / 60)
                 const regularMinutes = regular % 60
                 this.saveRecord({
@@ -316,6 +342,7 @@ export default {
                     comments: this.comments,
                     taskDescription: this.taskDescription,
                     repeat: this.repeat,
+                    holiday: holiday,
                 })
             } else {
                 this.saveRecord({
@@ -326,6 +353,7 @@ export default {
                     comments: this.comments,
                     taskDescription: this.taskDescription,
                     repeat: this.repeat,
+                    holiday: holiday,
                 })
             }
             this.initProjectDefault()
