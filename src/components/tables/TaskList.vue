@@ -93,6 +93,20 @@
                                 Comments
                             </th>
                             <th
+                                scope="col"
+                                class="
+                                    px-6
+                                    py-3
+                                    text-left text-xs
+                                    font-medium
+                                    text-gray-500
+                                    uppercase
+                                    tracking-wider
+                                "
+                            >
+                                Focal Point
+                            </th>
+                            <th
                                 class="
                                     pr-6
                                     py-3
@@ -212,6 +226,21 @@
                                 <div class="text-sm text-gray-500">
                                     {{ task.comments }}
                                 </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <a href="#" class="flex-shrink-0 group block">
+    <div class="flex items-center">
+      <div>
+        <img class="inline-block h-8 w-8 rounded-full" :src="task.focalPoint.avatar" :alt="task.focalPoint.name" />
+      </div>
+      <div class="ml-3">
+        <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900">
+          {{ task.focalPoint.name }}
+        </p>
+      </div>
+    </div>
+  </a>
+
                             </td>
                             <td class="pr-6">
                                 <Menu
