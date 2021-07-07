@@ -72,6 +72,11 @@ export default {
                 overtime: this.minutesToHours(overtimeMinutes),
                 tasks: this.tasks,
             })
+            this.$notify({
+                    title: 'Report submmited!',
+                    message: 'Your report is submitted',
+                    type: 'success',
+                })
         },
         taskTimesInMinutes() {
             let total_tasks = []
