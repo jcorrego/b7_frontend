@@ -12,7 +12,7 @@
         "
     >
 
-      <div class="text-center text-center text-md text-gray-500">
+      <div class="text-center text-md text-gray-500">
         Please preview your monthly report before submitting
       </div>
 
