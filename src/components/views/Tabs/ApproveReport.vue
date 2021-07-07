@@ -9,9 +9,6 @@
         <div class="text-sm text-gray-700 mb-4">Here are the available reports for the selected user. <br> Select one to view the details.</div>
 
         <RadioGroup v-model="selected">
-          <RadioGroupLabel class="sr-only">
-            Server size
-          </RadioGroupLabel>
           <div class="space-y-4">
             <RadioGroupOption
               as="template"
@@ -20,14 +17,14 @@
               :value="report"
               v-slot="{ active, checked }"
             >
-              <div :class="[active ? 'ring-1 ring-offset-2 ring-indigo-500' : '', 'relative block rounded-lg border border-gray-300 bg-white shadow-sm px-6 py-4 cursor-pointer hover:border-gray-400 sm:flex sm:justify-between focus:outline-none']">
+              <div :class="[active ? 'ring-1 ring-offset-2 ring-teal-500' : '', 'relative block rounded-lg border border-gray-300 bg-white shadow-sm px-6 py-4 cursor-pointer hover:border-gray-400 sm:flex sm:justify-between focus:outline-none']">
                 <div class="flex items-center">
                   <div class="text-sm">
                     <RadioGroupLabel
                       as="p"
                       class="font-medium text-gray-900"
                     >
-                      {{ report.project }}
+                      {{ projects.filter((item)=>report.project == item.id)[0].name }}
                     </RadioGroupLabel>
                     <RadioGroupDescription
                       as="div"
@@ -39,8 +36,11 @@
                       <span v-if="report.status=='rejected'" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
                         Rejected
                       </span>
-                      <span v-if="report.status=='pending'" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                        Pending
+                      <span v-if="report.status=='submitted'" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                        Submitted
+                      </span>
+                      <span v-if="report.status=='working'" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-sky-100 text-sky-800">
+                        Working on
                       </span>
                       {{ ' ' }}
                       <p class="sm:inline">{{ report.month }}</p>
@@ -51,11 +51,11 @@
                   as="div"
                   class="mt-2 flex text-sm sm:mt-0 sm:block sm:ml-4 sm:text-right"
                 >
-                  <div class="font-medium text-gray-900">{{ report.hours }}</div>
+                  <div class="font-medium text-gray-900">{{ report.hours }}h</div>
                   <div class="ml-1 text-gray-500 sm:ml-0" v-if="report.overtime">{{ report.overtime }} <span class="text-red-800">OT</span> </div>
                 </RadioGroupDescription>
                 <div
-                  :class="[checked ? 'border-indigo-500' : 'border-transparent', 'absolute -inset-px rounded-lg border-2 pointer-events-none']"
+                  :class="[checked ? 'border-teal-500' : 'border-transparent', 'absolute -inset-px rounded-lg border-2 pointer-events-none']"
                   aria-hidden="true"
                 />
               </div>
@@ -90,44 +90,13 @@ export default {
     },
     data() {
         return {
-            reports: [
-                {
-                    project: 'BairesDev New Time Tracker',
-                    status: 'pending',
-                    cpus: '4 CPUs',
-                    disk: '160 GB SSD disk',
-                    hours: '160h',
-                    overtime: '10h',
-                    month: '2021-06',
-                },
-                {
-                    project: 'Another Project to Change the World',
-                    status: 'pending',
-                    hours: '160h',
-                    overtime: '10h',
-                    month: '2021-06',
-                },
-                {
-                    project: 'BairesDev New Time Tracker',
-                    status: 'rejected',
-                    hours: '160h',
-                    overtime: '-2h',
-                    month: '2021-05',
-                },
-                {
-                    project: 'Another Project to Change the World',
-                    status: 'approved',
-                    hours: '160h',
-                    overtime: '1h',
-                    month: '2021-05',
-                },
-            ],
             selected: null,
         }
     },
     computed: {
         ...mapState({
             projects: (state) => state.projects,
+            reports: (state) => state.reports,
         }),
     },
     watch: {

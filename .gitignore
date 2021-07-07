@@ -4,3 +4,8 @@ dist
 dist-ssr
 *.local
 .env
+/.idea/.gitignore
+/.idea/b7_frontend.iml
+/.idea/modules.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/vcs.xml

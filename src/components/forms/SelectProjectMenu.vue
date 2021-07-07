@@ -47,7 +47,7 @@
                                 "
                             >
                                 <CheckIcon class="h-5 w-5" aria-hidden="true" />
-                                <p class="ml-2.5 text-sm font-medium">
+                                <p class="ml-2.5 text-md font-medium">
                                     {{ selectedProject.name }}
                                 </p>
                             </div>

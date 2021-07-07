@@ -362,7 +362,7 @@
                         <tr>
                             <td
                                 colspan="6"
-                                class="px-6 py-3 text-gray-500 text-sm"
+                                class="px-6 py-3 text-gray-500 rounded-b-lg  text-sm"
                             >
                                 <div class="flex items-center justify-between">
                                     <div>
