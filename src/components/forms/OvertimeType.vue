@@ -1,7 +1,7 @@
 <template>
     <Listbox as="div" v-model="selectedOption">
         <ListboxLabel class="block text-sm font-medium text-gray-700">
-            Time record type
+            Overtime Type
         </ListboxLabel>
         <div class="relative mt-1">
             <ListboxButton
@@ -131,17 +131,24 @@ export default {
         CheckIcon,
         SelectorIcon,
     },
-    props: ['initial', 'onUpdate'],
-    setup(props) {
+    props: ['overtimeType'],
+    emits: ['update:overtimeType'],
+    setup(props, { emit }) {
         const options = [
-            { name: 'All', value: null },
-            { name: 'Overtime', value: true },
-            { name: 'Regular Hour', value: false },
+            { name: 'Actual Overtime', value: 'actual' },
+            { name: 'To be Compensated', value: 'compensate' },
         ]
-        const selectedOption = ref(props.initial || options[0])
+        let otType = options[0]
+        if (props.overtimeType) {
+            otType = options.find((o) => o.value === props.overtimeType)
+        }
+        const selectedOption = ref(otType)
+        if (selectedOption.value.value !== props.overtimeType) {
+            emit('update:overtimeType', selectedOption.value.value)
+        }
 
-        watch(selectedOption, (value) => {
-            props.onUpdate(value)
+        watch(selectedOption, (option) => {
+            emit('update:overtimeType', option.value)
         })
 
         return {

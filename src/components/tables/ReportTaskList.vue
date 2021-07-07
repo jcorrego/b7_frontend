@@ -117,7 +117,7 @@
                                             font-medium
                                             text-gray-400
                                         ">
-                    {{ task.date }}
+                    {{ task.date.toLocaleDateString() }}
                   </div>
                 </div>
               </td>

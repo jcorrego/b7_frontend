@@ -29,7 +29,7 @@
                                         item[period] === '0:00'
                                             ? 'text-gray-300'
                                             : item.name === 'Hours Overtime'
-                                            ? 'text-yellow-600'
+                                            ? 'text-teal-600'
                                             : 'text-teal-600',
                                         'flex items-baseline text-2xl font-semibold',
                                     ]">
@@ -119,7 +119,7 @@ export default {
       },
       calculateStatistics () {
         const [total_tasks, overtime_tasks] = this.taskTimesInMinutes();
-        let expectedMinutes = this.getDaysInFilteredRange() * 8 * 60;
+        let expectedMinutes = this.getDaysInFilteredRange() * 4 * 60;
         let overtimeMinutes = 0;
         let totalMinutes = 0;
         try {
