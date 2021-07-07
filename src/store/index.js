@@ -21,7 +21,7 @@ const store = createStore({
             PMUser: {
                 name: 'Juliana Ponzio',
                 email: 'juliana.ponzio@bairesdev.com',
-                avatar: 'https://ca.slack-edge.com/T9U2U104U-U01CTG078RG-30f636af9db9-512'
+                avatar: 'https://ca.slack-edge.com/T9U2U104U-U01CTG078RG-30f636af9db9-512',
             },
             projects,
             reports,
@@ -113,8 +113,9 @@ const store = createStore({
         setOvertimeReasonFilter({ commit }, overtimeReason) {
             commit('setOvertimeReasonFilter', overtimeReason)
         },
-        setOvertimeFilter({ commit }, overtime) {
+        setOvertimeFilter({ dispatch, commit }, overtime) {
             commit('setOvertimeFilter', overtime)
+            dispatch('search')
         },
         setOvertimeTypeFilter({ commit }, overtimeType) {
             commit('setOvertimeTypeFilter', overtimeType)
@@ -122,8 +123,9 @@ const store = createStore({
         setTaskCategoryFilter({ commit }, taskCategory) {
             commit('setTaskCategoryFilter', taskCategory)
         },
-        setTaskDescriptionFilter({ commit }, taskDescription) {
+        setTaskDescriptionFilter({ dispatch, commit }, taskDescription) {
             commit('setTaskDescriptionFilter', taskDescription)
+            dispatch('search')
         },
         search({ commit, state }) {
             //TODO: fetch from API
@@ -144,8 +146,17 @@ const store = createStore({
                 })
             }
 
-            //TODO: mock focal point filter
-            //TODO: mock task description filter
+            if (filters.taskDescription) {
+                filtered = filtered.filter(
+                    (f) => f.taskDescription === filters.taskDescription
+                )
+            }
+
+            if (filters.overtime !== null) {
+                filtered = filtered.filter(
+                    (f) => f.overtime === filters.overtime
+                )
+            }
 
             commit('setFilteredRecords', filtered)
         },
@@ -190,8 +201,11 @@ const store = createStore({
             state.filters.taskDescription = taskDescription
         },
         setReportStatus(state, payload) {
-            state.reports.forEach((item)=>{
-                if(item.date == payload.report.data && item.project == payload.report.project)
+            state.reports.forEach((item) => {
+                if (
+                    item.date == payload.report.data &&
+                    item.project == payload.report.project
+                )
                     item.status = payload.status
             })
         },
