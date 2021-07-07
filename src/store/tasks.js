@@ -5,12 +5,12 @@ const today = new Date()
 const tasks = [
     {id: v4(), focalPoint: people[0], date: new Date(today.getFullYear(), today.getMonth(), 1), project:{id:1}, hours: '2:30', taskDescription: 'Features development',  	comments: 'TKT #HJ-201',	overtime:	false},
     {id: v4(), focalPoint: people[0], date: new Date(today.getFullYear(), today.getMonth(), 1), project:{id:1}, hours: '1:15', taskDescription: 'Refactor',  	comments: 'TKT #HJ-203',	overtime:	false},
-    {id: v4(), focalPoint: people[0], date: new Date(today.getFullYear(), today.getMonth(), 1), project:{id:1}, hours: '0:15', taskDescription: 'Daily Meeting', 	comments: '',	overtime:	false},
+    {id: v4(), focalPoint: people[1], date: new Date(today.getFullYear(), today.getMonth(), 1), project:{id:1}, hours: '0:15', taskDescription: 'Daily Meeting', 	comments: '',	overtime:	false},
     {id: v4(), focalPoint: people[0], date: new Date(today.getFullYear(), today.getMonth(), 1), project:{id:2}, hours: '2:45', taskDescription: 'Features development',  	comments: 'TKT #1129',	overtime:	false},
     {id: v4(), focalPoint: people[0], date: new Date(today.getFullYear(), today.getMonth(), 1), project:{id:2}, hours: '1:15', taskDescription: 'Features development',  	comments: 'TKT #1716',	overtime:	false},
     {id: v4(), focalPoint: people[0], date: new Date(today.getFullYear(), today.getMonth(), 2), project:{id:1}, hours: '3:25', taskDescription: 'Features development',  	comments: 'TKT #HJ-114',	overtime:	false},
     {id: v4(), focalPoint: people[0], date: new Date(today.getFullYear(), today.getMonth(), 2), project:{id:1}, hours: '0:15', taskDescription: 'Daily Meeting', 	comments: '',	overtime:	false},
-    {id: v4(), focalPoint: people[0], date: new Date(today.getFullYear(), today.getMonth(), 2), project:{id:1}, hours: '0:20', taskDescription: 'Weekly Progress Report',   	comments: '',	overtime:	false},
+    {id: v4(), focalPoint: people[2], date: new Date(today.getFullYear(), today.getMonth(), 2), project:{id:1}, hours: '0:20', taskDescription: 'Weekly Progress Report',   	comments: '',	overtime:	false},
     {id: v4(), focalPoint: people[0], date: new Date(today.getFullYear(), today.getMonth(), 2), project:{id:2}, hours: '3:00', taskDescription: 'Features development',  	comments: 'TKT #1799',	overtime:	false},
     {id: v4(), focalPoint: people[0], date: new Date(today.getFullYear(), today.getMonth(), 5), project:{id:2}, hours: '0:45', taskDescription: 'Bug Fixing',	comments: 'TKT #B340',	overtime:	false},
     {id: v4(), focalPoint: people[0], date: new Date(today.getFullYear(), today.getMonth(), 2), project:{id:2}, hours: '1:00', taskDescription: 'Bug Fixing',	comments: 'TKT #B1800',	overtime:	false},
@@ -25,7 +25,7 @@ const tasks = [
     {id: v4(), focalPoint: people[0], date: new Date(today.getFullYear(), today.getMonth(), 6), project:{id:1}, hours: '1:00', taskDescription: 'Backlog refinement meeting',	comments: '',	overtime:	false},
     {id: v4(), focalPoint: people[0], date: new Date(today.getFullYear(), today.getMonth(), 6), project:{id:1}, hours: '1:00', taskDescription: 'Features development',  	comments: 'TKT #HJ-346',	overtime:	false},
     {id: v4(), focalPoint: people[0], date: new Date(today.getFullYear(), today.getMonth(), 6), project:{id:1}, hours: '1:00', taskDescription: 'Features development',  	comments: 'TKT #HJ-350',	overtime:	false},
-    {id: v4(), focalPoint: people[0], date: new Date(today.getFullYear(), today.getMonth(), 6), project:{id:1}, hours: '0:45', taskDescription: 'Test cases development',	comments: 'TKT #HJ-350A',	overtime:	false}
+    {id: v4(), focalPoint: people[8], date: new Date(today.getFullYear(), today.getMonth(), 6), project:{id:1}, hours: '0:45', taskDescription: 'Test cases development',	comments: 'TKT #HJ-350A',	overtime:	false}
     // {
     //     id: v4(),
     //     date: new Date(today.getFullYear(), today.getMonth(), 1),

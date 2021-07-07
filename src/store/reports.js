@@ -1,5 +1,5 @@
 import { v4 } from 'uuid'
-
+const today = new Date()
 const reports = [
     {
         month: '2021-06',
@@ -18,7 +18,7 @@ const reports = [
         tasks:[
             {
                 id: v4(),
-                date: '2021-06-15',
+                date: new Date(today.getFullYear(), today.getMonth()-1, 15),
                 project: {
                     id: 2,
                 },
@@ -29,7 +29,7 @@ const reports = [
             },
             {
                 id: v4(),
-                date: '2021-06-21',
+                date: new Date(today.getFullYear(), today.getMonth()-1, 11),
                 project: {
                     id: 2,
                 },
@@ -49,7 +49,7 @@ const reports = [
         tasks:[
             {
                 id: v4(),
-                date: '2021-05-01',
+                date: new Date(today.getFullYear(), today.getMonth()-2, 15),
                 project: {
                     id: 1,
                 },
@@ -69,7 +69,7 @@ const reports = [
         tasks:[
             {
                 id: v4(),
-                date: '2021-05-01',
+                date: new Date(today.getFullYear(), today.getMonth()-2, 15),
                 project: {
                     id: 2,
                 },

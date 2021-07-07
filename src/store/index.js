@@ -26,6 +26,7 @@ const store = createStore({
             projects,
             reports,
             projectDefaults,
+            editing: null,
             descriptions,
             records: tasks.map((t) => ({ ...t, selected: false })),
             filteredRecords: tasks.map((t) => ({ ...t, selected: false })),
@@ -89,6 +90,9 @@ const store = createStore({
                 } else commit('addRecord', record)
             }
             dispatch('search')
+        },
+        setEditing({ commit }, editing) {
+            commit('setEditing', editing)
         },
         getHoursByDate({ state }, date) {
             return state.records
@@ -174,23 +178,8 @@ const store = createStore({
 
             commit('setFilteredRecords', filtered)
         },
-        confirmModal({ commit, state }, confirmMessage, selection, length){
-            state.confirmModal.isOpen = true
-            state.confirmModal.confirmMessage = confirmMessage
-            commit('confirmModal', confirmMessage, selection, length)
-        },
-        closeConfirmModal({ commit, state }){
-            state.confirmModal.isOpen = false;
-            state.confirmModal.confirmMessage = {
-                title: '',
-                message: '',
-                button: '',
-            }
-            commit('closeConfirmModal')
-        },
-        addReport({commit}, report){
+        addReport({ commit }, report) {
             commit('addReport', report)
-
         },
     },
     mutations: {
@@ -227,7 +216,7 @@ const store = createStore({
                     item.status = payload.status
             })
         },
-        addReport(state, report){
+        addReport(state, report) {
             state.reports.unshift(report)
         },
         setLoginUser(state, us) {
@@ -268,9 +257,14 @@ const store = createStore({
             const index = state.records.findIndex((r) => r.id === recordId)
             if (~index) state.records.splice(index, 1)
         },
+<<<<<<< HEAD
         confirmModal(state, confirmModal, selection, length) {
             const index = state.records.findIndex((r) => r.id === recordId)
             if (~index) state.records.splice(index, 1)
+=======
+        setEditing(state, editing) {
+            state.editing = editing
+>>>>>>> bbc0ec3e451076eade759e1deac180b15536a802
         },
     },
     modules: {

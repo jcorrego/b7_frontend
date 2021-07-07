@@ -4,7 +4,6 @@
             <div class="shadow border-b border-gray-200 sm:rounded-lg bg-white">
                 <div class="p-4">
                     <time-period-filter ref="time-period-filter"></time-period-filter>
-                    <confirm-modal v-if="deleteconfirmation"></confirm-modal>
                 </div>
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-sky-50">
@@ -94,6 +93,20 @@
                                 Comments
                             </th>
                             <th
+                                scope="col"
+                                class="
+                                    px-6
+                                    py-3
+                                    text-left text-xs
+                                    font-medium
+                                    text-gray-500
+                                    uppercase
+                                    tracking-wider
+                                "
+                            >
+                                Focal Point
+                            </th>
+                            <th
                                 class="
                                     pr-6
                                     py-3
@@ -115,7 +128,16 @@
                         leave-to-class="transform opacity-0 scale-y-0"
                         move-class="transition ease-out duration-500"
                     >
-                        <tr
+                        <tr v-if="tasks.length == 0">
+                            <td colspan="7" class="px-4 py-5">
+                                <div class="text-center w-full text-gray-500 text-sm">
+                                    <img src="../../assets/empty.svg" alt="No records found" class="h-72 mx-auto opacity-50">
+                                    <span class="text-teal-500"> Sorry! No records where found.</span> <br> Try changing some filters.
+                                </div>
+
+                            </td>
+                        </tr>
+                        <tr v-else
                             v-for="(task, index) in tasks"
                             :key="task.id"
                             :class="[
@@ -204,6 +226,21 @@
                                 <div class="text-sm text-gray-500">
                                     {{ task.comments }}
                                 </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <a href="#" class="flex-shrink-0 group block">
+    <div class="flex items-center">
+      <div>
+        <img class="inline-block h-8 w-8 rounded-full" :src="task.focalPoint.avatar" :alt="task.focalPoint.name" />
+      </div>
+      <div class="ml-3">
+        <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900">
+          {{ task.focalPoint.name }}
+        </p>
+      </div>
+    </div>
+  </a>
+
                             </td>
                             <td class="pr-6">
                                 <Menu
@@ -296,11 +333,7 @@
                                                 <MenuItem v-slot="{ active }">
                                                     <a
                                                         href="#"
-                                                        @click="
-                                                            createRecord(
-                                                                task
-                                                            )
-                                                        "
+                                                        @click="showDuplicate(task)"
                                                         :class="[
                                                             active
                                                                 ? 'bg-gray-100 text-gray-900'
@@ -451,6 +484,11 @@
             </div>
         </div>
     </div>
+    <duplicate-modal
+        v-model:isOpen="isDuplicateModalOpen"
+        v-model:duplicateTo="duplicateTo"
+        :onConfirm="duplicate"
+    ></duplicate-modal>
 </template>
 
 <script>
@@ -465,6 +503,7 @@ import TimePeriodFilter from '../filters/TimePeriodFilter.vue'
 import ConfirmModal from '../modals/ConfirmModal.vue'
 import { mapState, mapActions } from 'vuex'
 import { getTaskCategoryByDescription } from '../../store/descriptions'
+import DuplicateModal from '../forms/modals/DuplicateModal.vue'
 
 export default {
     components: {
@@ -476,12 +515,15 @@ export default {
         DuplicateIcon,
         PencilAltIcon,
         TimePeriodFilter,
-        ConfirmModal,
+        DuplicateModal,
     },
     props: ['onEditClick'],
     data(){
         return {
             selectAll: false,
+            isDuplicateModalOpen: false,
+            duplicateTo: new Date(),
+            duplicateTask:null,
         }
     },
     computed: {
@@ -535,6 +577,26 @@ export default {
                 this.tasks.forEach((item) => item.selected = false)
             }
         },
+<<<<<<< HEAD
+=======
+        showDuplicate(task){
+            this.duplicateTask = task
+            this.isDuplicateModalOpen = true
+
+        },
+        duplicate(){
+            this.duplicateTask.date = this.duplicateTo,
+            this.duplicateTask.id = null,
+            this.saveRecord(this.duplicateTask)
+            this.isDuplicateModalOpen = false
+            this.$notify({
+                    title: 'Record saved!',
+                    message: 'Your record has been duplicated to the selected month',
+                    type: 'success',
+                })
+        },
+        ...mapActions(['saveRecord','removeRecord', 'search']),
+>>>>>>> bbc0ec3e451076eade759e1deac180b15536a802
     },
     mounted() {
         this.search()
