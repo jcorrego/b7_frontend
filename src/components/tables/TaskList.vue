@@ -548,9 +548,20 @@ export default {
 
         },
         duplicate(){
-            this.duplicateTask.date = this.duplicateTo,
-            this.duplicateTask.id = null,
-            this.saveRecord(this.duplicateTask)
+            let newRecord = {
+                id: null,
+                date: this.duplicateTo,
+                hours: this.duplicateTask.hours,
+                focalPoint: this.duplicateTask.focalPoint,
+                taskCategory: this.duplicateTask.taskCategory,
+                taskDescription: this.duplicateTask.taskDescription,
+                overtime: this.duplicateTask.overtime,
+                overtimeType: this.duplicateTask.overtimeType,
+                overtimeReason: this.duplicateTask.overtimeReason,
+                comments: this.duplicateTask.comments,
+                repeat: 1,
+            }
+            this.saveRecord(newRecord)
             this.isDuplicateModalOpen = false
             this.$notify({
                     title: 'Record saved!',
