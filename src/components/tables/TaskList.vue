@@ -4,6 +4,10 @@
             <div class="shadow border-b border-gray-200 sm:rounded-lg bg-white">
                 <div class="p-4">
                     <time-period-filter></time-period-filter>
+                    <confirm-modal
+                        v-show="isConfirmModalVisible"
+                        @close="closeConfirmModal"
+                    ></confirm-modal>
                 </div>
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-sky-50">
@@ -461,6 +465,7 @@ import {
 } from '@heroicons/vue/solid'
 
 import TimePeriodFilter from '../filters/TimePeriodFilter.vue'
+import { ConfirmModal } from '../modals/ConfirmModal.vue'
 import { mapState, mapActions } from 'vuex'
 import { getTaskCategoryByDescription } from '../../store/descriptions'
 
@@ -474,6 +479,7 @@ export default {
         DuplicateIcon,
         PencilAltIcon,
         TimePeriodFilter,
+        ConfirmModal,
     },
     props: ['onEditClick'],
     data(){
@@ -507,6 +513,20 @@ export default {
             }
         },
         deleteSelected(selected, length) {
+            /*let deleteConfirmation = {
+                title: 'Delete Item',
+                message: 'Are you sure You want to delete the selected item',
+                button: 'Delete',
+            }
+            if (length>1) {
+                deleteConfirmation = {
+                    title: 'Delete Items',
+                    message: 'Are you sure You want to delete the selected items',
+                    button: 'Delete',
+                }
+            }
+            
+            commit('confirmModal', deleteConfirmation, selected, length);*/
             for (let i = 0; i < length; i++) {
                 this.removeRecord(selected[i].id)
             }
