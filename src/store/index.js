@@ -87,6 +87,7 @@ const store = createStore({
         getHoursByDate({ state }, date) {
             return state.records
                 .map((r) =>
+                    r.project.id === state.filters.project.id &&
                     r.date.setHours(0, 0, 0, 0) == date.setHours(0, 0, 0, 0)
                         ? r.hours
                         : null
