@@ -7,6 +7,7 @@ import tasks from './tasks' //TODO: fetch from API
 import reports from './reports'
 import projectDefaults from './projectDefaults' //TODO: fetch from API
 import * as uuid from 'uuid'
+import { stringifyQuery } from 'vue-router'
 const today = new Date()
 const startMonth = new Date(today.getFullYear(), today.getMonth(), 1)
 const endMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0)

@@ -358,11 +358,7 @@
                                                 <MenuItem v-slot="{ active }">
                                                     <a
                                                         href="#"
-                                                        @click="
-                                                            removeRecord(
-                                                                task.id
-                                                            )
-                                                        "
+                                                        @click="showDeleteRecord([task])"
                                                         :class="[
                                                             active
                                                                 ? 'bg-gray-100 text-gray-900'
@@ -428,6 +424,7 @@
                     </div>
                     <button
                         type="button"
+                        @click="showDeleteRecord(selected)"
                         class="
                             mr-2
                             inline-flex
@@ -454,6 +451,7 @@
                     </button>
                     <button
                         type="button"
+                        @click="duplicate(selected, selected.length)"
                         class="
                             inline-flex
                             items-center
@@ -486,6 +484,11 @@
         v-model:duplicateTo="duplicateTo"
         :onConfirm="duplicate"
     ></duplicate-modal>
+    <confirm-modal
+        v-model:isOpen="isConfirmModalOpen"
+        v-model:removeRecord="removeRecords"
+        :onConfirm="deleteRecord"
+    ></confirm-modal>
 </template>
 
 <script>
@@ -499,6 +502,7 @@ import {
 import TimePeriodFilter from '../filters/TimePeriodFilter.vue'
 import { mapState, mapActions } from 'vuex'
 import { getTaskCategoryByDescription } from '../../store/descriptions'
+import ConfirmModal from '../forms/modals/ConfirmModal.vue'
 import DuplicateModal from '../forms/modals/DuplicateModal.vue'
 
 export default {
@@ -511,6 +515,7 @@ export default {
         DuplicateIcon,
         PencilAltIcon,
         TimePeriodFilter,
+        ConfirmModal,
         DuplicateModal,
     },
     props: ['onEditClick'],
@@ -518,8 +523,11 @@ export default {
         return {
             selectAll: false,
             isDuplicateModalOpen: false,
+            isConfirmModalOpen: false,
             duplicateTo: new Date(),
-            duplicateTask:null,
+            duplicateTask: null,
+            deleteTask: null,
+            removeRecords: null,
         }
     },
     computed: {
@@ -534,13 +542,28 @@ export default {
     },
     methods: {
         getTaskCategoryByDescription,
+        ...mapActions(['createRecord', 'removeRecord', 'search']),
+        showDeleteRecord(tasks){
+            this.deleteTask = tasks
+            this.isConfirmModalOpen = true
+        },
+        deleteRecord() {
+            for (let i = 0; i < this.deleteTask.length; i++) {
+                this.removeRecord(this.deleteTask[i].id)
+            }
+            this.isConfirmModalOpen = false
+            this.$notify({
+                    title: 'Records Deleted!',
+                    message: 'Your recordd has been deleted',
+                    type: 'success',
+                })
+        },
         toggleSelectAll(){
             if(this.selectAll){
                 this.tasks.forEach((item) => item.selected = true)
             } else {
                 this.tasks.forEach((item) => item.selected = false)
             }
-
         },
         showDuplicate(task){
             this.duplicateTask = task
