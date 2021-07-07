@@ -187,7 +187,7 @@ const store = createStore({
                 button: '',
             }
             commit('closeConfirmModal')
-        }
+        },
         addReport({commit}, report){
             commit('addReport', report)
 

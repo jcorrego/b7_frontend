@@ -4,6 +4,7 @@
             <div class="shadow border-b border-gray-200 sm:rounded-lg bg-white">
                 <div class="p-4">
                     <time-period-filter ref="time-period-filter"></time-period-filter>
+                    <confirm-modal v-if="deleteconfirmation"></confirm-modal>
                 </div>
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-sky-50">
