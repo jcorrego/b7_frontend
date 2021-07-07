@@ -3,7 +3,7 @@
         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
             <div class="shadow border-b border-gray-200 sm:rounded-lg bg-white">
                 <div class="p-4">
-                    <time-period-filter></time-period-filter>
+                    <time-period-filter ref="time-period-filter"></time-period-filter>
                 </div>
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-sky-50">

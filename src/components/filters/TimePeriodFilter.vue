@@ -3,7 +3,7 @@
         <div>
             <span class="relative inline-flex shadow-sm rounded-md">
                 <button
-                    @click="setPeriodType('daily')"
+                    @click="setType('daily')"
                     type="button"
                     :class="[
                         periodType == 'daily'
@@ -15,7 +15,7 @@
                     Daily
                 </button>
                 <button
-                    @click="setPeriodType('weekly')"
+                    @click="setType('weekly')"
                     type="button"
                     :class="[
                         periodType == 'weekly'
@@ -27,7 +27,7 @@
                     Weekly
                 </button>
                 <button
-                    @click="setPeriodType('monthly')"
+                    @click="setType('monthly')"
                     type="button"
                     :class="[
                         periodType == 'monthly'
@@ -40,7 +40,7 @@
                 </button>
 
                 <button
-                    @click="setPeriodType('range')"
+                    @click="setType('range')"
                     type="button"
                     :class="[
                         periodType == 'range'
@@ -102,7 +102,6 @@ import moment from 'moment';
 export default {
     data() {
         return {
-            periodType: 'monthly',
             disabledDate(time) {
                 return time.getTime() > Date.now()
             },
@@ -165,12 +164,13 @@ export default {
     computed: {
         ...mapState({
             period: (state) => state.period,
+            periodType: (state) => state.filters.periodType,
         }),
     },
     methods: {
-        ...mapActions(['setPeriod']),
-        setPeriodType(type) {
-            this.periodType = type
+        ...mapActions(['setPeriod', 'setPeriodType']),
+        setType(type) {
+            this.setPeriodType(type)
             const now = moment()
             switch (this.periodType) {
               case 'daily':

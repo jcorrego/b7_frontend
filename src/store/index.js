@@ -29,6 +29,7 @@ const store = createStore({
             records: tasks.map((t) => ({ ...t, selected: false })),
             filteredRecords: tasks.map((t) => ({ ...t, selected: false })),
             filters: {
+                periodType: 'monthly',
                 period: [startMonth, endMonth],
                 project: projects[0],
                 focalPoint: people[0],
@@ -103,6 +104,10 @@ const store = createStore({
             commit('setPeriod', period)
             dispatch('search')
         },
+        setPeriodType({ dispatch, commit }, type) {
+            commit('setPeriodType', type)
+            dispatch('search')
+        },
         setFocalPointFilter({ commit }, focalPoint) {
             commit('setFocalPointFilter', focalPoint)
         },
@@ -159,6 +164,10 @@ const store = createStore({
 
             commit('setFilteredRecords', filtered)
         },
+        addReport({commit}, report){
+            commit('addReport', report)
+
+        },
     },
     mutations: {
         setFilteredRecords(state, filtered) {
@@ -194,6 +203,9 @@ const store = createStore({
                     item.status = payload.status
             })
         },
+        addReport(state, report){
+            state.reports.unshift(report)
+        },
         setLoginUser(state, us) {
             state.loginUser = us
             setStore('user', us)
@@ -217,6 +229,9 @@ const store = createStore({
         },
         setPeriod(state, per) {
             state.filters.period = per
+        },
+        setPeriodType(state, typ) {
+            state.filters.periodType = typ
         },
         addRecord(state, record) {
             state.records.unshift(record)
