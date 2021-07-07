@@ -333,6 +333,7 @@
                                                 <MenuItem v-slot="{ active }">
                                                     <a
                                                         href="#"
+                                                        @click="showDuplicate(task)"
                                                         :class="[
                                                             active
                                                                 ? 'bg-gray-100 text-gray-900'
@@ -481,6 +482,11 @@
             </div>
         </div>
     </div>
+    <duplicate-modal
+        v-model:isOpen="isDuplicateModalOpen"
+        v-model:duplicateTo="duplicateTo"
+        :onConfirm="duplicate"
+    ></duplicate-modal>
 </template>
 
 <script>
@@ -494,6 +500,7 @@ import {
 import TimePeriodFilter from '../filters/TimePeriodFilter.vue'
 import { mapState, mapActions } from 'vuex'
 import { getTaskCategoryByDescription } from '../../store/descriptions'
+import DuplicateModal from '../forms/modals/DuplicateModal.vue'
 
 export default {
     components: {
@@ -505,11 +512,15 @@ export default {
         DuplicateIcon,
         PencilAltIcon,
         TimePeriodFilter,
+        DuplicateModal,
     },
     props: ['onEditClick'],
     data(){
         return {
             selectAll: false,
+            isDuplicateModalOpen: false,
+            duplicateTo: new Date(),
+            duplicateTask:null,
         }
     },
     computed: {
@@ -532,7 +543,23 @@ export default {
             }
 
         },
-        ...mapActions(['removeRecord', 'search']),
+        showDuplicate(task){
+            this.duplicateTask = task
+            this.isDuplicateModalOpen = true
+
+        },
+        duplicate(){
+            this.duplicateTask.date = this.duplicateTo,
+            this.duplicateTask.id = null,
+            this.saveRecord(this.duplicateTask)
+            this.isDuplicateModalOpen = false
+            this.$notify({
+                    title: 'Record saved!',
+                    message: 'Your record has been duplicated to the selected month',
+                    type: 'success',
+                })
+        },
+        ...mapActions(['saveRecord','removeRecord', 'search']),
     },
     mounted() {
         this.search()
