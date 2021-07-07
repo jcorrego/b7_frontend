@@ -97,6 +97,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import moment from 'moment';
 
 export default {
     data() {
@@ -147,7 +148,7 @@ export default {
         week(value) {
             const dt = new Date(value)
             let ndt = new Date(value)
-            this.setPeriod([dt, new Date(ndt.setDate(ndt.getDate() + 7))])
+            this.setPeriod([dt, new Date(ndt.setDate(ndt.getDate() + 6))])
         },
         month(value) {
             const dt = new Date(value)
@@ -170,6 +171,20 @@ export default {
         ...mapActions(['setPeriod']),
         setPeriodType(type) {
             this.periodType = type
+            const now = moment()
+            switch (this.periodType) {
+              case 'daily':
+                this.day = new Date()
+                break
+              case 'monthly':
+                this.month = new Date(now.clone().startOf("month"))
+                break
+              case 'weekly':
+                this.week = new Date(now.clone().startOf("week"))
+                break
+              case 'range':
+                this.range = [new Date(now.clone().startOf("month")), new Date(now)]
+            }
         },
     },
 }

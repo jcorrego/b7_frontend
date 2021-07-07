@@ -86,7 +86,10 @@
                         for="comments"
                         class="block text-sm font-medium text-gray-700"
                     >
-                        Repeat this record? <span class="text-xs opacity-50"> How many times...</span>
+                        Repeat this record?
+                        <span class="text-xs opacity-50">
+                            How many times...</span
+                        >
                     </label>
                     <div class="mt-1">
                         <el-input
@@ -103,13 +106,36 @@
             </div>
         </div>
     </div>
-    <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 rounded-b-lg overflow-hidden">
-        <cancel-button v-if="editing" @click="cancelEditing" >Cancel</cancel-button>
-        <submit-button @click="save" :disabled="!date || !taskDescription || !hours || !comments">Save record</submit-button>
+    <div
+        class="
+            px-4
+            py-3
+            bg-gray-50
+            text-right
+            sm:px-6
+            rounded-b-lg
+            overflow-hidden
+        "
+    >
+        <cancel-button v-if="editing" @click="cancelEditing"
+            >Cancel</cancel-button
+        >
+        <submit-button
+            @click="save"
+            :disabled="!date || !taskDescription || !hours || !comments"
+            >Save</submit-button
+        >
     </div>
+    <overtime-modal
+        v-model:isOpen="isOTModalOpen"
+        v-model:overtimeType="overtimeType"
+        v-model:overtimeReason="overtimeReason"
+        :onConfirm="save"
+    ></overtime-modal>
 </template>
 
 <script>
+import OvertimeModal from '../../forms/modals/OvertimeModal.vue'
 import FocalPoint from '../../forms/FocalPoint.vue'
 import TaskDescription from '../../forms/TaskDescription.vue'
 import people from '../../../store/people'
@@ -124,6 +150,7 @@ export default {
         TaskDescription,
         SubmitButton,
         CancelButton,
+        OvertimeModal,
     },
     directives: { maska },
     props: ['editing'],
@@ -166,6 +193,7 @@ export default {
             overtimeReason: '',
             overtimeType: '',
             repeat: 1,
+            isOTModalOpen: false,
         }
     },
     computed: {
@@ -189,24 +217,87 @@ export default {
         },
     },
     methods: {
-        ...mapActions(['saveRecord']),
-        save() {
-            this.saveRecord({
-                id: this.id,
-                date: this.date,
-                hours: this.hours,
-                focalPoint: this.focalPoint,
-                comments: this.comments,
-                taskDescription: this.taskDescription,
-                repeat: this.repeat,
-            })
+        ...mapActions(['saveRecord', 'getHoursByDate']),
+        async exceededHours(date, amount) {
+            const dailyMinutes = this.project.expectedDailyMinutes
+
+            const registeredHours = await this.getHoursByDate(date)
+
+            const [hours, minutes] = amount.split(':')
+            const addingMinutes = parseInt(hours) * 60 + parseInt(minutes)
+
+            let registeredMinutes = 0
+            for (const hour of registeredHours) {
+                const [h, m] = hour.split(':')
+                registeredMinutes += parseInt(h) * 60 + parseInt(m)
+            }
+            if (registeredMinutes + addingMinutes > dailyMinutes) {
+                return {
+                    exceeded: true,
+                    amount: registeredMinutes + addingMinutes - dailyMinutes,
+                }
+            }
+
+            return {
+                exceeded: false,
+                amount: 0,
+            }
+        },
+        async save() {
+            const validateOvertime =
+                this.isOTModalOpen &&
+                this.overtime &&
+                (!this.overtimeType || !this.overtimeReason)
+            if (validateOvertime) {
+                this.$notify({
+                    title: 'Required fields!',
+                    message: 'Overtime Type and Reason are required.',
+                    type: 'error',
+                })
+                return
+            }
+            const validation = await this.exceededHours(this.date, this.hours)
+
+            if (!this.overtime && validation.exceeded) {
+                this.isOTModalOpen = true
+                this.overtime = true
+                return
+            }
+            this.isOTModalOpen = false
+
+            if (this.overtime) {
+                const hours = parseInt(validation.amount / 60)
+                const minutes = validation.amount % 60
+                this.saveRecord({
+                    id: this.id,
+                    date: this.date,
+                    hours: `${hours}:${minutes.toString().padStart(2, '0')}`,
+                    focalPoint: this.focalPoint,
+                    comments: this.comments,
+                    taskDescription: this.taskDescription,
+                    overtime: this.overtime,
+                    overtimeType: this.overtimeType,
+                    overtimeReason: this.overtimeReason,
+                    repeat: 1,
+                })
+            } else {
+                this.saveRecord({
+                    id: this.id,
+                    date: this.date,
+                    hours: this.hours,
+                    focalPoint: this.focalPoint,
+                    comments: this.comments,
+                    taskDescription: this.taskDescription,
+                    repeat: this.repeat,
+                })
+            }
             this.initProjectDefault()
             this.$emit('record:saved')
             this.$notify({
                 title: 'Succesfully saved!',
                 message: 'The record has been added/updated in time tracker',
-                type: 'success'
-              });
+                type: 'success',
+            })
         },
         cancelEditing() {
             this.initProjectDefault()

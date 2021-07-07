@@ -2,7 +2,7 @@
     <div
         class="
             px-4
-            py-5
+            py-8
             border-b border-gray-200
             sm:px-6
             rounded-lg
@@ -10,42 +10,55 @@
             gap-y-6 gap-x-4
         "
     >
-        <focal-point-filter
-            :initial="focalPoint"
-            :onUpdate="setFocalPointFilter"
-        ></focal-point-filter>
+        <overtime
+            :initial="overtime"
+            :onUpdate="handleOvertimeChange"
+        ></overtime>
         <task-description-filter
-            :updateTaskCategory="setTaskCategoryFilter"
-            :updateTaskDescription="setTaskDescriptionFilter"
+            v-model="description"
         ></task-description-filter>
-    </div>
-    <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 rounded-b-lg">
-        <submit-button @click="search">Search</submit-button>
     </div>
 </template>
 
 <script>
-import FocalPointFilter from '../../forms/FocalPoint.vue'
-import SubmitButton from '../../forms/SubmitButton.vue'
+import Overtime from '../../forms/Overtime.vue'
 import TaskDescriptionFilter from '../../forms/TaskDescription.vue'
 import { mapActions, mapState } from 'vuex'
 export default {
     components: {
-        FocalPointFilter,
+        Overtime,
         TaskDescriptionFilter,
-        SubmitButton,
+    },
+    data() {
+        return {
+            description: '',
+        }
+    },
+    watch: {
+        description(value) {
+            if (!value || !(typeof value === 'object')) {
+                this.setTaskDescriptionFilter(null)
+                return
+            }
+            const [_, description] = value
+            this.setTaskDescriptionFilter(description)
+        },
     },
     computed: {
         ...mapState({
-            focalPoint: (state) => state.filters.focalPoint,
+            overtime: (state) => state.filters.overtime,
+            taskDescritpion: (state) => state.filters.taskDescritpion,
         }),
     },
     methods: {
         ...mapActions([
             'setFocalPointFilter',
-            'setTaskCategoryFilter',
+            'setOvertimeFilter',
             'setTaskDescriptionFilter',
         ]),
+        handleOvertimeChange(option) {
+            this.setOvertimeFilter(option.value)
+        },
     },
 }
 </script>

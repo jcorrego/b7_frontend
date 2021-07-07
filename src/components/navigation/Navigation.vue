@@ -32,7 +32,7 @@
             </div>
             <div v-else class="text-base font-medium truncate">
               {{ $store.state.loginUser.user.name }}
-              <span class="text-sm opacity-75 italic">ID 3325 (BP)</span>
+              <span class="text-sm opacity-75 italic">ID 3332 (BP)</span>
             </div>
             <div v-if="actAsPM" class="text-sm font-medium opacity-60 truncate">{{ $store.state.PMUser.email }}</div>
             <div v-else class="text-sm font-medium opacity-60 truncate">{{ $store.state.loginUser.user.email }}</div>
@@ -108,7 +108,7 @@
           </PopoverButton>
         </div>
       </div>
-      <div class="hidden lg:block border-t border-white border-opacity-20 py-5">
+      <div class="hidden lg:block py-3">
 
       </div>
     </div>

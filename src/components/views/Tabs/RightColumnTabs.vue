@@ -39,7 +39,7 @@
                                     tab.current
                                         ? 'border-teal-500 text-teal-600'
                                         : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
-                                    'w-1/3 py-4 px-1 text-center border-b-2 font-medium text-sm',
+                                    'w-1/3 py-4 px-1 text-center border-b-2 font-medium text-lg',
                                 ]"
               >
                 {{ tab.name }}
@@ -78,18 +78,18 @@ export default {
     data() {
         return {
             tabs: [
-                { name: 'New Record', href: 'new', current: true },
-                { name: 'Project Config', href: 'project', current: false },
+                { name: 'Track', href: 'new', current: true },
                 { name: 'Search', href: 'search', current: false },
                 { name: 'Report', href: 'report', current: false },
+                { name: 'Setup', href: 'project', current: false },
             ],
             selectedTab: 'new',
         }
     },
     watch: {
         editing(value) {
-            if (value) this.tabs[0].name = 'Edit Record'
-            else this.tabs[0].name = 'New Record'
+            if (value) this.tabs[0].name = 'Edit'
+            else this.tabs[0].name = 'Track'
         },
     },
     methods: {

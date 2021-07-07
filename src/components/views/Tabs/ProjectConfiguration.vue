@@ -12,7 +12,7 @@
         </div>
     </div>
     <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 rounded-b-lg">
-        <submit-button @click="save">Update config</submit-button>
+        <submit-button @click="save">Save</submit-button>
     </div>
 </template>
 
