@@ -114,7 +114,16 @@
                         leave-to-class="transform opacity-0 scale-y-0"
                         move-class="transition ease-out duration-500"
                     >
-                        <tr
+                        <tr v-if="tasks.length == 0">
+                            <td colspan="7" class="px-4 py-5">
+                                <div class="text-center w-full text-gray-500 text-sm">
+                                    <img src="../../assets/empty.svg" alt="No records found" class="h-72 mx-auto opacity-50">
+                                    <span class="text-teal-500"> Sorry! No records where found.</span> <br> Try changing some filters.
+                                </div>
+
+                            </td>
+                        </tr>
+                        <tr v-else
                             v-for="(task, index) in tasks"
                             :key="task.id"
                             :class="[
