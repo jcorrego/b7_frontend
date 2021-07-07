@@ -359,11 +359,7 @@
                                                 <MenuItem v-slot="{ active }">
                                                     <a
                                                         href="#"
-                                                        @click="
-                                                            removeRecord(
-                                                                task.id
-                                                            )
-                                                        "
+                                                        @click="showDeleteRecord([task])"
                                                         :class="[
                                                             active
                                                                 ? 'bg-gray-100 text-gray-900'
@@ -429,7 +425,7 @@
                     </div>
                     <button
                         type="button"
-                        @click="deleteSelected(selected, selected.length)"
+                        @click="showDeleteRecord(selected)"
                         class="
                             mr-2
                             inline-flex
@@ -489,6 +485,11 @@
         v-model:duplicateTo="duplicateTo"
         :onConfirm="duplicate"
     ></duplicate-modal>
+    <confirm-modal
+        v-model:isOpen="isConfirmModalOpen"
+        v-model:removeRecord="removeRecords"
+        :onConfirm="deleteRecord"
+    ></confirm-modal>
 </template>
 
 <script>
@@ -500,9 +501,9 @@ import {
 } from '@heroicons/vue/solid'
 
 import TimePeriodFilter from '../filters/TimePeriodFilter.vue'
-import ConfirmModal from '../modals/ConfirmModal.vue'
 import { mapState, mapActions } from 'vuex'
 import { getTaskCategoryByDescription } from '../../store/descriptions'
+import ConfirmModal from '../forms/modals/ConfirmModal.vue'
 import DuplicateModal from '../forms/modals/DuplicateModal.vue'
 
 export default {
@@ -515,6 +516,7 @@ export default {
         DuplicateIcon,
         PencilAltIcon,
         TimePeriodFilter,
+        ConfirmModal,
         DuplicateModal,
     },
     props: ['onEditClick'],
@@ -522,8 +524,11 @@ export default {
         return {
             selectAll: false,
             isDuplicateModalOpen: false,
+            isConfirmModalOpen: false,
             duplicateTo: new Date(),
-            duplicateTask:null,
+            duplicateTask: null,
+            deleteTask: null,
+            removeRecords: null,
         }
     },
     computed: {
@@ -539,36 +544,20 @@ export default {
     methods: {
         getTaskCategoryByDescription,
         ...mapActions(['createRecord', 'removeRecord', 'search']),
-        duplicate(selected, length) {
-            for (let i = 0; i < length; i++) {
-                this.createRecord({
-                    date: selected[i].date,
-                    hours: selected[i].hours,
-                    focalPoint: selected[i].focalPoint,
-                    comments: selected[i].comments,
-                    taskDescription: selected[i].taskDescription,
-                    repeat: 1,
-                })
-            }
+        showDeleteRecord(tasks){
+            this.deleteTask = tasks
+            this.isConfirmModalOpen = true
         },
-        deleteSelected(selected, length) {
-            let deleteConfirmation = {
-                title: 'Delete Item',
-                message: 'Are you sure You want to delete the selected item',
-                button: 'Delete',
+        deleteRecord() {
+            for (let i = 0; i < this.deleteTask.length; i++) {
+                this.removeRecord(this.deleteTask[i].id)
             }
-            if (length>1) {
-                deleteConfirmation = {
-                    title: 'Delete Items',
-                    message: 'Are you sure You want to delete the selected items',
-                    button: 'Delete',
-                }
-            }
-            
-            commit('confirmModal', deleteConfirmation, selected, length);
-            for (let i = 0; i < length; i++) {
-                this.removeRecord(selected[i].id)
-            }
+            this.isConfirmModalOpen = false
+            this.$notify({
+                    title: 'Records Deleted!',
+                    message: 'Your recordd has been deleted',
+                    type: 'success',
+                })
         },
         toggleSelectAll(){
             if(this.selectAll){
@@ -577,8 +566,6 @@ export default {
                 this.tasks.forEach((item) => item.selected = false)
             }
         },
-<<<<<<< HEAD
-=======
         showDuplicate(task){
             this.duplicateTask = task
             this.isDuplicateModalOpen = true
@@ -596,7 +583,6 @@ export default {
                 })
         },
         ...mapActions(['saveRecord','removeRecord', 'search']),
->>>>>>> bbc0ec3e451076eade759e1deac180b15536a802
     },
     mounted() {
         this.search()

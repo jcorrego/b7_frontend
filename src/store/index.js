@@ -257,14 +257,8 @@ const store = createStore({
             const index = state.records.findIndex((r) => r.id === recordId)
             if (~index) state.records.splice(index, 1)
         },
-<<<<<<< HEAD
-        confirmModal(state, confirmModal, selection, length) {
-            const index = state.records.findIndex((r) => r.id === recordId)
-            if (~index) state.records.splice(index, 1)
-=======
         setEditing(state, editing) {
             state.editing = editing
->>>>>>> bbc0ec3e451076eade759e1deac180b15536a802
         },
     },
     modules: {
