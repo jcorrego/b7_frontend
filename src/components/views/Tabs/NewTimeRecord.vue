@@ -123,7 +123,7 @@
         <submit-button
             @click="save"
             :disabled="!date || !taskDescription || !hours || !comments"
-            >Save record</submit-button
+            >Save</submit-button
         >
     </div>
     <overtime-modal

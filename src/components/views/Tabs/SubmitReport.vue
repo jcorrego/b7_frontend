@@ -11,11 +11,18 @@
             overflow-hidden
         "
     >
-        ok
+
+      <div class="text-center text-center text-md text-gray-500">
+        Please preview your monthly report before submitting
+      </div>
+
+      <div class="px-4 py-3 text-center sm:px-6 rounded-b-lg">
+        <submit-button @click="submit">Preview report</submit-button>
+        <submit-button @click="submit" class="bg-primary hover:bg-sky-500 focus:ring-sky-500">Submit report</submit-button>
+      </div>
+
     </div>
-    <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 rounded-b-lg">
-        <submit-button @click="submit">Submit report</submit-button>
-    </div>
+
 </template>
 
 <script>

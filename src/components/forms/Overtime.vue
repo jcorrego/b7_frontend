@@ -1,7 +1,7 @@
 <template>
     <Listbox as="div" v-model="selectedOption">
         <ListboxLabel class="block text-sm font-medium text-gray-700">
-            Overtime?
+            Time record type
         </ListboxLabel>
         <div class="relative mt-1">
             <ListboxButton
@@ -134,9 +134,9 @@ export default {
     props: ['initial', 'onUpdate'],
     setup(props) {
         const options = [
-            { name: 'Both', value: null },
+            { name: 'All', value: null },
             { name: 'Overtime', value: true },
-            { name: 'Not Overtime/Regular Hour', value: false },
+            { name: 'Regular Hour', value: false },
         ]
         const selectedOption = ref(props.initial || options[0])
 
