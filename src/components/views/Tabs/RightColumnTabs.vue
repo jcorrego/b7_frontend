@@ -47,7 +47,6 @@
             </div>
             <new-time-record
                 v-if="selectedTab == 'new'"
-                :editing="editing"
                 @record:saved="handleRecordSaved"
             ></new-time-record>
             <project-configuration
@@ -62,6 +61,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import AdditionalFilters from './AdditionalFilters.vue'
 import ProjectConfiguration from './ProjectConfiguration.vue'
 import NewTimeRecord from './NewTimeRecord.vue'
@@ -74,7 +74,6 @@ export default {
         ProjectConfiguration,
         SubmitReport,
     },
-    props: ['editing'],
     emits: ['record:saved'],
     data() {
         return {
@@ -86,6 +85,11 @@ export default {
             ],
             selectedTab: 'new',
         }
+    },
+    computed: {
+        ...mapState({
+            editing: (state) => state.editing,
+        }),
     },
     watch: {
         editing(value) {
