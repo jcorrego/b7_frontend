@@ -77,30 +77,20 @@
                     </div>
                 </div>
 
-                <div class="sm:col-span-2">
+                <div class="sm:col-span-1">
                     <focal-point v-model="focalPoint"></focal-point>
                 </div>
 
-                <div class="sm:col-span-2" v-if="!editing">
-                    <label
-                        for="comments"
-                        class="block text-sm font-medium text-gray-700"
-                    >
-                        Repeat this record?
-                        <span class="text-xs opacity-50">
-                            How many times...</span
-                        >
-                    </label>
-                    <div class="mt-1">
-                        <el-input
-                            type="number"
-                            name="repeat"
-                            id="repeat"
-                            placeholder="times to repeat"
-                            v-model="repeat"
-                            clearable
-                        >
-                        </el-input>
+                <div v-if="!editing" class="sm:col-span-1">
+                    <label for="price" class="block text-sm font-medium text-gray-700">Repeat this record</label>
+                    <div class="mt-1 relative rounded-md shadow-sm">
+
+                    <input v-model="repeat" type="number" name="repeat" id="repeat" class="focus:ring-teal-500 focus:border-teal-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="1" />
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <span class="text-gray-500 sm:text-sm" id="price-currency">
+                        times
+                        </span>
+                    </div>
                     </div>
                 </div>
             </div>
