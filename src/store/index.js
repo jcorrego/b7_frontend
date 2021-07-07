@@ -149,18 +149,19 @@ const store = createStore({
 
             commit('setFilteredRecords', filtered)
         },
-        confirmModal({ commit }, confirmMessage, selection, length){
+        confirmModal({ commit, state }, confirmMessage, selection, length){
             state.confirmModal.isOpen = true
             state.confirmModal.confirmMessage = confirmMessage
-            commit('confirmModal', confirmModal, selection, length)
-        }
-        closeConfirmModal({ commit }, ){
+            commit('confirmModal', confirmMessage, selection, length)
+        },
+        closeConfirmModal({ commit, state }){
             state.confirmModal.isOpen = false;
             state.confirmModal.confirmMessage = {
                 title: '',
                 message: '',
                 button: '',
             }
+            commit('closeConfirmModal')
         }
     },
     mutations: {

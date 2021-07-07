@@ -47,7 +47,7 @@ import { Dialog, DialogOverlay, DialogTitle, TransitionChild, TransitionRoot } f
 import { ExclamationIcon } from '@heroicons/vue/outline'
 
 export default {
-  name: 'ConfirmModal',
+  name: 'modal',
   components: {
     Dialog,
     DialogOverlay,

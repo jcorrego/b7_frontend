@@ -465,7 +465,7 @@ import {
 } from '@heroicons/vue/solid'
 
 import TimePeriodFilter from '../filters/TimePeriodFilter.vue'
-import { ConfirmModal } from '../modals/ConfirmModal.vue'
+import ConfirmModal from '../modals/ConfirmModal.vue'
 import { mapState, mapActions } from 'vuex'
 import { getTaskCategoryByDescription } from '../../store/descriptions'
 
@@ -513,7 +513,7 @@ export default {
             }
         },
         deleteSelected(selected, length) {
-            /*let deleteConfirmation = {
+            let deleteConfirmation = {
                 title: 'Delete Item',
                 message: 'Are you sure You want to delete the selected item',
                 button: 'Delete',
@@ -526,7 +526,7 @@ export default {
                 }
             }
             
-            commit('confirmModal', deleteConfirmation, selected, length);*/
+            commit('confirmModal', deleteConfirmation, selected, length);
             for (let i = 0; i < length; i++) {
                 this.removeRecord(selected[i].id)
             }
