@@ -3,7 +3,9 @@
         <div class="grid grid-cols-1 gap-4 items-start lg:grid-cols-3 lg:gap-8">
             <!-- Left column -->
             <div class="grid grid-cols-1 gap-4 lg:col-span-2">
-                <task-list-summary v-if="!actAsPM && selectedProject"></task-list-summary>
+                <task-list-summary
+                    v-if="!actAsPM && selectedProject"
+                ></task-list-summary>
                 <task-list :onEditClick="edit"></task-list>
             </div>
 
@@ -12,10 +14,9 @@
                 <select-project-menu v-if="!actAsPM"></select-project-menu>
                 <right-column-tabs
                     v-if="!actAsPM && selectedProject"
-                    v-model:editing="editing"
                     @record:saved="handleRecordSaved"
                 ></right-column-tabs>
-                <hour-stats v-if="!actAsPM &&  !selectedProject"></hour-stats>
+                <hour-stats v-if="!actAsPM && !selectedProject"></hour-stats>
                 <approve-report v-if="actAsPM"></approve-report>
             </div>
         </div>
@@ -23,8 +24,7 @@
 </template>
 
 <script>
-import { ref } from 'vue'
-import { mapState } from 'vuex'
+import { mapState, useStore } from 'vuex'
 
 import HourStats from '../stats/HourStats.vue'
 import RightColumnTabs from './Tabs/RightColumnTabs.vue'
@@ -48,21 +48,20 @@ export default {
             selectedProject: (state) => state.filters.project,
             period: (state) => state.filters.period,
             actAsPM: (state) => state.actAsPM,
+            editing: (state) => state.editing,
         }),
     },
     setup() {
-        const editing = ref(null)
+        const { dispatch } = useStore()
         const edit = (record) => {
-            editing.value = record
+            dispatch('setEditing', record)
         }
 
         const handleRecordSaved = () => {
-            editing.value = null
-
+            dispatch('setEditing', null)
         }
 
         return {
-            editing,
             edit,
             handleRecordSaved,
         }

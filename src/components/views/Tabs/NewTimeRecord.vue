@@ -82,15 +82,47 @@
                 </div>
 
                 <div v-if="!editing" class="sm:col-span-1">
-                    <label for="price" class="block text-sm font-medium text-gray-700">Repeat this record</label>
+                    <label
+                        for="price"
+                        class="block text-sm font-medium text-gray-700"
+                        >Repeat this record</label
+                    >
                     <div class="mt-1 relative rounded-md shadow-sm">
-
-                    <input v-model="repeat" type="number" name="repeat" id="repeat" class="focus:ring-teal-500 focus:border-teal-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md" placeholder="1" />
-                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                        <span class="text-gray-500 sm:text-sm" id="price-currency">
-                        times
-                        </span>
-                    </div>
+                        <input
+                            v-model="repeat"
+                            type="number"
+                            name="repeat"
+                            id="repeat"
+                            class="
+                                focus:ring-teal-500 focus:border-teal-500
+                                block
+                                w-full
+                                pl-7
+                                pr-12
+                                sm:text-sm
+                                border-gray-300
+                                rounded-md
+                            "
+                            placeholder="1"
+                        />
+                        <div
+                            class="
+                                absolute
+                                inset-y-0
+                                right-0
+                                pr-3
+                                flex
+                                items-center
+                                pointer-events-none
+                            "
+                        >
+                            <span
+                                class="text-gray-500 sm:text-sm"
+                                id="price-currency"
+                            >
+                                times
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -133,6 +165,7 @@ import SubmitButton from '../../forms/SubmitButton.vue'
 import CancelButton from '../../forms/CancelButton.vue'
 import { maska } from 'maska'
 import { mapState, mapActions } from 'vuex'
+import { hourStringToMinutes } from '../../../helpers/hours'
 
 export default {
     components: {
@@ -143,7 +176,6 @@ export default {
         OvertimeModal,
     },
     directives: { maska },
-    props: ['editing'],
     emits: ['record:saved'],
     data() {
         return {
@@ -190,12 +222,13 @@ export default {
         ...mapState({
             projectDefaults: (state) => state.projectDefaults,
             project: (state) => state.filters.project,
+            editing: (state) => state.editing,
         }),
     },
     watch: {
         editing(value) {
             if (!value) return
-            if (value) this.edit(value)
+            else this.edit(value)
         },
         description(value) {
             if (!value || !(typeof value === 'object')) return
@@ -213,13 +246,11 @@ export default {
 
             const registeredHours = await this.getHoursByDate(date)
 
-            const [hours, minutes] = amount.split(':')
-            const addingMinutes = parseInt(hours) * 60 + parseInt(minutes)
+            const addingMinutes = hourStringToMinutes(amount)
 
             let registeredMinutes = 0
             for (const hour of registeredHours) {
-                const [h, m] = hour.split(':')
-                registeredMinutes += parseInt(h) * 60 + parseInt(m)
+                registeredMinutes += hourStringToMinutes(hour)
             }
             if (registeredMinutes + addingMinutes > dailyMinutes) {
                 return {
@@ -270,6 +301,22 @@ export default {
                     overtimeReason: this.overtimeReason,
                     repeat: 1,
                 })
+
+                const regular =
+                    hourStringToMinutes(this.hours) - validation.amount
+                const regularHours = parseInt(regular / 60)
+                const regularMinutes = regular % 60
+                this.saveRecord({
+                    id: this.id,
+                    date: this.date,
+                    hours: `${regularHours}:${regularMinutes
+                        .toString()
+                        .padStart(2, '0')}`,
+                    focalPoint: this.focalPoint,
+                    comments: this.comments,
+                    taskDescription: this.taskDescription,
+                    repeat: this.repeat,
+                })
             } else {
                 this.saveRecord({
                     id: this.id,
@@ -313,6 +360,9 @@ export default {
             this.repeat = 1
         },
         initProjectDefault() {
+            if (this.editing) {
+                return this.edit(this.editing)
+            }
             this.id = null
             this.date = new Date()
             this.hours = ''
