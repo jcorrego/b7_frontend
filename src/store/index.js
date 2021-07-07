@@ -41,7 +41,7 @@ const store = createStore({
                 taskCategory: null,
                 taskDescription: null,
             },
-            darkMode: true,
+            darkMode: false,
         }
     },
     actions: {
