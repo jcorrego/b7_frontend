@@ -18,21 +18,16 @@
             v-model="description"
         ></task-description-filter>
     </div>
-    <!-- <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 rounded-b-lg">
-        <submit-button @click="search">Search</submit-button>
-    </div> -->
 </template>
 
 <script>
 import Overtime from '../../forms/Overtime.vue'
-import SubmitButton from '../../forms/SubmitButton.vue'
 import TaskDescriptionFilter from '../../forms/TaskDescription.vue'
 import { mapActions, mapState } from 'vuex'
 export default {
     components: {
         Overtime,
         TaskDescriptionFilter,
-        SubmitButton,
     },
     data() {
         return {

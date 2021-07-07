@@ -79,6 +79,15 @@ const store = createStore({
             }
             dispatch('search')
         },
+        getHoursByDate({ state }, date) {
+            return state.records
+                .map((r) =>
+                    r.date.setHours(0, 0, 0, 0) == date.setHours(0, 0, 0, 0)
+                        ? r.hours
+                        : null
+                )
+                .filter((r) => r)
+        },
         removeRecord({ dispatch, commit }, recordId) {
             commit('removeRecord', recordId)
             dispatch('search')
