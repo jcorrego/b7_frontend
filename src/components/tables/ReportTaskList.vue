@@ -10,6 +10,8 @@
             <p class="mt-1 text-sm text-gray-500">
               This is the details of worked hours reported by the user.
             </p>
+            <p v-if="report.status == 'submitted'">
+              <a href="/BairesDev_TimeTracker_Report.pdf" target="_blank" class="text-teal-500 text-sm"><i class="fad fa-file-pdf mr-2"></i> Download as PDF</a></p>
           </div>
           <div class="ml-4 mt-4 flex-shrink-0 items-center">
             <submit-button @click="approveReport" v-if="report.status == 'submitted'"><i class="far fa-check mr-2"></i>Approve</submit-button>
