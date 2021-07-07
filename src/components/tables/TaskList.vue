@@ -1,12 +1,12 @@
 <template>
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-            <div class="shadow border-b border-gray-200 sm:rounded-lg bg-white">
+            <div class="shadow border-b border-gray-200 sm:rounded-lg bg-white dark:bg-primary border dark:border-sky-600 ">
                 <div class="p-4">
                     <time-period-filter ref="time-period-filter"></time-period-filter>
                 </div>
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-sky-50">
+                <table class="min-w-full divide-y divide-gray-200 dark:divide-sky-600">
+                    <thead class="bg-sky-50 dark:bg-sky-900">
                         <tr>
                             <th class="pl-4">
                                 <div class="flex items-center h-5">
@@ -27,7 +27,7 @@
                                     py-3
                                     text-right text-xs
                                     font-medium
-                                    text-gray-500
+                                    text-gray-500 dark:text-gray-50
                                     uppercase
                                     tracking-wider
                                 "
@@ -40,7 +40,7 @@
                                     py-3
                                     text-right text-xs
                                     font-medium
-                                    text-gray-500
+                                    text-gray-500 dark:text-gray-50
                                     uppercase
                                     tracking-wider
                                     w-1
@@ -60,7 +60,7 @@
                                     py-3
                                     text-left text-xs
                                     font-medium
-                                    text-gray-500
+                                    text-gray-500 dark:text-gray-50
                                     uppercase
                                     tracking-wider
                                 ">Project</th>
@@ -71,7 +71,7 @@
                                     py-3
                                     text-left text-xs
                                     font-medium
-                                    text-gray-500
+                                    text-gray-500 dark:text-gray-50
                                     uppercase
                                     tracking-wider
                                 "
@@ -85,7 +85,7 @@
                                     py-3
                                     text-left text-xs
                                     font-medium
-                                    text-gray-500
+                                    text-gray-500 dark:text-gray-50
                                     uppercase
                                     tracking-wider
                                 "
@@ -99,7 +99,7 @@
                                     py-3
                                     text-left text-xs
                                     font-medium
-                                    text-gray-500
+                                    text-gray-500 dark:text-gray-50
                                     uppercase
                                     tracking-wider
                                 "
@@ -112,14 +112,14 @@
                                     py-3
                                     text-right text-xs
                                     font-medium
-                                    text-gray-500
+                                    text-gray-500 dark:text-gray-50
                                     uppercase
                                     tracking-wider
                                 "
                             />
                         </tr>
                     </thead>
-                    <transition-group tag="tbody" class="bg-white divide-y divide-gray-200"
+                    <transition-group tag="tbody" class="bg-white divide-y divide-gray-200 dark:bg-gray-600 dark:divide-gray-500"
                         enter-active-class="transition ease-out duration-700"
                         enter-from-class="transform opacity-0 scale-y-0"
                         enter-to-class="transform opacity-100 scale-y-100"
@@ -130,7 +130,7 @@
                     >
                         <tr v-if="tasks.length == 0">
                             <td colspan="7" class="px-4 py-5">
-                                <div class="text-center w-full text-gray-500 text-sm">
+                                <div class="text-center w-full text-gray-500 dark:text-gray-50 text-sm">
                                     <img src="../../assets/empty.svg" alt="No records found" class="h-72 mx-auto opacity-50">
                                     <span class="text-teal-500"> Sorry! No records where found.</span> <br> Try changing some filters.
                                 </div>
@@ -141,8 +141,8 @@
                             v-for="(task, index) in tasks"
                             :key="task.id"
                             :class="[
-                                task.selected ? 'bg-teal-50' : '',
-                                'cursor-pointer hover:bg-gray-50',
+                                task.selected ? 'bg-teal-50 dark:bg-teal-800' : '',
+                                'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-900',
                             ]"
                         >
                             <td
@@ -175,7 +175,7 @@
                                         class="
                                             text-sm
                                             font-medium
-                                            text-gray-400
+                                            text-gray-400 dark:text-gray-100
                                         "
                                     >
                                         {{ task.date.toLocaleDateString() }}
@@ -186,7 +186,7 @@
                                 @click="task.selected = !task.selected"
                                 class="py-2 whitespace-nowrap text-right"
                             >
-                                <div class="text-primary text-sm font-bold">
+                                <div class="text-primary dark:text-sky-100 text-sm font-bold">
                                     <el-tooltip
                                         v-if="task.overtime || task.date.toLocaleDateString() == '7/5/2021'"
                                         class="item"
@@ -194,27 +194,27 @@
                                         content="Overtime"
                                         placement="top"
                                     >
-                                        <span v-if="task.date.toLocaleDateString() == '7/5/2021'" class="text-purple-600 mr-2">HOL</span>
-                                        <span v-else class="text-yellow-600 mr-2">OT</span>
+                                        <span v-if="task.date.toLocaleDateString() == '7/5/2021'" class="text-purple-600 dark:text-purple-200 mr-2">HOL</span>
+                                        <span v-else class="text-yellow-600 dark:text-yellow-200 mr-2">OT</span>
                                     </el-tooltip>
                                     {{ task.hours }}
                                 </div>
                             </td>
-                            <td v-if="!selectedProject" class="px-6 py-2 text-sm text-gray-900">
+                            <td v-if="!selectedProject" class="px-6 py-2 text-sm text-gray-900 dark:text-gray-100">
                                 {{ projects.filter((item)=>item.id ==task.project.id )[0].name }}
                             </td>
                             <td
                                 @click="task.selected = !task.selected"
                                 class="px-6 py-2 whitespace-nowrap"
                             >
-                                <div class="text-sm text-gray-900">
+                                <div class="text-sm text-gray-900 dark:text-gray-100">
                                     {{
                                         getTaskCategoryByDescription(
                                             task.taskDescription
                                         )
                                     }}
                                 </div>
-                                <div class="text-sm text-gray-500">
+                                <div class="text-sm text-gray-500 dark:text-gray-300">
                                     {{ task.taskDescription }}
                                 </div>
                             </td>
@@ -222,7 +222,7 @@
                                 @click="task.selected = !task.selected"
                                 class="px-6 py-4 whitespace-nowrap"
                             >
-                                <div class="text-sm text-gray-500">
+                                <div class="text-sm text-gray-500 dark:text-gray-100">
                                     {{ task.comments }}
                                 </div>
                             </td>
@@ -233,7 +233,7 @@
         <img class="inline-block h-8 w-8 rounded-full" :src="task.focalPoint.avatar" :alt="task.focalPoint.name" />
       </div>
       <div class="ml-3">
-        <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900">
+        <p class="text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-gray-900">
           {{ task.focalPoint.name }}
         </p>
       </div>
@@ -255,7 +255,7 @@
                                         class="
                                             w-8
                                             h-8
-                                            bg-white
+                                            bg-white dark:bg-gray-700
                                             inline-flex
                                             items-center
                                             justify-center
@@ -387,16 +387,16 @@
                             </td>
                         </tr>
                     </transition-group>
-                    <tfoot class="bg-gray-50">
+                    <tfoot class="bg-gray-50 dark:bg-sky-900">
                         <tr>
                             <td
-                                colspan="6"
-                                class="px-6 py-3 text-gray-500 rounded-b-lg  text-sm"
+                                colspan="7"
+                                class="px-6 py-3 text-gray-500 dark:text-gray-50 rounded-b-lg  text-sm"
                             >
                                 <div class="flex items-center justify-between">
                                     <div>
                                         Displaying
-                                        <span class="font-bold text-primary">{{
+                                        <span class="font-bold text-primary dark:text-sky-200">{{
                                             tasks.length
                                         }}</span>
                                         records

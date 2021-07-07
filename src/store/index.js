@@ -41,6 +41,7 @@ const store = createStore({
                 taskCategory: null,
                 taskDescription: null,
             },
+            darkMode: false,
         }
     },
     actions: {
@@ -172,6 +173,9 @@ const store = createStore({
         addReport({ commit }, report) {
             commit('addReport', report)
         },
+        setDarkMode({ commit }, mode) {
+            commit('setDarkMode', mode)
+        },
     },
     mutations: {
         setFilteredRecords(state, filtered) {
@@ -250,6 +254,9 @@ const store = createStore({
         },
         setEditing(state, editing) {
             state.editing = editing
+        },
+        setDarkMode(state, mode) {
+            state.darkMode = mode
         },
     },
     modules: {

@@ -1,12 +1,13 @@
 <template>
-  <div class="bg-white border shadow rounded-lg">
+  <div class="bg-white dark:bg-primary border dark:border-sky-600 shadow rounded-lg">
     <dl class="
                             grid grid-cols-1
                             rounded-lg
                             bg-white
+                            dark:bg-sky-800
                             overflow-hidden
                             shadow
-                            divide-y divide-gray-200
+                            divide-y divide-gray-200 dark:divide-sky-600
                             md:grid-cols-4 md:divide-y-0 md:divide-x
                         ">
       <div
@@ -14,7 +15,7 @@
         :key="item.name"
         class="px-4 py-5 sm:p-4"
       >
-        <dt class="text-base font-normal text-gray-900">
+        <dt class="text-base font-normal text-gray-900 dark:text-gray-50">
           {{ item.name }}
         </dt>
         <dd class="
@@ -27,10 +28,10 @@
                                 ">
           <div :class="[
                                         item[period] === '0:00'
-                                            ? 'text-gray-300'
+                                            ? 'text-gray-300 dark:text-gray-50'
                                             : item.name === 'Hours Overtime'
-                                            ? 'text-teal-600'
-                                            : 'text-teal-600',
+                                            ? 'text-teal-600 dark:text-teal-100'
+                                            : 'text-teal-600 dark:text-teal-100',
                                         'flex items-baseline text-2xl font-semibold',
                                     ]">
             {{ item.value }}
