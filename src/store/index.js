@@ -6,6 +6,7 @@ import descriptions from './descriptions' //TODO: fetch from API
 import tasks from './tasks' //TODO: fetch from API
 import projectDefaults from './projectDefaults' //TODO: fetch from API
 import * as uuid from 'uuid'
+import { stringifyQuery } from 'vue-router'
 const today = new Date()
 const startMonth = new Date(today.getFullYear(), today.getMonth(), 1)
 const endMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0)
@@ -37,6 +38,15 @@ const store = createStore({
                 taskCategory: null,
                 taskDescription: null,
             },
+            confirmModal: {
+                isOpen: Boolean,
+                confirmMessage: {
+                    title: String,
+                    message: String,
+                    button: String,
+                }
+
+            }
         }
     },
     actions: {
@@ -137,6 +147,19 @@ const store = createStore({
 
             commit('setFilteredRecords', filtered)
         },
+        confirmModal({ commit }, confirmMessage, selection, length){
+            state.confirmModal.isOpen = true
+            state.confirmModal.confirmMessage = confirmMessage
+            commit('confirmModal', confirmModal, selection, length)
+        }
+        closeConfirmModal({ commit }, ){
+            state.confirmModal.isOpen = false;
+            state.confirmModal.confirmMessage = {
+                title: '',
+                message: '',
+                button: '',
+            }
+        }
     },
     mutations: {
         setFilteredRecords(state, filtered) {
@@ -195,6 +218,10 @@ const store = createStore({
             if (~index) state.records[index] = record
         },
         removeRecord(state, recordId) {
+            const index = state.records.findIndex((r) => r.id === recordId)
+            if (~index) state.records.splice(index, 1)
+        },
+        confirmModal(state, confirmModal, selection, length) {
             const index = state.records.findIndex((r) => r.id === recordId)
             if (~index) state.records.splice(index, 1)
         },
