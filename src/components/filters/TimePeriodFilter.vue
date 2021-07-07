@@ -7,9 +7,9 @@
                     type="button"
                     :class="[
                         periodType == 'daily'
-                            ? 'bg-secondary text-white hover:bg-teal-400'
-                            : 'bg-white text-gray-700 hover:bg-gray-50',
-                        'relative inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 text-sm font-medium focus:z-10 focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500',
+                            ? 'bg-secondary dark:bg-teal-800 text-white hover:bg-teal-400 dark:hover:bg-teal-900'
+                            : 'bg-white dark:bg-gray-500 dark:text-gray-50 text-gray-700 hover:bg-gray-50',
+                        'relative inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 dark:border-gray-900 text-sm font-medium focus:z-10 focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500',
                     ]"
                 >
                     Daily
@@ -19,9 +19,9 @@
                     type="button"
                     :class="[
                         periodType == 'weekly'
-                            ? 'bg-secondary text-white hover:bg-teal-400'
-                            : 'bg-white text-gray-700 hover:bg-gray-50',
-                        '-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium focus:z-10 focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500',
+                            ? 'bg-secondary dark:bg-teal-800 text-white hover:bg-teal-400 dark:hover:bg-teal-900'
+                            : 'bg-white dark:bg-gray-500 dark:text-gray-50 text-gray-700 hover:bg-gray-50',
+                        '-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-900 text-sm font-medium focus:z-10 focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500',
                     ]"
                 >
                     Weekly
@@ -31,9 +31,9 @@
                     type="button"
                     :class="[
                         periodType == 'monthly'
-                            ? 'bg-secondary text-white hover:bg-teal-400'
-                            : 'bg-white text-gray-700 hover:bg-gray-50',
-                        '-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium focus:z-10 focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500',
+                            ? 'bg-secondary dark:bg-teal-800 text-white hover:bg-teal-400 dark:hover:bg-teal-900'
+                            : 'bg-white dark:bg-gray-500 dark:text-gray-50 text-gray-700 hover:bg-gray-50',
+                        '-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-900 text-sm font-medium focus:z-10 focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500',
                     ]"
                 >
                     Monthly
@@ -44,9 +44,9 @@
                     type="button"
                     :class="[
                         periodType == 'range'
-                            ? 'bg-secondary text-white hover:bg-teal-400'
-                            : 'bg-white text-gray-700 hover:bg-gray-50',
-                        '-ml-px relative inline-flex items-center px-4 py-2 rounded-r-md border border-gray-300 text-sm font-medium focus:z-10 focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500',
+                            ? 'bg-secondary dark:bg-teal-800 text-white hover:bg-teal-400 dark:hover:bg-teal-900'
+                            : 'bg-white dark:bg-gray-500 dark:text-gray-50 text-gray-700 hover:bg-gray-50',
+                        '-ml-px relative inline-flex items-center px-4 py-2 rounded-r-md border border-gray-300 dark:border-gray-900 text-sm font-medium focus:z-10 focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500',
                     ]"
                 >
                     Range
