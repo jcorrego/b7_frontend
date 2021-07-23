@@ -1,7 +1,7 @@
 <template>
   <div :class="[this.$store.state.darkMode ?'dark bg-gray-900' :'bg-gray-100','min-h-screen ']">
     <navigation v-if="this.$store.state.loginUser"></navigation>
-    <main :class="[!this.$store.state.loginUser?'':'-mt-20',' pb-8']">
+    <main :class="[!this.$store.state.loginUser?'':'-mt-12 sm:-mt-20',' pb-8']">
       <pm-screen v-if="actAsPM"></pm-screen>
       <router-view v-else />
     </main>
